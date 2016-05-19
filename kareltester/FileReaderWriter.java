@@ -4,15 +4,15 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * Description:
- *  This class manages all files. It does this by creating kwld2 or reusing an old kwld2 (so that 
- *  brings up the option of saving worlds for later testing). Whenever called on by the KarelWorldEditor
- *  it will add beepers, walls, and karels.
+ * @author Neil Prajapati
+ *
+ *  This class manages all files. It does this by creating kwld2 or reusing an old kwld2.
+ *  Whenever called on by the KarelWorldEditor it will add beepers, walls, and karels.
  *
  *  This class is a whole bunch of utility methods. To use these utility methods one must first call
  *  the static method setUp() which preforms all necessary preparations. Note that calling this multiple times
  *  will not cause any issues so always call this before using any FileReaderWriter methods.
- *  The other utility methods are as follows
+ *  The other utility methods include but are not limited to:
  *
  *      File[] getAllKarelsJavaFilesInFolder():
  *          this is for robbie since he has to list the karels we can use. This will retrive the Files
@@ -62,8 +62,6 @@ import java.util.ArrayList;
  *
  *
  *TODO: finish documentation
- * TODO: finish setStreets, setAvenues
- * TODO: finish find all karels in folder
  * TODO: make KTerminal work off of input, output and error streams
  */
 
@@ -78,8 +76,8 @@ public class FileReaderWriter
     private static File kwld2File; //Writer will be created when necessary
     private static File kwldFile;
 
-    private static ArrayList<Karel> uncompiledKarels;
     private static File mainDriver; //Writer will be created when necessary
+    private static File mainDriverJ;
     private static ArrayList<Kwld2Listener> listeners;
     private static boolean inited = false;
 
@@ -109,21 +107,27 @@ public class FileReaderWriter
         }
 
         mainDriver = new File(pathToOuterFolder + "/$MainDriver.java");
-        
+
         //creates file if not created already else does nothing
         try{
             mainDriver.createNewFile();
         }catch(Exception e){}
 
+
+        mainDriverJ = new File(pathToOuterFolder + "/$MainDriver.j");
+        try{
+            mainDriverJ.createNewFile();
+        }catch(Exception e){}
+
         copyToPlusLibs();
 
-        uncompiledKarels = new ArrayList<Karel>();
         listeners = new ArrayList<Kwld2Listener>();
         inited = true;
     }
 
     public static void copyFrom(File f)
     {
+
         try {
             BufferedReader reader = new BufferedReader(new FileReader(f));
             StringBuilder builder = new StringBuilder();
@@ -144,7 +148,7 @@ public class FileReaderWriter
 
         //fire kwld2 changed for like everything :D
         for (int av = 1; av <= getAvenues(); av++) {
-            for (int st = 1; st <= getSteets() ; st++) {
+            for (int st = 1; st <= getStreets() ; st++) {
                 for(Kwld2Listener listener: listeners)
                     listener.onChange(st, av);
             }
@@ -161,9 +165,8 @@ public class FileReaderWriter
             for(Kwld2Listener listener: listeners)
                 listener.onChange(streets[i], avenue[i]);
         }
-
-
     }
+
     public static void addListener(Kwld2Listener l)
     {
         listeners.add(l);
@@ -302,7 +305,7 @@ public class FileReaderWriter
         else if(findFirstInKwld2("eastwestwalls " + st + " " + av + " ") != null) return Direction.EAST; //eastwest wall
         else return Direction.IDK;
     }
-    public static int getSteets()
+    public static int getStreets()
     {
         String s = findFirstInKwld2("streets ");
         if(s == null)
@@ -411,7 +414,7 @@ public class FileReaderWriter
                     int newNumBeepers;
                     newNumBeepers = Integer.parseInt(line.substring(line.lastIndexOf(" ") + 1, line.length()));
                     newNumBeepers ++;
-                    builder.append(signature).append(" " + newNumBeepers).append("\n");
+                    builder.append(signature).append(newNumBeepers).append("\n");
                     foundSignature = true;
                 } else {
                     builder.append(line).append("\n");//CHECK IF \n is okies
@@ -562,16 +565,14 @@ public class FileReaderWriter
                     builder.append(line).append("\n");//TODO CHECK IF \n is okies
                 } else
                 {
-                    //  0       1   2    3
-                    //beepers [st] [av] [#]
-                    String[] segments = line.split(" ");
-
-                    int numBeepers = Integer.parseInt(segments[3]) - 1;
-                    if(numBeepers < 0){
+                    int newNumBeepers;
+                    newNumBeepers = Integer.parseInt(line.substring(line.lastIndexOf(" ") + 1, line.length()));
+                    newNumBeepers --;
+                    if(newNumBeepers < 0) {
+                        newNumBeepers = 0;
                         couldSubtract = false;
-                        numBeepers = 0;
                     }
-                    builder.append(signature).append(" ").append(numBeepers).append("\n");
+                    builder.append(signature).append(newNumBeepers).append("\n");
 
                     foundLine = true;
                 }
@@ -690,20 +691,16 @@ public class FileReaderWriter
 
 
 
-    //=================================SETTING/GETTING WORLD CONSTANTS============================//
-
-
-
-
 
 
     //=================================FINALLLY RUNNING KAREL WORLD :))==================//
     public static void runKarelTest()
     {
         KTerminalUtils.println("Starting KarelTest");
-        createKWLD();
-        createMainDriver();
         copyToPlusLibs();
+        createKWLD();
+        //createMainDriver();
+        createJasminMainDriver();
         compileMainDriverAndRun();
     }
 
@@ -738,7 +735,72 @@ public class FileReaderWriter
                 e.printStackTrace();
             }
         }
+
+
+        ///copying jasmin
+        //NOTE CODE STOlEN FROM INTERNET FROM Ordiel
+        String resourceName = "jasmin.jar";
+        InputStream stream = null;
+        OutputStream resStreamOut = null;
+        String jarFolder;
+        try {
+            stream = FileReaderWriter.class.getClassLoader().getResourceAsStream(resourceName);//note that each / is a directory down in the "jar tree" been the jar the root of the tree
+            System.out.println(stream);
+            if(stream == null) {
+                throw new Exception("Cannot get resource \"" + resourceName + "\" from Jar file.");
+            }
+
+            int readBytes;
+            byte[] buffer = new byte[4096];
+            jarFolder = new File(FileReaderWriter.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getPath().replace('\\', '/');
+            resStreamOut = new FileOutputStream(jarFolder +"/+libs/"+ resourceName);
+            while ((readBytes = stream.read(buffer)) > 0) {
+                resStreamOut.write(buffer, 0, readBytes);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                stream.close();
+                resStreamOut.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        //copying karel
+        resourceName = "KarelJRobot.jar";
+        stream = null;
+        resStreamOut = null;
+        //String jarFolder;
+        try {
+            stream = FileReaderWriter.class.getClassLoader().getResourceAsStream(resourceName);//note that each / is a directory down in the "jar tree" been the jar the root of the tree
+            System.out.println(stream);
+            if(stream == null) {
+                throw new Exception("Cannot get resource \"" + resourceName + "\" from Jar file.");
+            }
+
+            int readBytes;
+            byte[] buffer = new byte[4096];
+            jarFolder = new File(FileReaderWriter.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getPath().replace('\\', '/');
+            resStreamOut = new FileOutputStream(jarFolder +"/+libs/"+ resourceName);
+            while ((readBytes = stream.read(buffer)) > 0) {
+                resStreamOut.write(buffer, 0, readBytes);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                stream.close();
+                resStreamOut.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
+
+
 
     private static void createKWLD() {
 
@@ -774,7 +836,7 @@ public class FileReaderWriter
     private static void createMainDriver() {
         //creates file if not created already else does nothing
         try{
-            mainDriver.createNewFile();
+            mainDriverJ.createNewFile();
         }catch(Exception e){}
 
 
@@ -810,10 +872,8 @@ public class FileReaderWriter
             builder.append("\t\twhile(System.currentTimeMillis() - startTime < 3000){}\n");
 
             Karel[] ks = getAllKarels();
-            uncompiledKarels = new ArrayList<>(ks.length);
             for(Karel k: ks)
             {
-                uncompiledKarels.add(k);
                 builder.append("\t\ttry{\n");
                 String nameOfFile = k.getSource().getName();
                 String nameOfClass = nameOfFile.substring(0, nameOfFile.length() - 5);
@@ -839,7 +899,170 @@ public class FileReaderWriter
         }
     }
 
+    private static void createJasminMainDriver(){
+        //creates file if not created already else does nothing
+        try{
+            mainDriverJ.createNewFile();
+        }catch(Exception e){}
+
+
+        //read from kwld2 and write anything necessary into kwld
+        try {
+            StringBuilder builder = new StringBuilder();
+
+
+            Karel[] ks = getAllKarels();
+            builder.append(
+                ";; Produced with help from JasminVisitor program (BCEL)\n" +
+                ";; http://bcel.sourceforge.net/\n" +
+                ";; Sun May 15 08:19:15 PDT 2016\n" +
+                "\n" +
+                ".source $MainDriver.java\n" +
+                ".class public $MainDriver\n" +
+                ".super java/lang/Object\n" +
+                ".implements kareltherobot/Directions\n" +
+                "\n" +
+                ".field private static startTime J\n" +
+                "\n" +
+                ".method public <init>()V\n" +
+                ".limit stack 1\n" +
+                ".limit locals 1\n" +
+                ".var 0 is this L$MainDriver; from Label0 to Label1\n" +
+                "\n" +
+                "Label0:\n" +
+                "\taload_0\n" +
+                "\tinvokespecial java/lang/Object/<init>()V\n" +
+                "Label1:\n" +
+                "\treturn\n" +
+                "\n" +
+                ".end method\n" +
+                "\n" +
+                ".method public static main([Ljava/lang/String;)V\n" +
+                ".limit stack 6\n" +
+                ".limit locals 2\n" +
+                ".var 0 is arg0 [Ljava/lang/String; from KLabel0 to KLabelNoExceptionPath"+(ks.length - 1)+"\n" +
+                "\n" +
+                "Label3:\n" +
+                "\tinvokestatic java/lang/System/currentTimeMillis()J\n" +
+                "\tputstatic $MainDriver/startTime J\n" +
+                "Label1:\n" +
+                "\tinvokestatic java/lang/System/currentTimeMillis()J\n" +
+                "\tgetstatic $MainDriver/startTime J\n" +
+                "\tlsub\n" +
+                "\tldc2_w 3000\n" +
+                "\tlcmp\n" +
+                "\tifge KLabel0\n" +
+                "\tgoto Label1\n"
+            );
+
+
+            ///all the karels and sstuff
+            /*EXAMPLE:
+            KLabel0:
+                new HappyRobot
+                dup
+                bipush 6
+                iconst_4
+                getstatic $MainDriver/North Lkareltherobot/Directions$Direction;
+                iconst_0
+                invokespecial HappyRobot/<init>(IILkareltherobot/Directions$Direction;I)V
+                astore_1
+                aload_1
+            KLabelInvokeTask0:
+                invokeinterface kareltester/TestableKarel/task()V 1
+                goto Label2
+            KLabelCatch0:
+                astore_1
+            KLabelNoExceptionPath0:
+                return
+
+            .catch java/lang/Exception from KLabel0 to KLabelInvokeTask0 using KLabelCatch0
+             */
+            /*
+            //all labels for karels are in the form KLabel[use]#:
+            each label set differs 1
+             */
+            int lblNumber = 0;
+
+            for(Karel k: ks)
+            {
+                builder.append("KLabel").append(lblNumber).append(":").append("\n");
+
+                // construction of karel
+                String nameOfFile = k.getSource().getName();
+                String nameOfClass = nameOfFile.substring(0, nameOfFile.length() - 5);
+                builder.append("\tnew " + nameOfClass).append("\n");
+                builder.append("\tdup").append("\n");
+                builder.append("\tbipush ").append(k.getStreet()).append("\n");
+                builder.append("\tbipush ").append(k.getAvenue()).append("\n");
+                builder.append("\tgetstatic $MainDriver/"+Direction.getDirectionsInterface(k.getDir())+" Lkareltherobot/Directions$Direction;\n");
+                builder.append("\tbipush ").append(k.getBeepers()).append("\n");
+
+                builder.append("\tinvokespecial "+nameOfClass+"/<init>(IILkareltherobot/Directions$Direction;I)V\n");
+                builder.append(
+                        "\tastore_1\n" +
+                        "\taload_1\n"
+                );
+
+                //invokeinterface karel
+                builder.append("KLabelInvokeTask" + lblNumber + ":\n");
+                builder.append("\tinvokeinterface kareltester/TestableKarel/task()V 1\n");
+                builder.append("\tgoto KLabelNoExceptionPath"+lblNumber + "\n");
+
+                //catch block
+                builder.append(
+                        "KLabelCatch"+lblNumber+":\n" +
+                        "\tastore_1\n"
+                );
+
+                //no exception path
+                builder.append(
+                        "KLabelNoExceptionPath"+lblNumber+":\n" +
+                        "\t\n"
+                );
+
+                //if its the last one, stick a return on it. :D
+                if(lblNumber == ks.length - 1) builder.append("\treturn\n");
+
+                builder.append(".catch java/lang/Exception from KLabel"+lblNumber+" to KLabelInvokeTask"+lblNumber+" using KLabelCatch" + lblNumber + "\n");
+
+                lblNumber++;
+            }
+
+            builder.append(".end method").append("\n");
+            //the static block
+            builder.append(
+                    ".method static <clinit>()V\n" +
+                    ".limit stack 1\n" +
+                    ".limit locals 0\n" +
+                    "\n" +
+                    "\tinvokestatic kareltherobot/World/reset()V\n" +
+                    "\tldc \"$KarelsHome.kwld\"\n" +
+                    "\tinvokestatic kareltherobot/World/readWorld(Ljava/lang/String;)V\n" +
+                    "\tbipush 50\n" +
+                    "\tinvokestatic kareltherobot/World/setDelay(I)V\n" +
+                    "\ticonst_1\n" +
+                    "\tinvokestatic kareltherobot/World/setVisible(Z)V\n" +
+                    "\ticonst_1\n" +
+                    "\tinvokestatic kareltherobot/World/showSpeedControl(Z)V\n" +
+                    "\treturn\n" +
+                    "\n" +
+                    ".end method\n"
+            );
+
+            BufferedWriter bw = new BufferedWriter(new FileWriter(mainDriverJ, false));
+            bw.write(builder.toString());
+            bw.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Oh noes, the kwld2 can't be found for some reason.. T.T");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static void compileMainDriverAndRun() {
+
+
         //javac.tools method; problem: ToolProvider.getSystemJavaCompiler returns null when double click jar file
 //
 //
@@ -883,15 +1106,25 @@ public class FileReaderWriter
             //javac -cp .:+libs/KarelJRobot.jar:+libs/AntiStipulator.jar \$MainDriver.java
             //java -cp .:+libs/KarelJRobot.jar:+libs/AntiStipulator.jar \$MainDriver
 
+
+            //this doesn't work bc we have no jdk
             //i assume we are calling outside +libs folder
+//            Process pro1 = Runtime.getRuntime().exec(
+//                    "javac -cp .:+libs/KarelJRobot.jar:AntiStipulator.jar "
+//                            + mainDriver.getName().substring(0,mainDriver.getName().length())
+//            );
+//            printKarelOutput(pro1.getInputStream());
+//            printKarelOutput(pro1.getErrorStream());
+//
+//            pro1.waitFor();
             Process pro1 = Runtime.getRuntime().exec(
-                    "javac -cp .:+libs/KarelJRobot.jar:AntiStipulator.jar "
-                            + mainDriver.getName().substring(0,mainDriver.getName().length())
+                    "java -jar +libs/jasmin.jar  "
+                            + mainDriverJ.getName()
             );
             printKarelOutput(pro1.getInputStream());
             printKarelOutput(pro1.getErrorStream());
-
             pro1.waitFor();
+
             if(pro1.exitValue() != 0) {
                 KTerminalUtils.println("Your karel did not compile. Please check your code");
                 return;
@@ -899,7 +1132,7 @@ public class FileReaderWriter
 
             Process pro2 = Runtime.getRuntime().exec(
                     "java -cp .:+libs/KarelJRobot.jar:AntiStipulator.jar "
-                    + mainDriver.getName().substring(0,mainDriver.getName().length() -5)
+                    +  mainDriver.getName().substring(0,mainDriver.getName().length() - 5)
             );
             printKarelOutput(pro2.getInputStream());
             printKarelOutput(pro2.getErrorStream());
@@ -923,6 +1156,5 @@ public class FileReaderWriter
     }
 
 
-    //===============TESTING================//
 
 }

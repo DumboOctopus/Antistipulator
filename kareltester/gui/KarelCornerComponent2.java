@@ -1,18 +1,18 @@
 package kareltester.gui;
 
-import kareltester.*;
+import kareltester.FileReaderWriter;
+import kareltester.Karel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.geom.Line2D;
 
 /**
- * Created on 3/26/16.
+ * Created on 5/15/16.
  */
-public class KarelCornerComponent extends JComponent implements MouseListener, Kwld2Listener {
+public class KarelCornerComponent2 extends JComponent {
 
-    private KarelWorldViewComponent worldViewComponent;
     private int street, avenue;
     private Image img = null;
 
@@ -21,13 +21,9 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
     private boolean hasNSWall;
     private boolean hasEWWall;
 
-    public KarelCornerComponent(KarelWorldViewComponent worldViewComponent, int street, int avenue) {
-        this.worldViewComponent = worldViewComponent;
+    public KarelCornerComponent2(int street, int avenue) {
         this.street = street;
         this.avenue = avenue;
-
-        addMouseListener(this);
-        FileReaderWriter.addListener(this);
 
         //updateImage();
         updateNumBeepers();
@@ -108,7 +104,7 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
 //        boolean nswall = FileReaderWriter.hasNSWall(street, avenue);
 //        boolean ewwall = FileReaderWriter.hasEWWall(street,avenue);
 
-        //image memory problem
+    //image memory problem
 //        String imageName;
 //        if(street != 1 && avenue != 1)
 //            imageName = "kareltester/resources/corner 0" + (ewwall?1:0) + (nswall?1:0) + "0.png";
@@ -142,27 +138,10 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
         hasEWWall = FileReaderWriter.hasEWWall(street,avenue);
     }
 
-    //==================================MOUSE LISTENER STUFF======================//
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        worldViewComponent.onCornerClick(street, avenue);
-    }
-
-
-    public void mousePressed(MouseEvent e) {}
-    public void mouseReleased(MouseEvent e){
-    }
-    public void mouseEntered(MouseEvent e) {}
-    public void mouseExited(MouseEvent e) {}
-
-    //=====================================KWLD2 LISTENER STUFF====================//
-    @Override
-    public void onChange(int st, int av) {
-        if(st == street && av == avenue)
-        {
-            updateNumBeepers();
-            updateWalls();
-            repaint();
-        }
+    public void update()
+    {
+        updateWalls();
+        updateNumBeepers();
+        repaint();
     }
 }

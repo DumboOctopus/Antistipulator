@@ -4,14 +4,12 @@ import kareltester.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 
 /**
  * Created on 3/26/16.
  */
-public class KarelWorldViewComponent extends JComponent {
+public class KarelWorldViewComponent extends JComponent  {
 
     private CornerClickListener onClickAction;
 
@@ -20,19 +18,24 @@ public class KarelWorldViewComponent extends JComponent {
     {
         super();
         setBorder(BorderFactory.createMatteBorder(0,10,10,0,Color.BLACK));
-        int maxStreet = FileReaderWriter.getSteets();
+
+        //set up Corners
+        setUpCorners();
+        setSize(555, 555);
+    }
+
+    //--helpers
+    private void setUpCorners() {
+        int maxStreet = FileReaderWriter.getStreets();
         int maxAvenue = FileReaderWriter.getAvenues();
 
         setLayout(new GridLayout(maxStreet, maxAvenue));
-
-        //set up Corners
         for (int street = maxStreet - 1; street >= 0 ; street--) {
             for (int avenue = 0; avenue <= maxAvenue - 1; avenue++) {
                 //System.out.println("I: "+(street +1) + " " + (avenue+1));
                 add(new KarelCornerComponent(this, street + 1, avenue + 1));
             }
         }
-        setSize(555, 555);
     }
 
 
@@ -40,6 +43,8 @@ public class KarelWorldViewComponent extends JComponent {
     public void onCornerClick(int street, int avenue) {
         if(onClickAction != null) onClickAction.onClick(street, avenue);
     }
+
+
 
 
     //====================CHANGE MODES OF BEHAVOR================//
@@ -155,6 +160,22 @@ public class KarelWorldViewComponent extends JComponent {
             }
         };
     }
+
+    public void addBeeperTokarelMode() {
+        onClickAction = new CornerClickListener() {
+            @Override
+            public void onClick(int st, int av) {
+                Karel[] karels = FileReaderWriter.getKarel(st, av);
+                FileReaderWriter.removeKarels(st, av);
+                for(Karel k: karels) {
+                    k.setBeepers(k.getBeepers() + 1);
+                    FileReaderWriter.addKarel(k);
+                }
+
+            }
+        };
+    }
+
 
 }
 

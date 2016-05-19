@@ -2,6 +2,7 @@ package kareltester.gui;
 
 import kareltester.FileReaderWriter;
 import kareltester.KTerminalUtils;
+import kareltester.Kwld2Listener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +12,7 @@ import java.io.File;
 
 /**
  */
-public class KarelWorldEditor extends JFrame {
+public class KarelWorldEditor extends JFrame{
     private KarelWorldViewComponent worldViewComponent;
 
     private JComboBox<Option> worldModifyingOptions;
@@ -212,6 +213,15 @@ public class KarelWorldEditor extends JFrame {
                                 worldViewComponent.removeKarelMode();
                             }
                         }
+                ),
+                new Option(
+                        "Add Beeper To Karel",
+                        new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                worldViewComponent.addBeeperTokarelMode();
+                            }
+                        }
                 )
         };
     }
@@ -269,6 +279,12 @@ public class KarelWorldEditor extends JFrame {
         }
 
     }
+
+
+
+
+
+    //==================================START THIS PROGRAM==================================//
 
     public static void main(String[] args)
     {
