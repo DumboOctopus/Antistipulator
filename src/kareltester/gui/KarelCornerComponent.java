@@ -50,7 +50,7 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
 
         Graphics2D g2 = (Graphics2D) g;
         //draw crosshair
-        g2.setColor(new Color(255, 143, 108));
+        g2.setColor(new Color(161, 162, 255));
         g2.setStroke(new BasicStroke(getWidth()/20));
         g2.draw(new Line2D.Float(0, middleY, getWidth(), middleY));
         g2.draw(new Line2D.Float(middleX, 0, middleX, getHeight()));
@@ -82,10 +82,15 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
 
         //karels
         Karel[] ks = FileReaderWriter.getKarel(street, avenue);
-        g2.setColor(new Color(0, 155, 0));
+
         for(Karel k:ks)
         {
             String name = k.getSource().getName();
+            g2.setColor(new Color(
+                    name.substring(0, name.length()/3).hashCode()%255,
+                    name.substring(name.length()/3, 2*name.length()/3).hashCode()%255,
+                    name.substring(2*name.length()/3).hashCode()%255
+            ));
             g2.drawString(
                     name.substring(0, name.length() -5),
                     0,

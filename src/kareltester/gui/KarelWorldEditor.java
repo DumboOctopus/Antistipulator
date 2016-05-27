@@ -24,14 +24,12 @@ public class KarelWorldEditor extends JFrame{
 
 
     //TODO: add modifying street and avenue
-    //TODO: add ability to copy world from .kwld files inside folder
     //TODO; refactor comboBox into special class
     //TODO: add beeper to karel mode. remove beeper from karel mode
 
     public KarelWorldEditor()
     {
         FileReaderWriter.setUp();
-        System.out.println(FileReaderWriter.getBeepers(10, 1));
         worldViewComponent = new KarelWorldViewComponent();
         add(worldViewComponent, BorderLayout.CENTER);
         worldViewComponent.addBeeperMode();
@@ -39,7 +37,7 @@ public class KarelWorldEditor extends JFrame{
 
         //-------------jPanel
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(7,1));
+        //panel.setLayout(new GridLayout(5,2));
 
         //refresh Button
         btnRefresh = new JButton("Refresh Karels");
@@ -83,13 +81,6 @@ public class KarelWorldEditor extends JFrame{
         });
         panel.add(btnRefresh);
 
-        //setUp standardOptions
-        setUpStandardOptions();
-
-        //setUp comboBox
-        setUpComboBox();
-        panel.add(worldModifyingOptions);
-
         //setUp run button
         btnRun = new JButton("Run");
         btnRun.addActionListener(new ActionListener() {
@@ -108,7 +99,20 @@ public class KarelWorldEditor extends JFrame{
         });
         panel.add(btnRun);
 
+
+
+        //setUp standardOptions
+        setUpStandardOptions();
+
+        //setUp comboBox
+        panel.add(new JLabel("Click Mode:"));
+        setUpComboBox();
+        panel.add(worldModifyingOptions);
+
+
+
         //set up read from file button
+        panel.add(new JLabel("Copy Kwld: "));
         File[] kwlds = FileReaderWriter.getAllKwldFilesInFolder();
         Option[] kwldOptions = new Option[kwlds.length];
         for (int i = 0; i < kwlds.length; i++) {
@@ -132,12 +136,12 @@ public class KarelWorldEditor extends JFrame{
             }
         });
         panel.add(readFileOptions);
-
-        add(panel, BorderLayout.EAST);
+        panel.setSize(50, 600);
+        add(panel, BorderLayout.NORTH);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-        setSize(800, 600);
+        setSize(770, 650);
     }
 
     private void setUpStandardOptions() {
@@ -220,6 +224,15 @@ public class KarelWorldEditor extends JFrame{
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 worldViewComponent.addBeeperTokarelMode();
+                            }
+                        }
+                ),
+                new Option(
+                        "Remove Beeper From Karel",
+                        new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                worldViewComponent.removeBeeperFromKarelMode();
                             }
                         }
                 )

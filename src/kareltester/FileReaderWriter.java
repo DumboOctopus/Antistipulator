@@ -2,6 +2,7 @@ package kareltester;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * @author Neil Prajapati
@@ -81,7 +82,7 @@ public class FileReaderWriter
     private static ArrayList<Kwld2Listener> listeners;
     private static boolean inited = false;
 
-
+    private static Stack<Process> mainDriverProcesses;
 
 
 
@@ -92,6 +93,8 @@ public class FileReaderWriter
         String tmp = FileReaderWriter.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         String pathToOuterFolder = tmp.substring(0, tmp.lastIndexOf(tmp.charAt(0)));
         kwld2File = new File(pathToOuterFolder + "/$KarelsHome.kwld2");
+
+        mainDriverProcesses = new Stack<>();
 
         //creates file if not created already else does nothing
         try{
@@ -697,11 +700,40 @@ public class FileReaderWriter
     public static void runKarelTest()
     {
         KTerminalUtils.println("Starting KarelTest");
+        while(!mainDriverProcesses.empty())
+        {
+            mainDriverProcesses.pop().destroy();
+        }
         copyToPlusLibs();
         createKWLD();
         //createMainDriver();
         createJasminMainDriver();
         compileMainDriverAndRun();
+        //it seems like the World class can't be loaded...T.T idk why tho T.T.T.T
+        //outside jar file its fine but instide its like derp.
+
+//        //----------------------RESET WORLD--------------------//
+//        ClassLoader cl = FileReaderWriter.class.getClassLoader();
+//        SwingWorker<Void, Void> s = new SwingWorker<Void, Void>() {
+//            @Override
+//            protected Void doInBackground() throws Exception {
+//                System.out.println("asdf");
+//
+//                System.out.println(World.worldCanvas());
+//                System.out.println("asdf");
+//                World.reset();
+//                World.readWorld("$KarelsHome.kwld");
+//                World.setBeeperColor(Color.red);
+//                World.setStreetColor(Color.blue);
+//                World.setNeutroniumColor(Color.green.darker().darker());
+//                World.setDelay(50);
+//                World.setVisible(true);
+//                World.showSpeedControl(true);
+//                ABCBot c = new ABCBot(1, 1, Directions.North, 1);
+//                return null;
+//            }
+//        };
+//        s.execute();
     }
 
     /*
@@ -1130,18 +1162,34 @@ public class FileReaderWriter
                 return;
             }
 
-            Process pro2 = Runtime.getRuntime().exec(
-                    "java -cp .:+libs/KarelJRobot.jar:AntiStipulator.jar "
-                    +  mainDriver.getName().substring(0,mainDriver.getName().length() - 5)
-            );
-            printKarelOutput(pro2.getInputStream());
-            printKarelOutput(pro2.getErrorStream());
-            pro2.waitFor();
+
+            boolean isWindow =  System.getProperty("os.name").toLowerCase().contains("win");
+            Process mainDriverProcess;
+
+
+            if(isWindow)
+            {
+                mainDriverProcess = Runtime.getRuntime().exec(
+                        "java -cp .;+libs/KarelJRobot.jar;AntiStipulator.jar "
+                                + mainDriver.getName().substring(0, mainDriver.getName().length() - 5)
+                );
+            } else {
+                //if its mac of linuex it should be this....i think....this might cause problems but heh
+                mainDriverProcess = Runtime.getRuntime().exec(
+                        "java -cp .:+libs/KarelJRobot.jar:AntiStipulator.jar "
+                                + mainDriver.getName().substring(0, mainDriver.getName().length() - 5)
+                );
+            }
+            mainDriverProcesses.push(mainDriverProcess);
+            printKarelOutput(mainDriverProcess.getInputStream());
+            printKarelOutput(mainDriverProcess.getErrorStream());
+            mainDriverProcess.waitFor();
             KTerminalUtils.println("\n\nThats all folks");
         } catch (Exception e) {
             KTerminalUtils.println("BIIGGGG Error occuered sorry freshy or sophy using this program");
             KTerminalUtils.println("I can't access main driver because security... ur computer is dumb. jkjk");
             KTerminalUtils.println("But seriously... check where u made this BlueJ project. There something really wrong");
+            KTerminalUtils.println("\ndetails:\n\n"+e.getMessage());
 
         }
     }

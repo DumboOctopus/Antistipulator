@@ -65,6 +65,7 @@ public class Karel
     }
 
     public void setBeepers(int beepers) {
+        if(beepers <= 0) return;
         this.beepers = beepers;
     }
 

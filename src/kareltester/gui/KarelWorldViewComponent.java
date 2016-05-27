@@ -176,6 +176,25 @@ public class KarelWorldViewComponent extends JComponent  {
         };
     }
 
+    public void removeBeeperFromKarelMode() {
+        onClickAction = new CornerClickListener() {
+            @Override
+            public void onClick(int st, int av) {
+                Karel[] karels = FileReaderWriter.getKarel(st, av);
+                FileReaderWriter.removeKarels(st, av);
+                for(Karel k: karels) {
+                    k.setBeepers(k.getBeepers() - 1);
+                    FileReaderWriter.addKarel(k);
+                }
 
+            }
+        };
+    }
+
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(600, 600);
+    }
 }
 
