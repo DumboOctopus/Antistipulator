@@ -1,11 +1,15 @@
 package kareltester.gui;
 
 import kareltester.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Line2D;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created on 3/26/16.
@@ -82,26 +86,40 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
 
         //karels
         Karel[] ks = FileReaderWriter.getKarel(street, avenue);
-
+        String tooltip = "";
         for(Karel k:ks)
         {
             String name = k.getSource().getName();
-            g2.setColor(new Color(
-                    name.substring(0, name.length()/3).hashCode()%255,
-                    name.substring(name.length()/3, 2*name.length()/3).hashCode()%255,
-                    name.substring(2*name.length()/3).hashCode()%255
-            ));
+
+            try {
+                InputStream is = KarelCornerComponent.class.getClassLoader().getResourceAsStream(
+                        "kareltester/resources/karel"+k.getDir()+".png"
+                );
+                Image image = ImageIO.read(is);
+                g2.setColor(new Color(
+                        name.substring(0, name.length()/3).hashCode()%255,
+                        name.substring(name.length()/3, 2*name.length()/3).hashCode()%255,
+                        name.substring(2*name.length()/3).hashCode()%255
+                ));
+                g.drawRect(
+                        getWidth()/5,
+                        getHeight()/5,
+                        getWidth()/10,
+                        getHeight()/10
+                );
+                g.drawImage(image.getScaledInstance(getWidth()/2, getHeight()/2, 0), 0, 0, null);
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             g2.drawString(
-                    name.substring(0, name.length() -5),
-                    0,
-                    middleY
-            );
-            g2.drawString(
-                    ("" + k.getDir()).substring(0, 1) + ":" + k.getBeepers(),
+                    k.getBeepers() + "",
                     0,
                     middleY + 12
             );
+            tooltip+= name.substring(0, name.length() -5) +":" + k.getDir()+ ":" + k.getBeepers() + " beepers | ";
         }
+        setToolTipText(tooltip);
 
 
     }
@@ -146,6 +164,7 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
         hasNSWall = FileReaderWriter.hasNSWall(street, avenue);
         hasEWWall = FileReaderWriter.hasEWWall(street,avenue);
     }
+
 
     //==================================MOUSE LISTENER STUFF======================//
     @Override
