@@ -117,7 +117,7 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
                     0,
                     middleY + 12
             );
-            tooltip+= name.substring(0, name.length() -5) +":" + k.getDir()+ ":" + k.getBeepers() + " beepers | ";
+            tooltip+= name.substring(0, name.length() -5) +":" + k.getDir()+ ":" + k.getBeepers() + " beepers; ";
         }
         setToolTipText(tooltip);
 

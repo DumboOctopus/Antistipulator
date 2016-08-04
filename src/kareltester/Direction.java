@@ -1,5 +1,9 @@
 package kareltester;
 
+import kareltherobot.Directions;
+
+import java.util.InputMismatchException;
+
 /**
  * Hi this is the document speaking
  *
@@ -52,5 +56,17 @@ public enum Direction {
             case WEST: return "West";
         }
         return "ERROR";
+    }
+
+    public static Directions.Direction getKarelDirection(Direction d)
+    {
+        switch(d)
+        {
+            case NORTH: return Directions.North;
+            case SOUTH: return Directions.South;
+            case EAST: return Directions.East;
+            case WEST: return Directions.West;
+        }
+        throw new InputMismatchException("is idk, no direction to convert too...");
     }
 }

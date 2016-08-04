@@ -36,6 +36,58 @@ public class KarelWorldEditor extends JFrame{
 
 
         //-------------jPanel
+        setUpJPanel();
+
+        //--------------
+        JPanel panel = new JPanel();
+
+        //streets
+        panel.add(new JLabel("Streets: "));
+        JTextField streetField = new JTextField(FileReaderWriter.getStreets() + "");
+        streetField.setColumns(3);
+        streetField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    int i = Integer.parseInt(streetField.getText());
+                    FileReaderWriter.setStreets(i);
+                    KTerminalUtils.println("Streets set to " + FileReaderWriter.getStreets());
+                    KTerminalUtils.println("Now please restart the program to view changes");
+                } catch (Exception e1)
+                {
+                    streetField.setText(""+FileReaderWriter.getStreets());
+                }
+            }
+        });
+        panel.add(streetField);
+
+        //avenues
+        panel.add(new JLabel("Avenues: "));
+        JTextField avenuesField = new JTextField(FileReaderWriter.getAvenues() + "");
+        avenuesField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    int i = Integer.parseInt(avenuesField.getText());
+                    FileReaderWriter.setAvenues(i);
+                    KTerminalUtils.println("Avenues set to " + FileReaderWriter.getAvenues());
+                    KTerminalUtils.println("Now please restart the program to view changes");
+                }catch (Exception he)
+                {
+                    avenuesField.setText(""+FileReaderWriter.getAvenues());
+                }
+            }
+        });
+        panel.add(avenuesField);
+
+        add(panel, BorderLayout.SOUTH);
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setVisible(true);
+        setSize(770, 650);
+    }
+
+    private void setUpJPanel() {
         JPanel panel = new JPanel();
         //panel.setLayout(new GridLayout(5,2));
 
@@ -100,7 +152,6 @@ public class KarelWorldEditor extends JFrame{
         panel.add(btnRun);
 
 
-
         //setUp standardOptions
         setUpStandardOptions();
 
@@ -108,7 +159,6 @@ public class KarelWorldEditor extends JFrame{
         panel.add(new JLabel("Click Mode:"));
         setUpComboBox();
         panel.add(worldModifyingOptions);
-
 
 
         //set up read from file button
@@ -136,12 +186,7 @@ public class KarelWorldEditor extends JFrame{
             }
         });
         panel.add(readFileOptions);
-        panel.setSize(50, 600);
         add(panel, BorderLayout.NORTH);
-
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setVisible(true);
-        setSize(770, 650);
     }
 
     private void setUpStandardOptions() {

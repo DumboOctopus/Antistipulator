@@ -1,6 +1,14 @@
 package kareltester;
 
+import kareltherobot.Directions;
+import kareltherobot.World;
+
+import javax.swing.*;
+import java.awt.*;
 import java.io.*;
+import java.lang.reflect.Constructor;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -64,6 +72,7 @@ import java.util.Stack;
  *
  *TODO: finish documentation
  * TODO: make KTerminal work off of input, output and error streams
+ * //TODO merge KTerminal with TextAreaOutputStream :D
  */
 
 //TODO: replace KTerminal with TerminalFactory stuff...maybe some time in the future it looks really complicated T.T
@@ -706,34 +715,73 @@ public class FileReaderWriter
         }
         copyToPlusLibs();
         createKWLD();
+        runNoDriverKarelDriver();
         //createMainDriver();
-        createJasminMainDriver();
-        compileMainDriverAndRun();
+        //createJasminMainDriver();
+        //compileMainDriverAndRun();
         //it seems like the World class can't be loaded...T.T idk why tho T.T.T.T
         //outside jar file its fine but instide its like derp.
 
 //        //----------------------RESET WORLD--------------------//
 //        ClassLoader cl = FileReaderWriter.class.getClassLoader();
-//        SwingWorker<Void, Void> s = new SwingWorker<Void, Void>() {
-//            @Override
-//            protected Void doInBackground() throws Exception {
-//                System.out.println("asdf");
-//
-//                System.out.println(World.worldCanvas());
-//                System.out.println("asdf");
-//                World.reset();
-//                World.readWorld("$KarelsHome.kwld");
-//                World.setBeeperColor(Color.red);
-//                World.setStreetColor(Color.blue);
-//                World.setNeutroniumColor(Color.green.darker().darker());
-//                World.setDelay(50);
-//                World.setVisible(true);
-//                World.showSpeedControl(true);
-//                ABCBot c = new ABCBot(1, 1, Directions.North, 1);
-//                return null;
-//            }
-//        };
-//        s.execute();
+
+    }
+
+    private static void runNoDriverKarelDriver() {
+        //TODO: fix size of this jFRAME
+        //TODO make the System.out = KTerminal.
+        //TODO: improve speed control
+        JFrame f = new JFrame("Karel Test");
+
+        f.add(World.worldCanvas());
+        f.setVisible(true);
+        World.reset();
+        World.readWorld("$KarelsHome.kwld");
+//        World.setBeeperColor(Color.red);
+//        World.setStreetColor(Color.blue);
+//        World.setNeutroniumColor(Color.green.darker().darker());
+        World.setDelay(50);
+        f.setSize(600, 600);
+        f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        World.showSpeedControl(true);
+
+        Karel[] ks = getAllKarels();
+        PrintStream defualt = System.out;
+
+        try {
+            File parentDir = new File(
+                    ks[0].getSource().getAbsolutePath().substring(
+                        0,
+                        ks[0].getSource().getAbsolutePath().lastIndexOf("/")
+                    )
+            );
+            URLClassLoader classLoader = new URLClassLoader(
+                new URL[]{parentDir.toURI().toURL()}
+            );
+            PrintStream stream = new PrintStream(KTerminalUtils.getOutputStream());
+
+            System.setOut(stream);
+            for(Karel k: ks)
+            {
+                Class<?> karelClass = classLoader.loadClass(k.getSource().getName().replace(".java", ""));
+                Constructor<?> ctor = karelClass.getDeclaredConstructor(int.class, int.class, Directions.Direction.class, int.class);
+                //System.out.println(ctor);
+                TestableKarel karelInstance = (TestableKarel) ctor.newInstance(
+                        k.getStreet(),
+                        k.getAvenue(),
+                        Direction.getKarelDirection( k.getDir()),
+                        k.getBeepers()
+                );
+                karelInstance.task();
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            System.setOut(defualt);
+        }
     }
 
     /*
@@ -793,8 +841,8 @@ public class FileReaderWriter
             System.out.println(ex.getMessage());
         } finally {
             try {
-                stream.close();
-                resStreamOut.close();
+                if(stream != null) stream.close();
+                if(resStreamOut != null) resStreamOut.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -832,8 +880,6 @@ public class FileReaderWriter
 
     }
 
-
-
     private static void createKWLD() {
 
 
@@ -864,345 +910,6 @@ public class FileReaderWriter
         }
 
     }
-
-    private static void createMainDriver() {
-        //creates file if not created already else does nothing
-        try{
-            mainDriverJ.createNewFile();
-        }catch(Exception e){}
-
-
-        //read from kwld2 and write anything necessary into kwld
-        try {
-            StringBuilder builder = new StringBuilder();
-            builder.append("import kareltester.*;\n");
-            builder.append("import kareltherobot.*;\n\n");
-
-
-            builder.append("public class $MainDriver implements Directions{\n");
-
-
-            //static initation block
-            builder.append("\tstatic {\n");
-            builder.append("        World.reset(); \n");
-            builder.append("        World.readWorld(\"$KarelsHome.kwld\"); \n");
-            builder.append("//      World.setBeeperColor(Color.red);\n");
-            builder.append("//      World.setStreetColor(Color.blue);\n");
-            builder.append("//      World.setNeutroniumColor(Color.green.darker().darker());\n");
-            builder.append("        World.setDelay(50);  \n");
-            builder.append("        World.setVisible(true);\n");
-            builder.append("        World.showSpeedControl(true);\n ");
-            builder.append("    }\n");
-
-
-            builder.append("\tprivate static long startTime;");
-
-            builder.append("\tpublic static void main(String[] args){\n");
-
-            //to make sure world inited first
-            builder.append("\t\tstartTime = System.currentTimeMillis();\n");
-            builder.append("\t\twhile(System.currentTimeMillis() - startTime < 3000){}\n");
-
-            Karel[] ks = getAllKarels();
-            for(Karel k: ks)
-            {
-                builder.append("\t\ttry{\n");
-                String nameOfFile = k.getSource().getName();
-                String nameOfClass = nameOfFile.substring(0, nameOfFile.length() - 5);
-                String constructor = "new " + nameOfClass + "(" + k.getStreet() + "," + k.getAvenue() + "," + Direction.getDirectionsInterface(k.getDir()) + "," + k.getBeepers() + ");";
-
-                builder.append("\t\t\tTestableKarel k" + "= "+constructor + "\n");
-                builder.append("\t\t\tk.task();\n");
-                builder.append("\t\t}").append("catch(Exception e){}\n");
-            }
-
-            builder.append("\t}\n");
-            builder.append("}\n");
-
-
-
-            BufferedWriter bw = new BufferedWriter(new FileWriter(mainDriver, false));
-            bw.write(builder.toString());
-            bw.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Oh noes, the kwld2 can't be found for some reason.. T.T");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void createJasminMainDriver(){
-        //creates file if not created already else does nothing
-        try{
-            mainDriverJ.createNewFile();
-        }catch(Exception e){}
-
-
-        //read from kwld2 and write anything necessary into kwld
-        try {
-            StringBuilder builder = new StringBuilder();
-
-
-            Karel[] ks = getAllKarels();
-            builder.append(
-                ";; Produced with help from JasminVisitor program (BCEL)\n" +
-                ";; http://bcel.sourceforge.net/\n" +
-                ";; Sun May 15 08:19:15 PDT 2016\n" +
-                "\n" +
-                ".source $MainDriver.java\n" +
-                ".class public $MainDriver\n" +
-                ".super java/lang/Object\n" +
-                ".implements kareltherobot/Directions\n" +
-                "\n" +
-                ".field private static startTime J\n" +
-                "\n" +
-                ".method public <init>()V\n" +
-                ".limit stack 1\n" +
-                ".limit locals 1\n" +
-                ".var 0 is this L$MainDriver; from Label0 to Label1\n" +
-                "\n" +
-                "Label0:\n" +
-                "\taload_0\n" +
-                "\tinvokespecial java/lang/Object/<init>()V\n" +
-                "Label1:\n" +
-                "\treturn\n" +
-                "\n" +
-                ".end method\n" +
-                "\n" +
-                ".method public static main([Ljava/lang/String;)V\n" +
-                ".limit stack 6\n" +
-                ".limit locals 2\n" +
-                ".var 0 is arg0 [Ljava/lang/String; from KLabel0 to KLabelNoExceptionPath"+(ks.length - 1)+"\n" +
-                "\n" +
-                "Label3:\n" +
-                "\tinvokestatic java/lang/System/currentTimeMillis()J\n" +
-                "\tputstatic $MainDriver/startTime J\n" +
-                "Label1:\n" +
-                "\tinvokestatic java/lang/System/currentTimeMillis()J\n" +
-                "\tgetstatic $MainDriver/startTime J\n" +
-                "\tlsub\n" +
-                "\tldc2_w 3000\n" +
-                "\tlcmp\n" +
-                "\tifge KLabel0\n" +
-                "\tgoto Label1\n"
-            );
-
-
-            ///all the karels and sstuff
-            /*EXAMPLE:
-            KLabel0:
-                new HappyRobot
-                dup
-                bipush 6
-                iconst_4
-                getstatic $MainDriver/North Lkareltherobot/Directions$Direction;
-                iconst_0
-                invokespecial HappyRobot/<init>(IILkareltherobot/Directions$Direction;I)V
-                astore_1
-                aload_1
-            KLabelInvokeTask0:
-                invokeinterface kareltester/TestableKarel/task()V 1
-                goto Label2
-            KLabelCatch0:
-                astore_1
-            KLabelNoExceptionPath0:
-                return
-
-            .catch java/lang/Exception from KLabel0 to KLabelInvokeTask0 using KLabelCatch0
-             */
-            /*
-            //all labels for karels are in the form KLabel[use]#:
-            each label set differs 1
-             */
-            int lblNumber = 0;
-
-            for(Karel k: ks)
-            {
-                builder.append("KLabel").append(lblNumber).append(":").append("\n");
-
-                // construction of karel
-                String nameOfFile = k.getSource().getName();
-                String nameOfClass = nameOfFile.substring(0, nameOfFile.length() - 5);
-                builder.append("\tnew " + nameOfClass).append("\n");
-                builder.append("\tdup").append("\n");
-                builder.append("\tbipush ").append(k.getStreet()).append("\n");
-                builder.append("\tbipush ").append(k.getAvenue()).append("\n");
-                builder.append("\tgetstatic $MainDriver/"+Direction.getDirectionsInterface(k.getDir())+" Lkareltherobot/Directions$Direction;\n");
-                builder.append("\tbipush ").append(k.getBeepers()).append("\n");
-
-                builder.append("\tinvokespecial "+nameOfClass+"/<init>(IILkareltherobot/Directions$Direction;I)V\n");
-                builder.append(
-                        "\tastore_1\n" +
-                        "\taload_1\n"
-                );
-
-                //invokeinterface karel
-                builder.append("KLabelInvokeTask" + lblNumber + ":\n");
-                builder.append("\tinvokeinterface kareltester/TestableKarel/task()V 1\n");
-                builder.append("\tgoto KLabelNoExceptionPath"+lblNumber + "\n");
-
-                //catch block
-                builder.append(
-                        "KLabelCatch"+lblNumber+":\n" +
-                        "\tastore_1\n"
-                );
-
-                //no exception path
-                builder.append(
-                        "KLabelNoExceptionPath"+lblNumber+":\n" +
-                        "\t\n"
-                );
-
-                //if its the last one, stick a return on it. :D
-                if(lblNumber == ks.length - 1) builder.append("\treturn\n");
-
-                builder.append(".catch java/lang/Exception from KLabel"+lblNumber+" to KLabelInvokeTask"+lblNumber+" using KLabelCatch" + lblNumber + "\n");
-
-                lblNumber++;
-            }
-
-            builder.append(".end method").append("\n");
-            //the static block
-            builder.append(
-                    ".method static <clinit>()V\n" +
-                    ".limit stack 1\n" +
-                    ".limit locals 0\n" +
-                    "\n" +
-                    "\tinvokestatic kareltherobot/World/reset()V\n" +
-                    "\tldc \"$KarelsHome.kwld\"\n" +
-                    "\tinvokestatic kareltherobot/World/readWorld(Ljava/lang/String;)V\n" +
-                    "\tbipush 50\n" +
-                    "\tinvokestatic kareltherobot/World/setDelay(I)V\n" +
-                    "\ticonst_1\n" +
-                    "\tinvokestatic kareltherobot/World/setVisible(Z)V\n" +
-                    "\ticonst_1\n" +
-                    "\tinvokestatic kareltherobot/World/showSpeedControl(Z)V\n" +
-                    "\treturn\n" +
-                    "\n" +
-                    ".end method\n"
-            );
-
-            BufferedWriter bw = new BufferedWriter(new FileWriter(mainDriverJ, false));
-            bw.write(builder.toString());
-            bw.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Oh noes, the kwld2 can't be found for some reason.. T.T");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void compileMainDriverAndRun() {
-
-
-        //javac.tools method; problem: ToolProvider.getSystemJavaCompiler returns null when double click jar file
-//
-//
-//        JavaCompiler javac = ToolProvider.getSystemJavaCompiler();
-//        KTerminalUtils.println(javac);
-//        StandardJavaFileManager fileManager = javac.getStandardFileManager(null, null, null);
-//        Iterable<? extends JavaFileObject> toCompile;
-//        DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
-//
-//        KTerminalUtils.println("Hows it going guys :D");
-//
-//        ArrayList<File> fileToCompile = new ArrayList<File>();
-//        fileToCompile.add(mainDriver);
-//
-//        toCompile =fileManager.getJavaFileObjectsFromFiles(fileToCompile);
-//
-//        //options
-//        ArrayList<String> options = new ArrayList<>(2);
-//        options.add("-cp");
-//        String s = ".:+libs/KarelJRobot.jar:+libs/AntiStipulator.jar";
-//        for(Karel k: uncompiledKarels)
-//        {
-//            s += ":" + k.getSource().getName();
-//            KTerminalUtils.println(k);
-//        }
-//        s+= "";
-//        options.add(s);
-//        KTerminalUtils.println("Hows it going guys :D");
-//        JavaCompiler.CompilationTask task = javac.getTask(null, fileManager, diagnostics, options, null, toCompile);
-//        boolean success = task.call();
-//
-//        for (Diagnostic diagnostic : diagnostics.getDiagnostics()) {
-//            KTerminalUtils.println("Error " + diagnostic.getCode() + ":" + diagnostic.getLineNumber());
-//            KTerminalUtils.println("\t" + diagnostic.getMessage(Locale.getDefault()));
-//
-//        }
-//        if(!success) return;
-
-        try {
-
-            //javac -cp .:+libs/KarelJRobot.jar:+libs/AntiStipulator.jar \$MainDriver.java
-            //java -cp .:+libs/KarelJRobot.jar:+libs/AntiStipulator.jar \$MainDriver
-
-
-            //this doesn't work bc we have no jdk
-            //i assume we are calling outside +libs folder
-//            Process pro1 = Runtime.getRuntime().exec(
-//                    "javac -cp .:+libs/KarelJRobot.jar:AntiStipulator.jar "
-//                            + mainDriver.getName().substring(0,mainDriver.getName().length())
-//            );
-//            printKarelOutput(pro1.getInputStream());
-//            printKarelOutput(pro1.getErrorStream());
-//
-//            pro1.waitFor();
-            Process pro1 = Runtime.getRuntime().exec(
-                    "java -jar +libs/jasmin.jar  "
-                            + mainDriverJ.getName()
-            );
-            printKarelOutput(pro1.getInputStream());
-            printKarelOutput(pro1.getErrorStream());
-            pro1.waitFor();
-
-            if(pro1.exitValue() != 0) {
-                KTerminalUtils.println("Your karel did not compile. Please check your code");
-                return;
-            }
-
-
-            boolean isWindow =  System.getProperty("os.name").toLowerCase().contains("win");
-            Process mainDriverProcess;
-
-
-            if(isWindow)
-            {
-                mainDriverProcess = Runtime.getRuntime().exec(
-                        "java -cp .;+libs/KarelJRobot.jar;AntiStipulator.jar "
-                                + mainDriver.getName().substring(0, mainDriver.getName().length() - 5)
-                );
-            } else {
-                //if its mac of linuex it should be this....i think....this might cause problems but heh
-                mainDriverProcess = Runtime.getRuntime().exec(
-                        "java -cp .:+libs/KarelJRobot.jar:AntiStipulator.jar "
-                                + mainDriver.getName().substring(0, mainDriver.getName().length() - 5)
-                );
-            }
-            mainDriverProcesses.push(mainDriverProcess);
-            printKarelOutput(mainDriverProcess.getInputStream());
-            printKarelOutput(mainDriverProcess.getErrorStream());
-            mainDriverProcess.waitFor();
-            KTerminalUtils.println("\n\nThats all folks");
-        } catch (Exception e) {
-            KTerminalUtils.println("BIIGGGG Error occuered sorry freshy or sophy using this program");
-            KTerminalUtils.println("I can't access main driver because security... ur computer is dumb. jkjk");
-            KTerminalUtils.println("But seriously... check where u made this BlueJ project. There something really wrong");
-            KTerminalUtils.println("\ndetails:\n\n"+e.getMessage());
-
-        }
-    }
-    //--helper
-    private static void printKarelOutput(InputStream ins) throws Exception {
-        String line = null;
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(ins));
-        while ((line = in.readLine()) != null) {
-            KTerminalUtils.println(line);
-        }
-    }
-
 
 
 }
