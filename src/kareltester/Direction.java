@@ -43,7 +43,7 @@ public enum Direction {
             case "WEST":
                 return WEST;
         }
-        return IDK;
+        throw new InputMismatchException("hi");
     }
 
     public static String getDirectionsInterface(Direction d)
