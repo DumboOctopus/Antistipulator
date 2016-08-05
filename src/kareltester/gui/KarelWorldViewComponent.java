@@ -121,7 +121,6 @@ public class KarelWorldViewComponent extends JComponent  {
     }
 
     public void rotateKarelMode() {
-        //TODO:
         onClickAction = new CornerClickListener() {
             @Override
             public void onClick(int st, int av) {

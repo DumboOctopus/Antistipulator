@@ -10,7 +10,7 @@ import javax.swing.*;
 /**
  * Created by Lawrence Dol on stack overflow: http://stackoverflow.com/questions/342990/create-java-console-inside-a-gui-panel/343007#343007
  *
- *
+ *TODO: under stand Appender class purpose
  */
 public class TextAreaOutputStream extends OutputStream {
 
@@ -97,7 +97,7 @@ public class TextAreaOutputStream extends OutputStream {
             if(queue) { queue=false; EventQueue.invokeLater(this); }
         }
 
-        // MUST BE THE ONLY METHOD THAT TOUCHES textArea!
+        // MUST BE THE ONLY METHOD THAT TOUCHES textArea! bc the modification must be made on EVT
         public synchronized void run() {
             if(clear) { textArea.setText(""); }
             for(String val: values) {

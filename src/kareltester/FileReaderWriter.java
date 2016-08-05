@@ -71,18 +71,16 @@ import java.util.Stack;
  *
  *
  *TODO: finish documentation
- * TODO: make KTerminal work off of input, output and error streams
- * //TODO merge KTerminal with TextAreaOutputStream :D
+ * TODO: possibly cache the data and flush it on close.
+ * TODO: Maybe have a right click tip that uses reflection to call any method of the user's choice :D
  */
 
-//TODO: replace KTerminal with TerminalFactory stuff...maybe some time in the future it looks really complicated T.T
-//
 
 public class FileReaderWriter
 {
     //===================================ATRRIBUTES===============================/
 
-
+    private static final String newLine = "\n";
     private static File kwld2File; //Writer will be created when necessary
     private static File kwldFile;
 
@@ -92,8 +90,7 @@ public class FileReaderWriter
     private static boolean inited = false;
 
     private static Stack<Process> mainDriverProcesses;
-
-
+    
 
     //==================================psuedo COnstrutor=================================//
     public static void setUp()
@@ -139,7 +136,8 @@ public class FileReaderWriter
 
     public static void copyFrom(File f)
     {
-
+        int streets = getStreets();
+        int avenues = getAvenues();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(f));
             StringBuilder builder = new StringBuilder();
@@ -147,7 +145,7 @@ public class FileReaderWriter
             String line = null;
             while((line = reader.readLine()) != null)
             {
-                builder.append(line).append("\n");
+                builder.append(line).append(newLine);
             }
             reader.close();
 
@@ -165,6 +163,13 @@ public class FileReaderWriter
                     listener.onChange(st, av);
             }
         }
+        if(streets != getStreets() || avenues != getAvenues())
+        {
+            KTerminalUtils.println("The size of the world has changed. Please restart the app.");
+            KTerminalUtils.println("Yeah...u should seriously listen to me though, after all J' suis la application");
+            KTerminalUtils.println("Yeah... please excuse my intentionally bad french.\n\n Sincerely, \nAntiStipulator");
+        }
+
     }
 
 
@@ -213,7 +218,7 @@ public class FileReaderWriter
                     {
                         String className = pathname.getName();
                         className = className.substring(0, className.indexOf('.'));
-                        String prcLine = line.replaceAll(" ","").replaceAll("\n", "");
+                        String prcLine = line.replaceAll(" ","").replaceAll(newLine, "");
 
                         //checking if [className] implements TestableKarel
                         //example: publicclassABCBotextendsRobotimplementsTestableKarel
@@ -426,17 +431,17 @@ public class FileReaderWriter
                     int newNumBeepers;
                     newNumBeepers = Integer.parseInt(line.substring(line.lastIndexOf(" ") + 1, line.length()));
                     newNumBeepers ++;
-                    builder.append(signature).append(newNumBeepers).append("\n");
+                    builder.append(signature).append(newNumBeepers).append(newLine);
                     foundSignature = true;
                 } else {
-                    builder.append(line).append("\n");//CHECK IF \n is okies
+                    builder.append(line).append(newLine);//CHECK IF newLine is okies
                 }
 
             }
             reader.close();
 
             //adds if foundSig not true
-            if(!foundSignature) builder.append(signature + " 1").append("\n");
+            if(!foundSignature) builder.append(signature).append("1").append(newLine);
 
             //writes to file now :)
             BufferedWriter bw = new BufferedWriter(new FileWriter(kwld2File, false));
@@ -512,22 +517,19 @@ public class FileReaderWriter
             String line;
 
             StringBuilder builder = new StringBuilder();
-            boolean foundSignature = false;
+            
             while((line = reader.readLine()) != null)
             {
-                //if its not the signature...
-                if (line.contains(signature)) {
-                    builder.append(signature).append(ending).append("\n");
-                    foundSignature = true;
-                } else {
-                    builder.append(line).append("\n");//CHECK IF \n is okies
+                //if its not the signature... so that it never includes any signature ones
+                if (!line.contains(signature)) {
+                    builder.append(line).append(newLine);//CHECK IF newLine is okies
                 }
 
             }
             reader.close();
 
-            //adds if foundSig not true
-            if(!foundSignature) builder.append(signature + ending).append("\n");
+            //since all signatures were removed now we just add this
+            builder.append(signature).append(ending).append(newLine);
 
             //writes to file now :)
             BufferedWriter bw = new BufferedWriter(new FileWriter(kwld2File, false));
@@ -574,7 +576,7 @@ public class FileReaderWriter
             {
                 //if its not the signature...then add it otherwise don't cuz we delete that
                 if (!line.contains(signature)) {
-                    builder.append(line).append("\n");//TODO CHECK IF \n is okies
+                    builder.append(line).append(newLine);//TODO CHECK IF newLine is okies
                 } else
                 {
                     int newNumBeepers;
@@ -584,7 +586,7 @@ public class FileReaderWriter
                         newNumBeepers = 0;
                         couldSubtract = false;
                     }
-                    builder.append(signature).append(newNumBeepers).append("\n");
+                    builder.append(signature).append(newNumBeepers).append(newLine);
 
                     foundLine = true;
                 }
@@ -677,7 +679,7 @@ public class FileReaderWriter
             {
                 //if its not the signature...then add it otherwise don't cuz we delete that
                 if (!line.contains(signature)) {
-                    builder.append(line).append("\n");//TODO CHECK IF \n is okies
+                    builder.append(line).append(newLine);//TODO CHECK IF newLine is okies
                 } else
                 {
                     foundLine = true;
@@ -716,25 +718,15 @@ public class FileReaderWriter
         copyToPlusLibs();
         createKWLD();
         runNoDriverKarelDriver();
-        //createMainDriver();
-        //createJasminMainDriver();
-        //compileMainDriverAndRun();
-        //it seems like the World class can't be loaded...T.T idk why tho T.T.T.T
-        //outside jar file its fine but instide its like derp.
-
-//        //----------------------RESET WORLD--------------------//
-//        ClassLoader cl = FileReaderWriter.class.getClassLoader();
-
     }
 
     private static void runNoDriverKarelDriver() {
-        //TODO: fix size of this jFRAME
-        //TODO make the System.out = KTerminal.
         //TODO: improve speed control
         JFrame f = new JFrame("Karel Test");
 
         f.add(World.worldCanvas());
         f.setVisible(true);
+
         World.reset();
         World.readWorld("$KarelsHome.kwld");
 //        World.setBeeperColor(Color.red);
@@ -819,40 +811,12 @@ public class FileReaderWriter
 
         ///copying jasmin
         //NOTE CODE STOlEN FROM INTERNET FROM Ordiel
-        String resourceName = "jasmin.jar";
+        String resourceName  = "KarelJRobot.jar";
         InputStream stream = null;
         OutputStream resStreamOut = null;
         String jarFolder;
-        try {
-            stream = FileReaderWriter.class.getClassLoader().getResourceAsStream(resourceName);//note that each / is a directory down in the "jar tree" been the jar the root of the tree
-            System.out.println(stream);
-            if(stream == null) {
-                throw new Exception("Cannot get resource \"" + resourceName + "\" from Jar file.");
-            }
-
-            int readBytes;
-            byte[] buffer = new byte[4096];
-            jarFolder = new File(FileReaderWriter.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getPath().replace('\\', '/');
-            resStreamOut = new FileOutputStream(jarFolder +"/+libs/"+ resourceName);
-            while ((readBytes = stream.read(buffer)) > 0) {
-                resStreamOut.write(buffer, 0, readBytes);
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        } finally {
-            try {
-                if(stream != null) stream.close();
-                if(resStreamOut != null) resStreamOut.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        //copying karel
-        resourceName = "KarelJRobot.jar";
         stream = null;
         resStreamOut = null;
-        //String jarFolder;
         try {
             stream = FileReaderWriter.class.getClassLoader().getResourceAsStream(resourceName);//note that each / is a directory down in the "jar tree" been the jar the root of the tree
             System.out.println(stream);
@@ -889,13 +853,14 @@ public class FileReaderWriter
             BufferedReader reader = new BufferedReader(new FileReader(kwld2File));
             StringBuilder builder = new StringBuilder();
 
-            builder.append("KarelWorld\n");
+            builder.append("KarelWorldnewLine");
 
             String line;
             while((line = reader.readLine()) != null)
             {
-                if(!line.contains("_") && !line.equals("\n") && !line.contains("KarelWorld")) {
-                    builder.append(line).append("\n");
+                //maybe remove regex if its too expensive
+                if(!line.contains("_") && !line.matches("\\s*") && !line.contains("KarelWorld")) {
+                    builder.append(line).append(newLine);
                 }
             }
             reader.close();

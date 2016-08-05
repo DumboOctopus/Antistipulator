@@ -2,7 +2,6 @@ package kareltester.gui;
 
 import kareltester.FileReaderWriter;
 import kareltester.KTerminalUtils;
-import kareltester.Kwld2Listener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,14 +17,12 @@ public class KarelWorldEditor extends JFrame{
     private JComboBox<Option> worldModifyingOptions;
     private JComboBox<Option> readFileOptions;
 
-    private Option[] standerdOptions;
+    private Option[] standardOptions;
     private JButton btnRefresh;
     private JButton btnRun;
 
 
-    //TODO: add modifying street and avenue
     //TODO; refactor comboBox into special class
-    //TODO: add beeper to karel mode. remove beeper from karel mode
 
     public KarelWorldEditor()
     {
@@ -98,7 +95,7 @@ public class KarelWorldEditor extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 File[] karelFiles = FileReaderWriter.getAllKarelsJavaFilesInFolder();
                 System.out.println("Ran");
-                for(int i = standerdOptions.length; i < worldModifyingOptions.getItemCount(); i ++)
+                for(int i = standardOptions.length; i < worldModifyingOptions.getItemCount(); i ++)
                 {
                     Option option = worldModifyingOptions.getItemAt(i);
                     System.out.println("Option: " + option.toString());
@@ -190,7 +187,7 @@ public class KarelWorldEditor extends JFrame{
     }
 
     private void setUpStandardOptions() {
-        standerdOptions = new Option[]{
+        standardOptions = new Option[]{
                 new Option(
                         "Add Beeper",
                         new ActionListener() {
@@ -286,13 +283,13 @@ public class KarelWorldEditor extends JFrame{
 
     private void setUpComboBox() {
         File[] karelsFiles = FileReaderWriter.getAllKarelsJavaFilesInFolder();
-        Option[] so = new Option[standerdOptions.length + karelsFiles.length];
-        for (int i = 0; i < standerdOptions.length; i++) {
-            so[i] = standerdOptions[i];
+        Option[] so = new Option[standardOptions.length + karelsFiles.length];
+        for (int i = 0; i < standardOptions.length; i++) {
+            so[i] = standardOptions[i];
         }
         for (int i = 0; i < karelsFiles.length; i++) {
             File f = karelsFiles[i];
-            so[i + standerdOptions.length] = getOptionFromFile(f);
+            so[i + standardOptions.length] = getOptionFromFile(f);
         }
         worldModifyingOptions = new JComboBox<>(so);
         worldModifyingOptions.addActionListener(new ActionListener() {

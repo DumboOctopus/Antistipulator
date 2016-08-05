@@ -10,12 +10,24 @@ import java.awt.event.MouseListener;
 import java.awt.geom.Line2D;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.DirectoryNotEmptyException;
+import java.util.HashMap;
 
 /**
  * Created on 3/26/16.
  */
 public class KarelCornerComponent extends JComponent implements MouseListener, Kwld2Listener {
 
+    //==============================STATICS FOR IMAGES SO LOADING ISNT BAD===================//
+    private static HashMap<Direction, Image> imageMap;
+    static {
+        imageMap = new HashMap<>();
+    }
+
+
+
+
+    //===============================NON STATIC================================//
     private KarelWorldViewComponent worldViewComponent;
     private int street, avenue;
     private Image img = null;
@@ -92,10 +104,18 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
             String name = k.getSource().getName();
 
             try {
-                InputStream is = KarelCornerComponent.class.getClassLoader().getResourceAsStream(
-                        "kareltester/resources/karel"+k.getDir()+".png"
-                );
-                Image image = ImageIO.read(is);
+                Image image = null;
+                if(!imageMap.containsKey(k.getDir())) {
+                    InputStream is = KarelCornerComponent.class.getClassLoader().getResourceAsStream(
+                            "kareltester/resources/karel" + k.getDir() + ".png"
+                    );
+                    image = ImageIO.read(is);
+                    is.close();
+                    imageMap.put(k.getDir(), image);
+                } else
+                {
+                    image = imageMap.get(k.getDir());
+                }
                 g2.setColor(new Color(
                         name.substring(0, name.length()/3).hashCode()%255,
                         name.substring(name.length()/3, 2*name.length()/3).hashCode()%255,
@@ -108,7 +128,7 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
                         getHeight()/10
                 );
                 g.drawImage(image.getScaledInstance(getWidth()/2, getHeight()/2, 0), 0, 0, null);
-                is.close();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

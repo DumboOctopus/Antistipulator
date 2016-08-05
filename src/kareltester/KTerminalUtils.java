@@ -52,8 +52,6 @@ public class KTerminalUtils {
             }
         });
     }
-    //TODO do something with streams
-
     public static void show()
     {
         SwingUtilities.invokeLater(new Runnable() {
