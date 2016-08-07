@@ -27,7 +27,7 @@ import java.util.InputMismatchException;
  *
  */
 public enum Direction {
-    NORTH, SOUTH, EAST, WEST, IDK;
+    NORTH, SOUTH, EAST, WEST;
 
     //just like Integer.parseInt(), it takes in a string and returns a Direction data type.
     public static Direction parseDirection(String s)
@@ -43,7 +43,7 @@ public enum Direction {
             case "WEST":
                 return WEST;
         }
-        throw new InputMismatchException("hi");
+        throw new InputMismatchException(s+ " is not a valid direction");
     }
 
     public static String getDirectionsInterface(Direction d)
@@ -55,7 +55,7 @@ public enum Direction {
             case EAST: return "East";
             case WEST: return "West";
         }
-        return "ERROR";
+        throw new InputMismatchException(d + " is not a karel direction");
     }
 
     public static Directions.Direction getKarelDirection(Direction d)

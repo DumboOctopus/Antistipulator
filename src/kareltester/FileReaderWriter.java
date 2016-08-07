@@ -1,5 +1,6 @@
 package kareltester;
 
+import com.sun.javafx.binding.StringFormatter;
 import kareltherobot.Directions;
 import kareltherobot.World;
 
@@ -73,6 +74,71 @@ import java.util.Stack;
  *TODO: finish documentation
  * TODO: possibly cache the data and flush it on close.
  * TODO: Maybe have a right click tip that uses reflection to call any method of the user's choice :D
+ * TODO: replace Direction class with Karel Directions to be more consistant.
+ * TODO: debug everything in here.
+ *
+ * TODO: if necessary, change MVC diagram{
+ *     currently, the file itself counts as the model,
+ *     but, it will be more efficient if their was an object ,not a file, which has these
+ *     constant read and write operations from the GUI.
+ *
+ *     [KarelCorner, KarelCorner, ...]
+ *          ^
+ *          |
+ *   [KarelWorldView Componenent]
+ *        ^   |
+ *        |   v
+ *      [database]     {KarelWorldEditorComponent}
+ *       ^  |                   |
+ *       [] []  <---------------0
+ *       |  v
+ *    [KWLD2 FILE]
+ *
+ *
+ *
+ *    WorldDatabase:
+ *      Sparse3DArray worldItems;
+ *
+ *      ctor(File kwld2, File kwld)
+ *
+ *      flushKwld2();
+ *      flushKwld();
+ *      getCorner(int st, int av): WorldComponents[]
+ *      addComponenet(int st, int av, WorldComponent): void
+ *
+ *      addListener(CacheListener l)
+ *      removeListener(CacheListener l)
+ *      -fireCornerChanged(int st, int av)
+ *
+ *   Sparse3DArray<T>:
+ *
+ *      ArrayList<Sparse3DArrayItem<T>> worldItems
+ *
+ *      set(int row, int column, T obj):
+ *          either finds (by binary search) and adds object to existing (r,c) one
+ *          or inserts new Sparse3DArrayItem<T> in natural ordering
+ *      get(int row, int column): T
+ *      remove(int row, int column, T obj)
+ *      remove(int row, int column): T
+ *
+ *   Sparse3DArrayItem<T>:
+ *
+ *      int row, column
+ *      ArrayList<T> obj;
+ *
+ *      ctor:(T obj)
+ *
+ *      +ArrayList<T> getObjects()
+ *
+ *
+ *      compareTo(): by row
+ *
+ *   CacheListener
+ *      void onCornerChange(int st, int av)
+ *
+ *
+ *
+ * }
  */
 
 
@@ -80,22 +146,18 @@ public class FileReaderWriter
 {
     //===================================ATRRIBUTES===============================/
 
-    private static final String newLine = "\n";
+    private static final String newLine = System.getProperty("line.separator");;
     private static File kwld2File; //Writer will be created when necessary
-    private static File kwldFile;
+    private static File kwldFile; //^ same thing as above
 
-    private static File mainDriver; //Writer will be created when necessary
-    private static File mainDriverJ;
-    private static ArrayList<Kwld2Listener> listeners;
-    private static boolean inited = false;
+    private static ArrayList<Kwld2Listener> listeners; //the corners which listen to the kwld2 file updates
 
     private static Stack<Process> mainDriverProcesses;
     
 
-    //==================================psuedo COnstrutor=================================//
-    public static void setUp()
-    {
-        if(inited) return;
+    //==================================Static-Constructor=================================//
+    static {
+
         String tmp = FileReaderWriter.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         String pathToOuterFolder = tmp.substring(0, tmp.lastIndexOf(tmp.charAt(0)));
         kwld2File = new File(pathToOuterFolder + "/$KarelsHome.kwld2");
@@ -105,7 +167,9 @@ public class FileReaderWriter
         //creates file if not created already else does nothing
         try{
             kwld2File.createNewFile();
-        }catch(Exception e){}
+        }catch(IOException e){
+            e.printStackTrace();
+        }
 
         kwldFile = new File(pathToOuterFolder + "/$KarelsHome.kwld");
         try {
@@ -115,23 +179,9 @@ public class FileReaderWriter
             e.printStackTrace();
         }
 
-        mainDriver = new File(pathToOuterFolder + "/$MainDriver.java");
-
-        //creates file if not created already else does nothing
-        try{
-            mainDriver.createNewFile();
-        }catch(Exception e){}
-
-
-        mainDriverJ = new File(pathToOuterFolder + "/$MainDriver.j");
-        try{
-            mainDriverJ.createNewFile();
-        }catch(Exception e){}
-
         copyToPlusLibs();
 
         listeners = new ArrayList<Kwld2Listener>();
-        inited = true;
     }
 
     public static void copyFrom(File f)
@@ -142,6 +192,8 @@ public class FileReaderWriter
             BufferedReader reader = new BufferedReader(new FileReader(f));
             StringBuilder builder = new StringBuilder();
 
+            //the reason why we use string builder rather than direct copy
+            //is so we minimize file writing which is quite expensive. Heh.
             String line = null;
             while((line = reader.readLine()) != null)
             {
@@ -195,7 +247,7 @@ public class FileReaderWriter
 
 
     //=======================================FINDING ALL IN FOLDER==================//
-    /*
+    /**
     @return all the ? implements TestableKarel inside the person's BlueJ folder
 
      */
@@ -316,12 +368,6 @@ public class FileReaderWriter
         return (findFirstInKwld2("eastwestwalls " + st + " " + av + " ") != null);
     }
 
-    public static Direction getWall(int st, int av)
-    {
-        if(findFirstInKwld2("northsouthwalls " + st + " " + av + " ") != null) return Direction.NORTH;   //north south wall
-        else if(findFirstInKwld2("eastwestwalls " + st + " " + av + " ") != null) return Direction.EAST; //eastwest wall
-        else return Direction.IDK;
-    }
     public static int getStreets()
     {
         String s = findFirstInKwld2("streets ");
@@ -739,6 +785,7 @@ public class FileReaderWriter
         World.showSpeedControl(true);
 
         Karel[] ks = getAllKarels();
+        if(ks.length ==0) return;
         PrintStream defualt = System.out;
 
         try {
@@ -769,7 +816,16 @@ public class FileReaderWriter
 
             }
 
-        } catch (Exception e) {
+        } catch (ClassNotFoundException e) {
+            System.out.println("You forgot to compile. Go back in BlueJ and hit the compile button");
+        }catch(NoSuchMethodException e) {
+            //TODO debug this
+            System.out.println("You either forgot to write the constructor of: " + e.getMessage());
+        } catch(IllegalAccessException e)
+        {
+            System.out.println("Be sure that your constructor is public.");
+        }catch (Exception e) {
+            System.out.println("Please report this error: ");
             e.printStackTrace();
         } finally {
             System.setOut(defualt);
@@ -853,7 +909,7 @@ public class FileReaderWriter
             BufferedReader reader = new BufferedReader(new FileReader(kwld2File));
             StringBuilder builder = new StringBuilder();
 
-            builder.append("KarelWorldnewLine");
+            builder.append("KarelWorld").append(newLine);
 
             String line;
             while((line = reader.readLine()) != null)

@@ -26,7 +26,6 @@ public class KarelWorldEditor extends JFrame{
 
     public KarelWorldEditor()
     {
-        FileReaderWriter.setUp();
         worldViewComponent = new KarelWorldViewComponent();
         add(worldViewComponent, BorderLayout.CENTER);
         worldViewComponent.addBeeperMode();

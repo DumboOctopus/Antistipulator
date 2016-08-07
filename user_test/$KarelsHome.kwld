@@ -1,4 +1,7 @@
-KarelWorldnewLinebeepers 8 10 0
+KarelWorld
+streets 10
+avenues 10
+beepers 8 10 0
 eastwestwalls 8 7 7
 eastwestwalls 8 8 8
 eastwestwalls 8 9 9
@@ -10,9 +13,3 @@ northsouthwalls 6 8 8
 eastwestwalls 7 6 6
 northsouthwalls 5 7 7
 beepers 7 6  1
-avenues 20
-streets 20
-beepers 2 1 1
-beepers 2 2 1
-beepers 1 2 1
-beepers 1 1 1
