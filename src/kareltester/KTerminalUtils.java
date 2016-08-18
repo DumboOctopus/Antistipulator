@@ -63,6 +63,17 @@ public class KTerminalUtils {
         });
     }
 
+    public static void clear()
+    {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                currTerminal.clear();
+
+            }
+        });
+    }
+
     public static TextAreaOutputStream getOutputStream()
     {
         return KTerminal.stream;
@@ -115,6 +126,12 @@ public class KTerminalUtils {
         {
             text.append(s).append("\n");
             textArea.setText(text.toString());
+        }
+
+        public void clear()
+        {
+            text = new StringBuilder();
+            textArea.setText("");
         }
 
     }

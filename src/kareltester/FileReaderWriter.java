@@ -1,11 +1,9 @@
 package kareltester;
 
-import com.sun.javafx.binding.StringFormatter;
 import kareltherobot.Directions;
 import kareltherobot.World;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.*;
 import java.lang.reflect.Constructor;
 import java.net.URL;
@@ -71,11 +69,12 @@ import java.util.Stack;
  *
  *
  *
- *TODO: finish documentation
- * TODO: possibly cache the data and flush it on close.
+ * TODO: finish documentation
  * TODO: Maybe have a right click tip that uses reflection to call any method of the user's choice :D
  * TODO: replace Direction class with Karel Directions to be more consistant.
- * TODO: debug everything in here.
+ * TODO: use classloaders to see if .class file implements TestableKarel
+ * TODO: change System.in stream
+ * TODO: reset world after each karel option :D
  *
  * TODO: if necessary, change MVC diagram{
  *     currently, the file itself counts as the model,
@@ -146,13 +145,13 @@ public class FileReaderWriter
 {
     //===================================ATRRIBUTES===============================/
 
-    private static final String newLine = System.getProperty("line.separator");;
+    private static final String NEW_LINE = System.getProperty("line.separator");;
     private static File kwld2File; //Writer will be created when necessary
     private static File kwldFile; //^ same thing as above
 
     private static ArrayList<Kwld2Listener> listeners; //the corners which listen to the kwld2 file updates
 
-    private static Stack<Process> mainDriverProcesses;
+    private static Stack<JFrame> executions;
     
 
     //==================================Static-Constructor=================================//
@@ -162,7 +161,7 @@ public class FileReaderWriter
         String pathToOuterFolder = tmp.substring(0, tmp.lastIndexOf(tmp.charAt(0)));
         kwld2File = new File(pathToOuterFolder + "/$KarelsHome.kwld2");
 
-        mainDriverProcesses = new Stack<>();
+        executions = new Stack<>();
 
         //creates file if not created already else does nothing
         try{
@@ -197,7 +196,7 @@ public class FileReaderWriter
             String line = null;
             while((line = reader.readLine()) != null)
             {
-                builder.append(line).append(newLine);
+                builder.append(line).append(NEW_LINE);
             }
             reader.close();
 
@@ -270,7 +269,7 @@ public class FileReaderWriter
                     {
                         String className = pathname.getName();
                         className = className.substring(0, className.indexOf('.'));
-                        String prcLine = line.replaceAll(" ","").replaceAll(newLine, "");
+                        String prcLine = line.replaceAll(" ","").replaceAll(NEW_LINE, "");
 
                         //checking if [className] implements TestableKarel
                         //example: publicclassABCBotextendsRobotimplementsTestableKarel
@@ -477,17 +476,17 @@ public class FileReaderWriter
                     int newNumBeepers;
                     newNumBeepers = Integer.parseInt(line.substring(line.lastIndexOf(" ") + 1, line.length()));
                     newNumBeepers ++;
-                    builder.append(signature).append(newNumBeepers).append(newLine);
+                    builder.append(signature).append(newNumBeepers).append(NEW_LINE);
                     foundSignature = true;
                 } else {
-                    builder.append(line).append(newLine);//CHECK IF newLine is okies
+                    builder.append(line).append(NEW_LINE);//CHECK IF NEW_LINE is okies
                 }
 
             }
             reader.close();
 
             //adds if foundSig not true
-            if(!foundSignature) builder.append(signature).append("1").append(newLine);
+            if(!foundSignature) builder.append(signature).append("1").append(NEW_LINE);
 
             //writes to file now :)
             BufferedWriter bw = new BufferedWriter(new FileWriter(kwld2File, false));
@@ -568,14 +567,14 @@ public class FileReaderWriter
             {
                 //if its not the signature... so that it never includes any signature ones
                 if (!line.contains(signature)) {
-                    builder.append(line).append(newLine);//CHECK IF newLine is okies
+                    builder.append(line).append(NEW_LINE);//CHECK IF NEW_LINE is okies
                 }
 
             }
             reader.close();
 
             //since all signatures were removed now we just add this
-            builder.append(signature).append(ending).append(newLine);
+            builder.append(signature).append(ending).append(NEW_LINE);
 
             //writes to file now :)
             BufferedWriter bw = new BufferedWriter(new FileWriter(kwld2File, false));
@@ -622,7 +621,7 @@ public class FileReaderWriter
             {
                 //if its not the signature...then add it otherwise don't cuz we delete that
                 if (!line.contains(signature)) {
-                    builder.append(line).append(newLine);//TODO CHECK IF newLine is okies
+                    builder.append(line).append(NEW_LINE);//TODO CHECK IF NEW_LINE is okies
                 } else
                 {
                     int newNumBeepers;
@@ -632,7 +631,7 @@ public class FileReaderWriter
                         newNumBeepers = 0;
                         couldSubtract = false;
                     }
-                    builder.append(signature).append(newNumBeepers).append(newLine);
+                    builder.append(signature).append(newNumBeepers).append(NEW_LINE);
 
                     foundLine = true;
                 }
@@ -725,7 +724,7 @@ public class FileReaderWriter
             {
                 //if its not the signature...then add it otherwise don't cuz we delete that
                 if (!line.contains(signature)) {
-                    builder.append(line).append(newLine);//TODO CHECK IF newLine is okies
+                    builder.append(line).append(NEW_LINE);//TODO CHECK IF NEW_LINE is okies
                 } else
                 {
                     foundLine = true;
@@ -757,10 +756,11 @@ public class FileReaderWriter
     public static void runKarelTest()
     {
         KTerminalUtils.println("Starting KarelTest");
-        while(!mainDriverProcesses.empty())
+        while(!executions.empty())
         {
-            mainDriverProcesses.pop().destroy();
+            executions.pop().dispose();
         }
+        KTerminalUtils.clear();
         copyToPlusLibs();
         createKWLD();
         runNoDriverKarelDriver();
@@ -769,12 +769,13 @@ public class FileReaderWriter
     private static void runNoDriverKarelDriver() {
         //TODO: improve speed control
         JFrame f = new JFrame("Karel Test");
-
+        executions.add(f);
         f.add(World.worldCanvas());
         f.setVisible(true);
 
         World.reset();
-        World.readWorld("$KarelsHome.kwld");
+        System.out.println(kwldFile.getName());
+        World.readWorld(kwldFile.getName());
 //        World.setBeeperColor(Color.red);
 //        World.setStreetColor(Color.blue);
 //        World.setNeutroniumColor(Color.green.darker().darker());
@@ -819,7 +820,6 @@ public class FileReaderWriter
         } catch (ClassNotFoundException e) {
             System.out.println("You forgot to compile. Go back in BlueJ and hit the compile button");
         }catch(NoSuchMethodException e) {
-            //TODO debug this
             System.out.println("You either forgot to write the constructor of: " + e.getMessage());
         } catch(IllegalAccessException e)
         {
@@ -909,14 +909,14 @@ public class FileReaderWriter
             BufferedReader reader = new BufferedReader(new FileReader(kwld2File));
             StringBuilder builder = new StringBuilder();
 
-            builder.append("KarelWorld").append(newLine);
+            builder.append("KarelWorld").append(NEW_LINE);
 
             String line;
             while((line = reader.readLine()) != null)
             {
                 //maybe remove regex if its too expensive
                 if(!line.contains("_") && !line.matches("\\s*") && !line.contains("KarelWorld")) {
-                    builder.append(line).append(newLine);
+                    builder.append(line).append(NEW_LINE);
                 }
             }
             reader.close();
