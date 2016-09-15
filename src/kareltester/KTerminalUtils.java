@@ -14,7 +14,7 @@ import java.io.OutputStream;
  */
 public class KTerminalUtils {
     private static KTerminal currTerminal;
-
+    private static boolean showErrors = false;
 
 
     //=====================GETTER=================//
@@ -24,7 +24,7 @@ public class KTerminalUtils {
 
 
     //====================METHODS================//
-    public static void print(Object s)
+    public static void print(final Object s)
     {
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -37,7 +37,7 @@ public class KTerminalUtils {
         });
 
     }
-    public static void println(Object s)
+    public static void println(final Object s)
     {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -73,6 +73,51 @@ public class KTerminalUtils {
             }
         });
     }
+    
+    //=========================ERROR======================//
+    public static void printErr(final Object s)
+    {
+
+        if(showErrors){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+
+                    checkAndInitKTerminal();
+
+                    currTerminal.print(s);
+
+                    currTerminal.requestFocus();
+
+                }
+            });
+        }
+
+    }
+    
+    
+    public static void setShowErr(boolean b)
+    {
+        showErrors = b;
+    }
+    public static void printlnErr(final Object s)
+    {
+        if(showErrors){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+
+                    checkAndInitKTerminal();
+
+                    currTerminal.println(s);
+
+                    currTerminal.requestFocus();
+
+                }
+            });
+        }
+    }
+    
 
     public static TextAreaOutputStream getOutputStream()
     {

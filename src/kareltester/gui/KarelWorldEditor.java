@@ -39,7 +39,7 @@ public class KarelWorldEditor extends JFrame{
 
         //streets
         panel.add(new JLabel("Streets: "));
-        JTextField streetField = new JTextField(FileReaderWriter.getStreets() + "");
+        final JTextField streetField = new JTextField(FileReaderWriter.getStreets() + "");
         streetField.setColumns(3);
         streetField.addActionListener(new ActionListener() {
             @Override
@@ -59,7 +59,7 @@ public class KarelWorldEditor extends JFrame{
 
         //avenues
         panel.add(new JLabel("Avenues: "));
-        JTextField avenuesField = new JTextField(FileReaderWriter.getAvenues() + "");
+        final JTextField avenuesField = new JTextField(FileReaderWriter.getAvenues() + "");
         avenuesField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -160,9 +160,9 @@ public class KarelWorldEditor extends JFrame{
         //set up read from file button
         panel.add(new JLabel("Copy Kwld: "));
         File[] kwlds = FileReaderWriter.getAllKwldFilesInFolder();
-        Option[] kwldOptions = new Option[kwlds.length];
+        Option[] kwldOptions = new Option[kwlds.length + 1];
         for (int i = 0; i < kwlds.length; i++) {
-            File curr = kwlds[i];
+            final File curr = kwlds[i];
             kwldOptions[i] = new Option(
                     kwlds[i].getName(),
                     new ActionListener() {
@@ -174,6 +174,14 @@ public class KarelWorldEditor extends JFrame{
                     }
             );
         }
+        kwldOptions[kwldOptions.length -1] = new Option(
+            "Clear World",
+            new ActionListener(){
+                public void actionPerformed(ActionEvent e) {
+                    FileReaderWriter.clearWorld();
+                }
+            }
+        );
         readFileOptions = new JComboBox<>(kwldOptions);
         readFileOptions.addActionListener(new ActionListener() {
             @Override
@@ -183,6 +191,7 @@ public class KarelWorldEditor extends JFrame{
         });
         panel.add(readFileOptions);
         add(panel, BorderLayout.NORTH);
+        
     }
 
     private void setUpStandardOptions() {

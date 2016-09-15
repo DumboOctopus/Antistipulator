@@ -6,6 +6,7 @@ import kareltherobot.World;
 import javax.swing.*;
 import java.io.*;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ import java.util.Stack;
  *      boolean removeKarels(Karel k)
  *
  *
- *
+ * TODO: KTerminals.printErr()
  * TODO: finish documentation
  * TODO: Maybe have a right click tip that uses reflection to call any method of the user's choice :D
  * TODO: replace Direction class with Karel Directions to be more consistant.
@@ -156,10 +157,11 @@ public class FileReaderWriter
 
     //==================================Static-Constructor=================================//
     static {
-
+        ////FOR DEBUGGING PATH ERRORS IN Z DRIVE
+        //KTerminalUtils.println(FileReaderWriter.class.getProtectionDomain().getCodeSource().getLocation().getPath());
         String tmp = FileReaderWriter.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         String pathToOuterFolder = tmp.substring(0, tmp.lastIndexOf(tmp.charAt(0)));
-        kwld2File = new File(pathToOuterFolder + "/$KarelsHome.kwld2");
+        kwld2File = new File(pathToOuterFolder + System.getProperty("file.separator") + "$KarelsHome.kwld2");
 
         executions = new Stack<>();
 
@@ -170,7 +172,7 @@ public class FileReaderWriter
             e.printStackTrace();
         }
 
-        kwldFile = new File(pathToOuterFolder + "/$KarelsHome.kwld");
+        kwldFile = new File(pathToOuterFolder + System.getProperty("file.separator") + "$KarelsHome.kwld");
         try {
             kwldFile.createNewFile();
 
@@ -178,7 +180,7 @@ public class FileReaderWriter
             e.printStackTrace();
         }
 
-        copyToPlusLibs();
+        //copyToPlusLibs();
 
         listeners = new ArrayList<Kwld2Listener>();
     }
@@ -224,7 +226,28 @@ public class FileReaderWriter
     }
 
 
+     public static void clearWorld()
+    {
+        int totalAves = getAvenues();
+        int totalStres = getStreets();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(kwld2File));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(kwld2File, false));
+            bw.write("streets " + totalStres + NEW_LINE+"avenues " + totalAves);
+            bw.close();
+            for (int av = 1; av <= totalAves; av++) {
+                for (int st = 1; st <= totalStres ; st++) {
+                    for(Kwld2Listener listener: listeners)
+                        listener.onChange(st, av);
+                }
+            }
 
+        } catch (FileNotFoundException e) {
+            System.out.println("Oh noes, the kwld2 can't be found for some reason.. T.T");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     //=======================================LISTENERS====================================//
     private static void fireKwld2Changed(int[] streets, int[] avenue)
@@ -261,37 +284,33 @@ public class FileReaderWriter
                 //check if its .java
                 if(!pathname.getName().contains(".java")) return false;
                 //check inside file if its contains public class [FileName] implements TestableKarel
-                try {
-                    BufferedReader reader = new BufferedReader(new FileReader(pathname));
-
-                    String line = reader.readLine();
-                    while(line != null)
-                    {
-                        String className = pathname.getName();
-                        className = className.substring(0, className.indexOf('.'));
-                        String prcLine = line.replaceAll(" ","").replaceAll(NEW_LINE, "");
-
-                        //checking if [className] implements TestableKarel
-                        //example: publicclassABCBotextendsRobotimplementsTestableKarel
-
-                        //we are looking at public class {blah}
-
-                        if(prcLine.contains("publicclass" + className))
-                        {
-
-                            reader.close(); //we wont bother checking rest of file, theres no point
-                            return prcLine.contains("implementsTestableKarel");
-                        }
-
-                        line = reader.readLine();
-                    }
-
-                    reader.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                //later use reflection to find if it is instance of UrRobot
+                return true;
+                /*
+                try{
+                File parentDir = new File(
+                    pathname.getAbsolutePath().substring(
+                        0,
+                        pathname.getAbsolutePath().lastIndexOf(System.getProperty("file.separator"))
+                    ) + System.getProperty("file.separator") + "+libs" //bc classloader refer to highre ones when they can't find it
+                );
+                URLClassLoader classLoader = new URLClassLoader(
+                    new URL[]{parentDir.toURI().toURL()}
+                );
+                System.out.println(pathname.getName().replace(".java", ""));
+                Class<?> karelClass = classLoader.loadClass(pathname.getName().replace(".java", ""));
+                Class<?> superClass =  karelClass.getSuperclass();
+                while(superClass != null && !superClass.getName().equals("UrRobot"))
+                {
+                    superClass =  karelClass.getSuperclass();
+                }
+                return superClass != null;
+                } catch(Exception e)
+                {
+                    KTerminalUtils.println("plz report this error: \n\n"+e);
                     return false;
                 }
-                return false;
+                */
             }
         });
         return testableFiles;
@@ -312,6 +331,7 @@ public class FileReaderWriter
         });
     }
 
+   
 
     //=======================================GETTING FROM WORLD===========================//
     public static Karel[] getKarel(int st, int av)
@@ -761,7 +781,7 @@ public class FileReaderWriter
             executions.pop().dispose();
         }
         KTerminalUtils.clear();
-        copyToPlusLibs();
+        //copyToPlusLibs();
         createKWLD();
         runNoDriverKarelDriver();
     }
@@ -786,47 +806,56 @@ public class FileReaderWriter
         World.showSpeedControl(true);
 
         Karel[] ks = getAllKarels();
-        if(ks.length ==0) return;
+        if(ks.length ==0)  return;
         PrintStream defualt = System.out;
+        PrintStream stream = new PrintStream(KTerminalUtils.getOutputStream());
+        System.setOut(stream);
 
         try {
+        
             File parentDir = new File(
                     ks[0].getSource().getAbsolutePath().substring(
                         0,
-                        ks[0].getSource().getAbsolutePath().lastIndexOf("/")
+                        ks[0].getSource().getAbsolutePath().lastIndexOf(System.getProperty("file.separator"))
                     )
             );
             URLClassLoader classLoader = new URLClassLoader(
                 new URL[]{parentDir.toURI().toURL()}
             );
-            PrintStream stream = new PrintStream(KTerminalUtils.getOutputStream());
-
-            System.setOut(stream);
+            
             for(Karel k: ks)
             {
                 Class<?> karelClass = classLoader.loadClass(k.getSource().getName().replace(".java", ""));
                 Constructor<?> ctor = karelClass.getDeclaredConstructor(int.class, int.class, Directions.Direction.class, int.class);
                 //System.out.println(ctor);
-                TestableKarel karelInstance = (TestableKarel) ctor.newInstance(
+                Object karelInstance = ctor.newInstance(
                         k.getStreet(),
                         k.getAvenue(),
                         Direction.getKarelDirection( k.getDir()),
                         k.getBeepers()
                 );
-                karelInstance.task();
+                Method taskMethod = karelInstance.getClass().getDeclaredMethod("task", new Class[0]);
+                taskMethod.invoke(karelInstance, new Object[0]);
 
             }
 
         } catch (ClassNotFoundException e) {
             System.out.println("You forgot to compile. Go back in BlueJ and hit the compile button");
+            KTerminalUtils.printlnErr(e);
         }catch(NoSuchMethodException e) {
-            System.out.println("You either forgot to write the constructor of: " + e.getMessage());
+            if(e.getMessage().contains("."))
+                System.out.println("You either forgot to write the method: " + e.getMessage());
+            else
+                System.out.println("You either forgot to write the constructor of " + e.getMessage());
+             KTerminalUtils.printlnErr(e);
         } catch(IllegalAccessException e)
         {
-            System.out.println("Be sure that your constructor is public.");
+            System.out.println("Be sure that your constructor and the task method is public.");
+             KTerminalUtils.printlnErr(e);
         }catch (Exception e) {
             System.out.println("Please report this error: ");
             e.printStackTrace();
+             KTerminalUtils.printlnErr(e);
         } finally {
             System.setOut(defualt);
         }
@@ -839,6 +868,8 @@ public class FileReaderWriter
     AntiStipulator.jar outside the +libs folder and have it put a copy of itself inside +libs. +libs
     is assummed to exists because u can't compile BlueJ karel files without it
      */
+    /** since it is not using testableKarel, no need :D**/
+    @Deprecated
     private static void copyToPlusLibs()
     {
         String pathToJar = FileReaderWriter.class.getProtectionDomain().getCodeSource().getLocation().getPath();
@@ -864,8 +895,8 @@ public class FileReaderWriter
             }
         }
 
-
-        ///copying jasmin
+            
+        /*
         //NOTE CODE STOlEN FROM INTERNET FROM Ordiel
         String resourceName  = "KarelJRobot.jar";
         InputStream stream = null;
@@ -897,7 +928,7 @@ public class FileReaderWriter
                 e.printStackTrace();
             }
         }
-
+        */
     }
 
     private static void createKWLD() {

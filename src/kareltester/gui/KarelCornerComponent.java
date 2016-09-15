@@ -63,7 +63,8 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
         //g.drawImage(img, 0, 0, getWidth(), getHeight(), null);
         int middleX = getWidth()/2;
         int middleY = getHeight()/2;
-
+        String tooltip = "";
+        
         Graphics2D g2 = (Graphics2D) g;
         //draw crosshair
         g2.setColor(new Color(161, 162, 255));
@@ -86,7 +87,7 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
         //beepers
         if(numBeepers != 0) {
             g.setColor(Color.BLACK);
-
+            tooltip += "|beepers on corner:" + numBeepers + "| ";
             int size = getWidth() / 3;
 
             int w = (getWidth() - size) / 2;
@@ -98,7 +99,7 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
 
         //karels
         Karel[] ks = FileReaderWriter.getKarel(street, avenue);
-        String tooltip = "";
+        
         for(Karel k:ks)
         {
             String name = k.getSource().getName();
@@ -122,12 +123,12 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
                         name.substring(2*name.length()/3).hashCode()%255
                 ));
                 g.drawRect(
-                        getWidth()/5,
-                        getHeight()/5,
+                        getWidth()/5 + getWidth()/4,
+                        getHeight()/5 + getHeight()/4,
                         getWidth()/10,
                         getHeight()/10
                 );
-                g.drawImage(image.getScaledInstance(getWidth()/2, getHeight()/2, 0), 0, 0, null);
+                g.drawImage(image.getScaledInstance(getWidth()/2, getHeight()/2, 0), getWidth()/4, getHeight()/4, null);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -137,7 +138,7 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
                     0,
                     middleY + 12
             );
-            tooltip+= name.substring(0, name.length() -5) +":" + k.getDir()+ ":" + k.getBeepers() + " beepers; ";
+            tooltip+= name.substring(0, name.length() -5) +":" + k.getDir()+ ":" + k.getBeepers() + " beepers| ";
         }
         setToolTipText(tooltip);
 

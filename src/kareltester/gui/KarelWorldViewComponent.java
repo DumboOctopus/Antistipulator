@@ -70,7 +70,7 @@ public class KarelWorldViewComponent extends JComponent  {
         };
     }
 
-    public void addKarelMode(File karelFile) {
+    public void addKarelMode(final File karelFile) {
         onClickAction = new CornerClickListener() {
             @Override
             public void onClick(int st, int av) {
