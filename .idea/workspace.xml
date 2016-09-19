@@ -6,11 +6,12 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="335e03e9-f4d4-4c6b-b2ae-b63564a2882b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/user_test/WarmUp0801.java" afterPath="" />
+    <list default="true" id="335e03e9-f4d4-4c6b-b2ae-b63564a2882b" name="Default" comment="circumvented iss7 with JToolbar">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/Antistipulator.jar" afterPath="$PROJECT_DIR$/user_test/Antistipulator.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kareltester/FileReaderWriter.java" afterPath="$PROJECT_DIR$/src/kareltester/FileReaderWriter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kareltester/gui/KarelWorldEditor.java" afterPath="$PROJECT_DIR$/src/kareltester/gui/KarelWorldEditor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/$KarelsHome.kwld" afterPath="$PROJECT_DIR$/user_test/$KarelsHome.kwld" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/$KarelsHome.kwld2" afterPath="$PROJECT_DIR$/user_test/$KarelsHome.kwld2" />
     </list>
     <ignored path="Antistipulator.iws" />
@@ -46,10 +47,12 @@
       <file leaf-file-name="FileReaderWriter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/kareltester/FileReaderWriter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1095">
-              <caret line="196" column="48" selection-start-line="196" selection-start-column="48" selection-end-line="196" selection-end-column="48" />
+            <state relative-caret-position="7845">
+              <caret line="593" column="11" selection-start-line="593" selection-start-column="11" selection-end-line="593" selection-end-column="11" />
               <folding>
-                <marker date="1474260002000" expanded="false" signature="29:174" ph="..." />
+                <element signature="method#getAllKarelsJavaFilesInFolder#0;class#FileReaderWriter#0" expanded="false" />
+                <element signature="method#getAllKwldFilesInFolder#0;class#FileReaderWriter#0" expanded="false" />
+                <marker date="1474262205000" expanded="false" signature="29:174" ph="..." />
               </folding>
             </state>
           </provider>
@@ -58,7 +61,7 @@
       <file leaf-file-name="KarelCornerComponent.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/kareltester/gui/KarelCornerComponent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
+            <state relative-caret-position="-780">
               <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
               <folding>
                 <element signature="method#paintComponent#0;class#KarelCornerComponent#0" expanded="false" />
@@ -67,26 +70,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="KarelWorldViewComponent.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/kareltester/gui/KarelWorldViewComponent.java">
+      <file leaf-file-name="KarelWorldEditor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/kareltester/gui/KarelWorldEditor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1920">
-              <caret line="144" column="42" selection-start-line="144" selection-start-column="42" selection-end-line="144" selection-end-column="42" />
+            <state relative-caret-position="184">
+              <caret line="199" column="41" selection-start-line="199" selection-start-column="41" selection-end-line="199" selection-end-column="41" />
               <folding>
-                <element signature="e#3320#3321#0" expanded="true" />
-                <element signature="e#3380#3381#0" expanded="true" />
-                <element signature="e#3558#3559#0" expanded="true" />
-                <element signature="e#3627#3628#0" expanded="true" />
+                <element signature="class#3025:4723" expanded="false" />
+                <element signature="class#6071:6345" expanded="false" />
+                <element signature="method#setUpStandardOptions#0;class#KarelWorldEditor#0" expanded="false" />
+                <element signature="method#setUpComboBox#0;class#KarelWorldEditor#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="$MainDriver.class" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/user_test/$MainDriver.class">
+      <file leaf-file-name="KarelWorldViewComponent.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/kareltester/gui/KarelWorldViewComponent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+            <state relative-caret-position="1860">
+              <caret line="144" column="42" selection-start-line="144" selection-start-column="42" selection-end-line="144" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -158,7 +161,6 @@
       <list>
         <option value="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
         <option value="$PROJECT_DIR$/src/kareltester/Direction.java" />
-        <option value="$PROJECT_DIR$/src/kareltester/gui/KarelWorldEditor.java" />
         <option value="$PROJECT_DIR$/user_test/ABCBot.java" />
         <option value="$PROJECT_DIR$/user_test/$KarelsHome.kwld" />
         <option value="$PROJECT_DIR$/src/kareltester/KTerminalUtils.java" />
@@ -167,6 +169,7 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/kareltester/gui/KarelWorldViewComponent.java" />
         <option value="$PROJECT_DIR$/src/kareltester/gui/KarelCornerComponent.java" />
+        <option value="$PROJECT_DIR$/src/kareltester/gui/KarelWorldEditor.java" />
         <option value="$PROJECT_DIR$/src/kareltester/FileReaderWriter.java" />
       </list>
     </option>
@@ -249,6 +252,50 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="kareltester" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Antistipulator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Antistipulator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kareltester" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Antistipulator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Antistipulator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kareltester" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gui" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -618,7 +665,14 @@
       <option name="project" value="LOCAL" />
       <updated>1473902240528</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="resolved iss4">
+      <created>1474260187466</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1474260187466</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView">
@@ -641,11 +695,11 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3306321" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3306321" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3273906" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25040388" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25040388" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -679,7 +733,8 @@
     <MESSAGE value="Removed Unnecessary Files the program generates." />
     <MESSAGE value="Opps forgot to git add -A" />
     <MESSAGE value="Changes for BlueJ + windows operator system bugs crushed + no more TestableKarel + GUI changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes for BlueJ + windows operator system bugs crushed + no more TestableKarel + GUI changes" />
+    <MESSAGE value="resolved iss4" />
+    <option name="LAST_COMMIT_MESSAGE" value="resolved iss4" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -770,7 +825,9 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1474260002000" expanded="false" signature="29:174" ph="..." />
+            <element signature="method#getAllKarelsJavaFilesInFolder#0;class#FileReaderWriter#0" expanded="false" />
+            <element signature="method#getAllKwldFilesInFolder#0;class#FileReaderWriter#0" expanded="false" />
+            <marker date="1474262205000" expanded="false" signature="29:174" ph="..." />
           </folding>
         </state>
       </provider>
@@ -851,7 +908,9 @@
         <state relative-caret-position="3900">
           <caret line="276" column="40" selection-start-line="276" selection-start-column="40" selection-end-line="276" selection-end-column="40" />
           <folding>
-            <marker date="1474260002000" expanded="false" signature="29:174" ph="..." />
+            <element signature="method#getAllKarelsJavaFilesInFolder#0;class#FileReaderWriter#0" expanded="false" />
+            <element signature="method#getAllKwldFilesInFolder#0;class#FileReaderWriter#0" expanded="false" />
+            <marker date="1474262205000" expanded="false" signature="29:174" ph="..." />
           </folding>
         </state>
       </provider>
@@ -961,14 +1020,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/kareltester/gui/KarelWorldEditor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="27" column="5" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/kareltester/TestableKarel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -1066,23 +1117,18 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/kareltester/Direction.ctxt" />
+    <entry file="file://$PROJECT_DIR$/user_test/hs_err_pid1114.log.txt" />
     <entry file="file://$PROJECT_DIR$/src/kareltester/gui/KarelWorldViewComponent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1920">
+        <state relative-caret-position="1860">
           <caret line="144" column="42" selection-start-line="144" selection-start-column="42" selection-end-line="144" selection-end-column="42" />
-          <folding>
-            <element signature="e#3320#3321#0" expanded="true" />
-            <element signature="e#3380#3381#0" expanded="true" />
-            <element signature="e#3558#3559#0" expanded="true" />
-            <element signature="e#3627#3628#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/user_test/hs_err_pid1114.log.txt" />
     <entry file="file://$PROJECT_DIR$/src/kareltester/gui/KarelCornerComponent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
+        <state relative-caret-position="-780">
           <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding>
             <element signature="method#paintComponent#0;class#KarelCornerComponent#0" expanded="false" />
@@ -1090,12 +1136,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/kareltester/gui/KarelWorldEditor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="199" column="41" selection-start-line="199" selection-start-column="41" selection-end-line="199" selection-end-column="41" />
+          <folding>
+            <element signature="class#3025:4723" expanded="false" />
+            <element signature="class#6071:6345" expanded="false" />
+            <element signature="method#setUpStandardOptions#0;class#KarelWorldEditor#0" expanded="false" />
+            <element signature="method#setUpComboBox#0;class#KarelWorldEditor#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/kareltester/FileReaderWriter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1095">
-          <caret line="196" column="48" selection-start-line="196" selection-start-column="48" selection-end-line="196" selection-end-column="48" />
+        <state relative-caret-position="7845">
+          <caret line="593" column="11" selection-start-line="593" selection-start-column="11" selection-end-line="593" selection-end-column="11" />
           <folding>
-            <marker date="1474260002000" expanded="false" signature="29:174" ph="..." />
+            <element signature="method#getAllKarelsJavaFilesInFolder#0;class#FileReaderWriter#0" expanded="false" />
+            <element signature="method#getAllKwldFilesInFolder#0;class#FileReaderWriter#0" expanded="false" />
+            <marker date="1474262205000" expanded="false" signature="29:174" ph="..." />
           </folding>
         </state>
       </provider>

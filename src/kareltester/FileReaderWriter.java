@@ -569,7 +569,7 @@ public class FileReaderWriter
 
     //------helpers
     /*
-    this method simply adds the line, if it already exists then does nothing
+    this method simply adds the line, if it already exists then does nothing.
      */
     private static void appendToKwld2(String toAppend) {
         if(findFirstInKwld2(toAppend) != null) return; //already exists in file
