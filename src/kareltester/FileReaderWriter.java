@@ -183,6 +183,22 @@ public class FileReaderWriter
         //copyToPlusLibs();
 
         listeners = new ArrayList<Kwld2Listener>();
+
+
+        //cleaning kwld2 before start
+        Karel[] karelsInKwld2 = getAllKarels();
+        File[] karelFilesInDir = getAllKarelsJavaFilesInFolder();
+        for(Karel k: karelsInKwld2)
+        {
+            boolean isOkay = false;
+            for(File f: karelFilesInDir)
+            {
+                System.out.println(k.getSource().getName());
+                System.out.println(f.getName());
+                if(k.getSource().getName().equals(f.getName())) isOkay = true;
+            }
+            if(!isOkay) removeKarel(k);
+        }
     }
 
     public static void copyFrom(File f)
