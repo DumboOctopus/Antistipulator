@@ -7,9 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="335e03e9-f4d4-4c6b-b2ae-b63564a2882b" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/Antistipulator.jar" afterPath="$PROJECT_DIR$/user_test/Antistipulator.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kareltester/FileReaderWriter.java" afterPath="$PROJECT_DIR$/src/kareltester/FileReaderWriter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kareltester/gui/KarelCornerComponent.java" afterPath="$PROJECT_DIR$/src/kareltester/gui/KarelCornerComponent.java" />
     </list>
     <ignored path="Antistipulator.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,23 +41,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FileReaderWriter.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FileReaderWriter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/kareltester/FileReaderWriter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2685">
-              <caret line="191" column="9" selection-start-line="191" selection-start-column="9" selection-end-line="191" selection-end-column="9" />
+            <state relative-caret-position="289">
+              <caret line="223" column="49" selection-start-line="223" selection-start-column="49" selection-end-line="223" selection-end-column="49" />
               <folding>
-                <marker date="1474327723000" expanded="false" signature="29:204" ph="..." />
+                <element signature="initializer##0;class#FileReaderWriter#0" expanded="false" />
+                <marker date="1474328362000" expanded="false" signature="29:204" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="KarelCornerComponent.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="KarelCornerComponent.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/kareltester/gui/KarelCornerComponent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="34" column="20" selection-start-line="34" selection-start-column="20" selection-end-line="34" selection-end-column="20" />
+            <state relative-caret-position="0">
+              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -182,8 +183,8 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/kareltester/gui/KarelWorldViewComponent.java" />
         <option value="$PROJECT_DIR$/src/kareltester/gui/KarelWorldEditor.java" />
-        <option value="$PROJECT_DIR$/src/kareltester/FileReaderWriter.java" />
         <option value="$PROJECT_DIR$/src/kareltester/gui/KarelCornerComponent.java" />
+        <option value="$PROJECT_DIR$/src/kareltester/FileReaderWriter.java" />
       </list>
     </option>
   </component>
@@ -656,7 +657,14 @@
       <option name="project" value="LOCAL" />
       <updated>1474327058535</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Synchronized all in school comps.">
+      <created>1474327747715</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1474327747715</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView">
@@ -720,10 +728,13 @@
     <MESSAGE value="resolved iss4" />
     <MESSAGE value=" iss7: circumvented with JToolbar and clr BUTTON" />
     <MESSAGE value="iss 2: first version. Untested. + Synchronized School computer's version with home computer's version" />
-    <option name="LAST_COMMIT_MESSAGE" value="iss 2: first version. Untested. + Synchronized School computer's version with home computer's version" />
+    <MESSAGE value="Synchronized all in school comps." />
+    <option name="LAST_COMMIT_MESSAGE" value="Synchronized all in school comps." />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
@@ -816,7 +827,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1474327723000" expanded="false" signature="29:204" ph="..." />
+            <element signature="initializer##0;class#FileReaderWriter#0" expanded="false" />
+            <marker date="1474328362000" expanded="false" signature="29:204" ph="..." />
           </folding>
         </state>
       </provider>
@@ -902,7 +914,8 @@
         <state relative-caret-position="3900">
           <caret line="276" column="40" selection-start-line="276" selection-start-column="40" selection-end-line="276" selection-end-column="40" />
           <folding>
-            <marker date="1474327723000" expanded="false" signature="29:204" ph="..." />
+            <element signature="initializer##0;class#FileReaderWriter#0" expanded="false" />
+            <marker date="1474328362000" expanded="false" signature="29:204" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1149,21 +1162,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/kareltester/FileReaderWriter.java">
+    <entry file="file://$PROJECT_DIR$/src/kareltester/gui/KarelCornerComponent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2685">
-          <caret line="191" column="9" selection-start-line="191" selection-start-column="9" selection-end-line="191" selection-end-column="9" />
-          <folding>
-            <marker date="1474327723000" expanded="false" signature="29:204" ph="..." />
-          </folding>
+        <state relative-caret-position="0">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/kareltester/gui/KarelCornerComponent.java">
+    <entry file="file://$PROJECT_DIR$/src/kareltester/FileReaderWriter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="34" column="20" selection-start-line="34" selection-start-column="20" selection-end-line="34" selection-end-column="20" />
-          <folding />
+        <state relative-caret-position="289">
+          <caret line="223" column="49" selection-start-line="223" selection-start-column="49" selection-end-line="223" selection-end-column="49" />
+          <folding>
+            <element signature="initializer##0;class#FileReaderWriter#0" expanded="false" />
+            <marker date="1474328362000" expanded="false" signature="29:204" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

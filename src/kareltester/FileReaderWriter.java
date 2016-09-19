@@ -10,7 +10,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.file.FileStore;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -155,9 +154,13 @@ public class FileReaderWriter
     private static File kwldFile; //^ same thing as above
     private static File outerFolder;
 
+    //to prevent clearWorld and copyWorld from occuring simultaneously :D
+    private final static Object WORLD_MODIFYING_LOCK = new Object();
+
 
     private static ArrayList<Kwld2Listener> listeners; //the corners which listen to the kwld2 file updates
 
+    //so i can delete extras :D
     private static Stack<JFrame> executions;
     
 
@@ -214,71 +217,75 @@ public class FileReaderWriter
         }
     }
 
+
+    //================================ENTIRE WORLD MODIFYING METHODS=======================//
     public static void copyFrom(File f)
     {
-        int streets = getStreets();
-        int avenues = getAvenues();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(f));
-            StringBuilder builder = new StringBuilder();
+        //TODO: check wheter this could deadlock.
+        synchronized (WORLD_MODIFYING_LOCK) {
+            int streets = getStreets();
+            int avenues = getAvenues();
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(f));
+                StringBuilder builder = new StringBuilder();
 
-            //the reason why we use string builder rather than direct copy
-            //is so we minimize file writing which is quite expensive. Heh.
-            String line = null;
-            while((line = reader.readLine()) != null)
-            {
-                builder.append(line).append(NEW_LINE);
+                //the reason why we use string builder rather than direct copy
+                //is so we minimize file writing which is quite expensive. Heh.
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line).append(NEW_LINE);
+                }
+                reader.close();
+
+                BufferedWriter bw = new BufferedWriter(new FileWriter(kwld2File));
+                bw.write(builder.toString());
+                bw.close();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            reader.close();
 
-            BufferedWriter bw = new BufferedWriter(new FileWriter(kwld2File));
-            bw.write(builder.toString());
-            bw.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        //fire kwld2 changed for like everything :D
-        for (int av = 1; av <= getAvenues(); av++) {
-            for (int st = 1; st <= getStreets() ; st++) {
-                for(Kwld2Listener listener: listeners)
-                    listener.onChange(st, av);
+            //fire kwld2 changed for like everything :D
+            for (int av = 1; av <= getAvenues(); av++) {
+                for (int st = 1; st <= getStreets(); st++) {
+                    for (Kwld2Listener listener : listeners)
+                        listener.onChange(st, av);
+                }
+            }
+            if (streets != getStreets() || avenues != getAvenues()) {
+                KTerminalUtils.println("The size of the world has changed. Please restart the app.");
+                KTerminalUtils.println("Yeah...u should seriously listen to me though, after all J' suis la application");
+                KTerminalUtils.println("Yeah... please excuse my intentionally bad french.\n\n Sincerely, \nAntiStipulator");
             }
         }
-        if(streets != getStreets() || avenues != getAvenues())
-        {
-            KTerminalUtils.println("The size of the world has changed. Please restart the app.");
-            KTerminalUtils.println("Yeah...u should seriously listen to me though, after all J' suis la application");
-            KTerminalUtils.println("Yeah... please excuse my intentionally bad french.\n\n Sincerely, \nAntiStipulator");
-        }
-
     }
 
 
      public static void clearWorld() {
-         int totalAvenues = getAvenues();
-         int totalStreets = getStreets();
-         BufferedWriter bw = null;
-         try {
-             bw = new BufferedWriter(new FileWriter(kwld2File, false));
-             bw.write("streets " + totalStreets + NEW_LINE + "avenues " + totalAvenues);
-             bw.close();
-             for (int av = 1; av <= totalAvenues; av++) {
-                 for (int st = 1; st <= totalStreets; st++) {
-                     for (Kwld2Listener listener : listeners)
-                         listener.onChange(st, av);
-                 }
-             }
-
-         } catch (FileNotFoundException e) {
-             System.out.println("Oh noes, the kwld2 can't be found for some reason.. T.T");
-         } catch (IOException e) {
-             e.printStackTrace();
-         } finally {
+         synchronized (WORLD_MODIFYING_LOCK) {
+             int totalAvenues = getAvenues();
+             int totalStreets = getStreets();
+             BufferedWriter bw = null;
              try {
+                 bw = new BufferedWriter(new FileWriter(kwld2File, false));
+                 bw.write("streets " + totalStreets + NEW_LINE + "avenues " + totalAvenues);
                  bw.close();
+                 for (int av = 1; av <= totalAvenues; av++) {
+                     for (int st = 1; st <= totalStreets; st++) {
+                         for (Kwld2Listener listener : listeners)
+                             listener.onChange(st, av);
+                     }
+                 }
+
+             } catch (FileNotFoundException e) {
+                 System.out.println("Oh noes, the kwld2 can't be found for some reason.. T.T");
              } catch (IOException e) {
                  e.printStackTrace();
+             } finally {
+                 try {
+                     bw.close();
+                 } catch (IOException e) {
+                     e.printStackTrace();
+                 }
              }
          }
      }
@@ -494,7 +501,10 @@ public class FileReaderWriter
                 new int[]{av}
         );
     }
-    public static void addBeeper(int st, int av)
+    /*
+    Note. must be synchronized to prevent 2 editing things at once.
+     */
+    public synchronized static void addBeeper(int st, int av)
     {
         //beepers [st] [av] [#]
         String signature = "beepers " + st + " " + av + " " ;
@@ -571,7 +581,7 @@ public class FileReaderWriter
     /*
     this method simply adds the line, if it already exists then does nothing.
      */
-    private static void appendToKwld2(String toAppend) {
+    private synchronized static void appendToKwld2(String toAppend) {
         if(findFirstInKwld2(toAppend) != null) return; //already exists in file
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(kwld2File, true));
@@ -590,8 +600,9 @@ public class FileReaderWriter
     first parameter is the "signature" of the text. The method will first search for this signature. If it finds it
     it will simply replace the back end of the signature with the "ending".
     If it can't find signature it will simply append "signature" + "ending"
+    Note, multiple edits might occur concurntly. Thus, must be synhcronized.
      */
-    private static void smartAppendToKwld2(String signature, String ending)
+    private synchronized static void smartAppendToKwld2(String signature, String ending)
     {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(kwld2File));
