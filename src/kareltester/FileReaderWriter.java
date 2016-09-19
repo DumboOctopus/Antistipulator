@@ -1,9 +1,12 @@
 package kareltester;
 
 import kareltherobot.Directions;
+import kareltherobot.UrRobot;
 import kareltherobot.World;
 
 import javax.swing.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -301,32 +304,20 @@ public class FileReaderWriter
                 if(!pathname.getName().contains(".java")) return false;
                 //check inside file if its contains public class [FileName] implements TestableKarel
                 //later use reflection to find if it is instance of UrRobot
-                return true;
-                /*
-                try{
-                File parentDir = new File(
-                    pathname.getAbsolutePath().substring(
-                        0,
-                        pathname.getAbsolutePath().lastIndexOf(System.getProperty("file.separator"))
-                    ) + System.getProperty("file.separator") + "+libs" //bc classloader refer to highre ones when they can't find it
-                );
-                URLClassLoader classLoader = new URLClassLoader(
-                    new URL[]{parentDir.toURI().toURL()}
-                );
-                System.out.println(pathname.getName().replace(".java", ""));
-                Class<?> karelClass = classLoader.loadClass(pathname.getName().replace(".java", ""));
-                Class<?> superClass =  karelClass.getSuperclass();
-                while(superClass != null && !superClass.getName().equals("UrRobot"))
+
+                try {
+                    URLClassLoader classLoader = new URLClassLoader(
+                            new URL[]{outerFolder.toURI().toURL()}
+                    );
+                    System.out.println(pathname.getName().replace(".java", ""));
+                    Class<?> karelClass = classLoader.loadClass(pathname.getName().replace(".java", ""));
+                    return UrRobot.class.isAssignableFrom(karelClass);
+                } catch (Throwable e)
                 {
-                    superClass =  karelClass.getSuperclass();
-                }
-                return superClass != null;
-                } catch(Exception e)
-                {
-                    KTerminalUtils.println("plz report this error: \n\n"+e);
+                    e.printStackTrace();
                     return false;
                 }
-                */
+
             }
         });
         return testableFiles;
@@ -877,75 +868,6 @@ public class FileReaderWriter
         }
     }
 
-    /*
-    For BlueJ to find the kareltester package, we must have the AntiStipulator jar file inside the +libs folder
-    However, the AntiStipulator jar file cannot find the .java to create karels if it is not located in the same
-    folder as itself. The java files are not located in +libs so.. So the solution is to keep the
-    AntiStipulator.jar outside the +libs folder and have it put a copy of itself inside +libs. +libs
-    is assummed to exists because u can't compile BlueJ karel files without it
-     */
-    /** since it is not using testableKarel, no need :D**/
-    @Deprecated
-    private static void copyToPlusLibs()
-    {
-        String pathToJar = FileReaderWriter.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-        String pathToOutside = pathToJar.substring(0, pathToJar.lastIndexOf(pathToJar.charAt(0)));
-        File plusLibs = new File(pathToOutside+"/+libs/AntiStipulator.jar");
-        if(!plusLibs.exists())
-        {
-            try {
-                File jar = new File(pathToJar);
-                InputStream in = new FileInputStream(jar);
-                OutputStream out = new FileOutputStream(plusLibs);
-
-                // Copy the bits from instream to outstream
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
-                in.close();
-                out.close();
-            } catch(Exception e){
-                e.printStackTrace();
-            }
-        }
-
-            
-        /*
-        //NOTE CODE STOlEN FROM INTERNET FROM Ordiel
-        String resourceName  = "KarelJRobot.jar";
-        InputStream stream = null;
-        OutputStream resStreamOut = null;
-        String jarFolder;
-        stream = null;
-        resStreamOut = null;
-        try {
-            stream = FileReaderWriter.class.getClassLoader().getResourceAsStream(resourceName);//note that each / is a directory down in the "jar tree" been the jar the root of the tree
-            System.out.println(stream);
-            if(stream == null) {
-                throw new Exception("Cannot get resource \"" + resourceName + "\" from Jar file.");
-            }
-
-            int readBytes;
-            byte[] buffer = new byte[4096];
-            jarFolder = new File(FileReaderWriter.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getPath().replace('\\', '/');
-            resStreamOut = new FileOutputStream(jarFolder +"/+libs/"+ resourceName);
-            while ((readBytes = stream.read(buffer)) > 0) {
-                resStreamOut.write(buffer, 0, readBytes);
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        } finally {
-            try {
-                stream.close();
-                resStreamOut.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        */
-    }
 
     private static void createKWLD() {
 
