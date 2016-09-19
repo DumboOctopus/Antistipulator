@@ -5,13 +5,12 @@ import kareltherobot.UrRobot;
 import kareltherobot.World;
 
 import javax.swing.*;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowStateListener;
 import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.FileStore;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -149,9 +148,13 @@ public class FileReaderWriter
 {
     //===================================ATRRIBUTES===============================/
 
-    private static final String NEW_LINE = System.getProperty("line.separator");;
+    private static final String NEW_LINE = System.getProperty("line.separator");
+    private static final String FILE_SEP = System.getProperty("file.separator");
+
     private static File kwld2File; //Writer will be created when necessary
     private static File kwldFile; //^ same thing as above
+    private static File outerFolder;
+
 
     private static ArrayList<Kwld2Listener> listeners; //the corners which listen to the kwld2 file updates
 
@@ -160,13 +163,18 @@ public class FileReaderWriter
 
     //==================================Static-Constructor=================================//
     static {
-        ////FOR DEBUGGING PATH ERRORS IN Z DRIVE
-        //KTerminalUtils.println(FileReaderWriter.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+
         String tmp = FileReaderWriter.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         String pathToOuterFolder = tmp.substring(0, tmp.lastIndexOf(tmp.charAt(0)));
-        kwld2File = new File(pathToOuterFolder + System.getProperty("file.separator") + "$KarelsHome.kwld2");
+        outerFolder = new File(pathToOuterFolder);
 
-        executions = new Stack<>();
+
+        File filesFolder = new File(pathToOuterFolder + FILE_SEP + "AntiStipulator Files");
+        if(!filesFolder.exists()) filesFolder.mkdir();
+
+
+        kwld2File = new File(pathToOuterFolder + FILE_SEP + "AntiStipulator Files" + FILE_SEP + "$KarelsHome.kwld2");
+
 
         //creates file if not created already else does nothing
         try{
@@ -175,13 +183,15 @@ public class FileReaderWriter
             e.printStackTrace();
         }
 
-        kwldFile = new File(pathToOuterFolder + System.getProperty("file.separator") + "$KarelsHome.kwld");
+        kwldFile = new File(pathToOuterFolder + FILE_SEP + "AntiStipulator Files" + FILE_SEP + "$KarelsHome.kwld");
         try {
             kwldFile.createNewFile();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        executions = new Stack<>();
 
         //copyToPlusLibs();
 
@@ -245,28 +255,33 @@ public class FileReaderWriter
     }
 
 
-     public static void clearWorld()
-    {
-        int totalAves = getAvenues();
-        int totalStres = getStreets();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(kwld2File));
-            BufferedWriter bw = new BufferedWriter(new FileWriter(kwld2File, false));
-            bw.write("streets " + totalStres + NEW_LINE+"avenues " + totalAves);
-            bw.close();
-            for (int av = 1; av <= totalAves; av++) {
-                for (int st = 1; st <= totalStres ; st++) {
-                    for(Kwld2Listener listener: listeners)
-                        listener.onChange(st, av);
-                }
-            }
+     public static void clearWorld() {
+         int totalAvenues = getAvenues();
+         int totalStreets = getStreets();
+         BufferedWriter bw = null;
+         try {
+             bw = new BufferedWriter(new FileWriter(kwld2File, false));
+             bw.write("streets " + totalStreets + NEW_LINE + "avenues " + totalAvenues);
+             bw.close();
+             for (int av = 1; av <= totalAvenues; av++) {
+                 for (int st = 1; st <= totalStreets; st++) {
+                     for (Kwld2Listener listener : listeners)
+                         listener.onChange(st, av);
+                 }
+             }
 
-        } catch (FileNotFoundException e) {
-            System.out.println("Oh noes, the kwld2 can't be found for some reason.. T.T");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+         } catch (FileNotFoundException e) {
+             System.out.println("Oh noes, the kwld2 can't be found for some reason.. T.T");
+         } catch (IOException e) {
+             e.printStackTrace();
+         } finally {
+             try {
+                 bw.close();
+             } catch (IOException e) {
+                 e.printStackTrace();
+             }
+         }
+     }
 
     //=======================================LISTENERS====================================//
     private static void fireKwld2Changed(int[] streets, int[] avenue)
@@ -294,9 +309,6 @@ public class FileReaderWriter
      */
     public static File[] getAllKarelsJavaFilesInFolder()
     {
-        String tmp = FileReaderWriter.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-        String pathToOuterFolder = tmp.substring(0, tmp.lastIndexOf(tmp.charAt(0)));
-        File outerFolder = new File(pathToOuterFolder);
         File[] testableFiles = outerFolder.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
@@ -325,9 +337,6 @@ public class FileReaderWriter
 
     public static File[] getAllKwldFilesInFolder()
     {
-        String tmp = FileReaderWriter.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-        String pathToOuterFolder = tmp.substring(0, tmp.lastIndexOf(tmp.charAt(0)));
-        File outerFolder = new File(pathToOuterFolder);
         return outerFolder.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {

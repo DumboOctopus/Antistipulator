@@ -33,7 +33,6 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
     //===============================NON STATIC================================//
     private KarelWorldViewComponent worldViewComponent;
     private int street, avenue;
-    private Image img = null;
     private JPopupMenu menu;
 
     //to making calculation not in drawing
@@ -64,8 +63,6 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
     @Override
     protected void paintComponent(Graphics g) {
 
-        //image memory problem
-        //g.drawImage(img, 0, 0, getWidth(), getHeight(), null);
         int middleX = getWidth()/2;
         int middleY = getHeight()/2;
         String tooltip = "";
