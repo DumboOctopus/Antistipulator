@@ -88,4 +88,63 @@ beepers 5 7 1
 beepers 6 6 13
 beepers 1 7 1
 
-_karel 10 5 NORTH 0 TestR.java 
+beepers 9 5 4
+beepers 8 5 3
+beepers 7 5 2
+beepers 7 4 1
+beepers 6 4 2
+beepers 6 5 5
+beepers 10 4 2
+beepers 9 4 5
+beepers 8 4 1
+beepers 10 5 19
+beepers 10 6 2
+beepers 9 6 1
+beepers 4 5 1
+
+
+
+
+beepers 5 8 3
+beepers 6 8 1
+beepers 6 7 1
+beepers 5 6 1
+beepers 4 6 1
+beepers 5 5 1
+beepers 11 5 3
+beepers 11 6 4
+beepers 3 7 3
+beepers 9 8 19
+beepers 10 8 4
+beepers 5 4 6
+beepers 2 6 1
+beepers 2 8 1
+beepers 3 8 1
+beepers 4 8 1
+
+
+
+
+
+
+
+
+
+
+
+
+beepers 9 3 4
+
+
+
+
+_karel 7 5 NORTH 0 ABCBot.java 
+_karel 9 5 NORTH 0 TestR.java 
+
+
+
+
+
+
+
+_karel 9 4 NORTH 10 WarmUp0801.java 

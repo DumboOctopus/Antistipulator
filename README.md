@@ -12,18 +12,7 @@ Note, this project is design for AP Computer Science Children using BlueJ. Thus,
 
 4. If you wish to delete a World Item, simply press the World Item’s corresponding remove button and then press on the corner on which you want to remove the World Item. For example, if you wanted to remove a beeper from the (1,1) corner, you would simply click on the “Remove Beeper” button and then click on the (1,1) corner.
 5. Open BlueJ.
-6. Now go into the file of a Karel you wish to test. At the top of the file write:
-
-
-    `import kareltester.*;`
-
-
- Then make your class implement TestableKarel:
-   
-    `public class MyRobot extends Robot implements TestableKarel`
-
-
- Finally, write the task method inside. The task method will be called when the AntiStipulator runs your Karel program.
+6. Now go into the file of a Karel you wish to test. Write the task method inside. The task method will be called when the AntiStipulator runs your Karel program.
     ```
     public void task(){
            //your code goes here
@@ -45,8 +34,8 @@ The following is an example of a Karel that the AntiStipulator can test:
 
 
     import kareltherobot.*;
-    import kareltester.*;
-    public class MyBot extends Robot implements TestableKarel
+    
+    public class MyBot extends Robot
     {
        
         public MyBot(int st, int av, Direction dir, int b)
@@ -95,5 +84,5 @@ The following is an example of a Karel that the AntiStipulator can test:
 ##Notes:
 <sup>*</sup>If u are an IDE other than BlueJ, be sure to add AntiStipulator.jar as an external library. If you are using a terminal to compile and run, be sure to include the jar in the classpath:
 
-    javac -classpath path/to/Antistipulator.jar:path/to/KarelJRobot.jar MyAwesomeKarelProgram.java
-    java -classpath path/to/Antistipulator.jar:path/to/KarelJRobot.jar MyAwesomeKarelProgram
+    javac -classpath path/to/KarelJRobot.jar MyAwesomeKarelProgram.java
+    java -classpath path/to/KarelJRobot.jar MyAwesomeKarelProgram

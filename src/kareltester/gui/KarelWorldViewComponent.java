@@ -124,29 +124,7 @@ public class KarelWorldViewComponent extends JComponent  {
         onClickAction = new CornerClickListener() {
             @Override
             public void onClick(int st, int av) {
-                Karel[] karelsOnCorner = FileReaderWriter.getKarel(st, av);
-                for(Karel k: karelsOnCorner)
-                    FileReaderWriter.removeKarel(k);
-                for(Karel k: karelsOnCorner)
-                {
-                    switch(k.getDir())
-                    {
-                        case NORTH:
-                            k.setDir(Direction.EAST);
-                            break;
-                        case EAST:
-                            k.setDir(Direction.SOUTH);
-                            break;
-                        case SOUTH:
-                            k.setDir(Direction.WEST);
-                            break;
-                        case WEST:
-                            k.setDir(Direction.NORTH);
-                            break;
-                    }
-                }
-                for(Karel k: karelsOnCorner)
-                    FileReaderWriter.addKarel(k);
+                rotateKarelsOnCorner(st, av);
             }
         };
     }
@@ -160,16 +138,11 @@ public class KarelWorldViewComponent extends JComponent  {
         };
     }
 
-    public void addBeeperTokarelMode() {
+    public void addBeeperToKarelMode() {
         onClickAction = new CornerClickListener() {
             @Override
             public void onClick(int st, int av) {
-                Karel[] karels = FileReaderWriter.getKarel(st, av);
-                FileReaderWriter.removeKarels(st, av);
-                for(Karel k: karels) {
-                    k.setBeepers(k.getBeepers() + 1);
-                    FileReaderWriter.addKarel(k);
-                }
+                addBeeperToKarel(st, av, 1);
 
             }
         };
@@ -179,21 +152,51 @@ public class KarelWorldViewComponent extends JComponent  {
         onClickAction = new CornerClickListener() {
             @Override
             public void onClick(int st, int av) {
-                Karel[] karels = FileReaderWriter.getKarel(st, av);
-                FileReaderWriter.removeKarels(st, av);
-                for(Karel k: karels) {
-                    k.setBeepers(k.getBeepers() - 1);
-                    FileReaderWriter.addKarel(k);
-                }
+                addBeeperToKarel(st, av, -1);
 
             }
         };
     }
 
-
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(600, 600);
+    }
+
+    protected void rotateKarelsOnCorner(int st, int av) {
+        Karel[] karelsOnCorner = FileReaderWriter.getKarel(st, av);
+        for(Karel k: karelsOnCorner)
+            FileReaderWriter.removeKarel(k);
+        for(Karel k: karelsOnCorner)
+        {
+            switch(k.getDir())
+            {
+                case NORTH:
+                    k.setDir(Direction.EAST);
+                    break;
+                case EAST:
+                    k.setDir(Direction.SOUTH);
+                    break;
+                case SOUTH:
+                    k.setDir(Direction.WEST);
+                    break;
+                case WEST:
+                    k.setDir(Direction.NORTH);
+                    break;
+            }
+        }
+        for(Karel k: karelsOnCorner)
+            FileReaderWriter.addKarel(k);
+    }
+
+
+    protected void addBeeperToKarel(int st, int av, int amt) {
+        Karel[] karels = FileReaderWriter.getKarel(st, av);
+        FileReaderWriter.removeKarels(st, av);
+        for(Karel k: karels) {
+            k.setBeepers(k.getBeepers() + amt);
+            FileReaderWriter.addKarel(k);
+        }
     }
 }
 

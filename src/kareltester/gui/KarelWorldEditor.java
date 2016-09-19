@@ -273,7 +273,7 @@ public class KarelWorldEditor extends JFrame{
                         new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                worldViewComponent.addBeeperTokarelMode();
+                                worldViewComponent.addBeeperToKarelMode();
                             }
                         }
                 ),

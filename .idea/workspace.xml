@@ -7,101 +7,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="335e03e9-f4d4-4c6b-b2ae-b63564a2882b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/artifacts/Antistipulator_jar/Antistipulator.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/META-INF/MANIFEST.MF" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/Direction$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/Direction.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/FileReaderWriter$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/FileReaderWriter$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/FileReaderWriter.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/KTerminalUtils$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/KTerminalUtils$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/KTerminalUtils$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/KTerminalUtils$4.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/KTerminalUtils$KTerminal$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/KTerminalUtils$KTerminal.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/KTerminalUtils.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/Karel.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/Kwld2Listener.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/TestableKarel.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/TextAreaOutputStream$Appender.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/TextAreaOutputStream.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelCornerComponent.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$10.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$11.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$12.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$13.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$14.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$15.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$16.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$17.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$18.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$19.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$4$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$4.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$5.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$6.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$7.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$8.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$9.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor$Option.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldEditor.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldViewComponent$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldViewComponent$10.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldViewComponent$11.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldViewComponent$12.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldViewComponent$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldViewComponent$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldViewComponent$4.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldViewComponent$5.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldViewComponent$6.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldViewComponent$7.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldViewComponent$8.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldViewComponent$9.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldViewComponent$CornerClickListener.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/gui/KarelWorldViewComponent.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/resources/karelEAST.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/resources/karelNORTH.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/resources/karelSOUTH.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Antistipulator/kareltester/resources/karelWEST.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/user_test/hs_err_pid1114.log" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/user_test/hs_err_pid939.log" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kareltester/resources/karelEAST.png" afterPath="$PROJECT_DIR$/src/kareltester/resources/karelEAST.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kareltester/resources/karelNORTH.png" afterPath="$PROJECT_DIR$/src/kareltester/resources/karelNORTH.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kareltester/resources/karelSOUTH.png" afterPath="$PROJECT_DIR$/src/kareltester/resources/karelSOUTH.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kareltester/resources/karelWEST.png" afterPath="$PROJECT_DIR$/src/kareltester/resources/karelWEST.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/$MainDriver.class" afterPath="$PROJECT_DIR$/user_test/$MainDriver.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/+libs/AntiStipulator.jar" afterPath="$PROJECT_DIR$/user_test/+libs/AntiStipulator.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/+libs/KarelJRobot.jar" afterPath="$PROJECT_DIR$/user_test/+libs/KarelJRobot.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/+libs/jasmin.jar" afterPath="$PROJECT_DIR$/user_test/+libs/jasmin.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/ABCBot$HEH.class" afterPath="$PROJECT_DIR$/user_test/ABCBot$HEH.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/ABCBot.class" afterPath="$PROJECT_DIR$/user_test/ABCBot.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/Antistipulator.jar" afterPath="$PROJECT_DIR$/user_test/Antistipulator.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/TestR.class" afterPath="$PROJECT_DIR$/user_test/TestR.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/jasmin.jar" afterPath="$PROJECT_DIR$/user_test/jasmin.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/AntiStipulator99.99UserManual.txt" afterPath="$PROJECT_DIR$/docs/AntiStipulator99.99UserManual.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kareltester/Direction.java" afterPath="$PROJECT_DIR$/src/kareltester/Direction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kareltester/FileReaderWriter.java" afterPath="$PROJECT_DIR$/src/kareltester/FileReaderWriter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kareltester/KTerminalUtils.java" afterPath="$PROJECT_DIR$/src/kareltester/KTerminalUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kareltester/Kwld2Listener.java" afterPath="$PROJECT_DIR$/src/kareltester/Kwld2Listener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kareltester/TestableKarel.java" afterPath="$PROJECT_DIR$/src/kareltester/TestableKarel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kareltester/TextAreaOutputStream.java" afterPath="$PROJECT_DIR$/src/kareltester/TextAreaOutputStream.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kareltester/gui/KarelCornerComponent.java" afterPath="$PROJECT_DIR$/src/kareltester/gui/KarelCornerComponent.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kareltester/gui/KarelWorldEditor.java" afterPath="$PROJECT_DIR$/src/kareltester/gui/KarelWorldEditor.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kareltester/gui/KarelWorldViewComponent.java" afterPath="$PROJECT_DIR$/src/kareltester/gui/KarelWorldViewComponent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/$KarelsHome.kwld" afterPath="$PROJECT_DIR$/user_test/$KarelsHome.kwld" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/$KarelsHome.kwld2" afterPath="$PROJECT_DIR$/user_test/$KarelsHome.kwld2" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/ABCBot.java" afterPath="$PROJECT_DIR$/user_test/ABCBot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/TestR.java" afterPath="$PROJECT_DIR$/user_test/TestR.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/WarmUp0801.java" afterPath="$PROJECT_DIR$/user_test/WarmUp0801.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/hi.kwld" afterPath="$PROJECT_DIR$/user_test/hi.kwld" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_test/package.bluej" afterPath="$PROJECT_DIR$/user_test/package.bluej" />
     </list>
     <ignored path="Antistipulator.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -126,11 +38,9 @@
       <file leaf-file-name="Direction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/kareltester/Direction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
+            <state relative-caret-position="0">
               <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -138,19 +48,50 @@
       <file leaf-file-name="FileReaderWriter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/kareltester/FileReaderWriter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="12645">
-              <caret line="850" column="41" selection-start-line="850" selection-start-column="41" selection-end-line="850" selection-end-column="41" />
-              <folding />
+            <state relative-caret-position="345">
+              <caret line="301" column="66" selection-start-line="301" selection-start-column="66" selection-end-line="301" selection-end-column="66" />
+              <folding>
+                <marker date="1473892350000" expanded="false" signature="29:174" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="$KarelsHome.kwld" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/user_test/$KarelsHome.kwld">
+      <file leaf-file-name="KarelCornerComponent.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/kareltester/gui/KarelCornerComponent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="274">
+              <caret line="232" column="6" selection-start-line="232" selection-start-column="6" selection-end-line="232" selection-end-column="6" />
+              <folding>
+                <element signature="method#paintComponent#0;class#KarelCornerComponent#0" expanded="false" />
+                <element signature="e#5427#5428#0" expanded="true" />
+                <element signature="e#5513#5514#0" expanded="true" />
+                <element signature="e#5736#5737#0" expanded="true" />
+                <element signature="e#5822#5823#0" expanded="true" />
+                <element signature="e#6048#6049#0" expanded="true" />
+                <element signature="e#6134#6135#0" expanded="true" />
+                <element signature="e#6362#6363#0" expanded="true" />
+                <element signature="e#6449#6450#0" expanded="true" />
+                <element signature="e#6680#6681#0" expanded="true" />
+                <element signature="e#6767#6768#0" expanded="true" />
+                <element signature="e#6988#6989#0" expanded="true" />
+                <element signature="e#7065#7066#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="KarelWorldViewComponent.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/kareltester/gui/KarelWorldViewComponent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="514">
+              <caret line="144" column="42" selection-start-line="144" selection-start-column="42" selection-end-line="144" selection-end-column="42" />
+              <folding>
+                <element signature="e#3320#3321#0" expanded="true" />
+                <element signature="e#3380#3381#0" expanded="true" />
+                <element signature="e#3558#3559#0" expanded="true" />
+                <element signature="e#3627#3628#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -178,7 +119,7 @@
       <file leaf-file-name="KTerminalUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/kareltester/KTerminalUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1650">
+            <state relative-caret-position="1575">
               <caret line="116" column="0" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
               <folding />
             </state>
@@ -195,12 +136,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="446">
-                <caret line="99" column="0" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+              <first_editor relative-caret-position="1305">
+                <caret line="87" column="20" selection-start-line="87" selection-start-column="20" selection-end-line="87" selection-end-column="20" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -211,20 +152,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestableKarel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/kareltester/TestableKarel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -235,7 +171,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/kareltester/Direction.java" />
         <option value="$PROJECT_DIR$/src/kareltester/gui/KarelWorldEditor.java" />
         <option value="$PROJECT_DIR$/user_test/ABCBot.java" />
@@ -244,11 +179,13 @@
         <option value="$PROJECT_DIR$/user_test/TestR.java" />
         <option value="$PROJECT_DIR$/src/kareltester/FileReaderWriter.java" />
         <option value="$PROJECT_DIR$/src/kareltester/Kwld2Listener.java" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/kareltester/gui/KarelWorldViewComponent.java" />
+        <option value="$PROJECT_DIR$/src/kareltester/gui/KarelCornerComponent.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-4" />
     <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="709" />
@@ -279,6 +216,8 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -297,19 +236,64 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Antistipulator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Antistipulator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Antistipulator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Antistipulator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kareltester" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Antistipulator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Antistipulator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../Java Classes Training Wheel Classes" />
+    <property name="extract.method.default.visibility" value="protected" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -641,7 +625,14 @@
       <option name="project" value="LOCAL" />
       <updated>1470602290649</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Changes for BlueJ + windows operator system bugs crushed + no more TestableKarel + GUI changes">
+      <created>1473902240528</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1473902240528</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView">
@@ -654,17 +645,18 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="23" width="1280" height="709" extended-state="6" />
+    <frame x="0" y="23" width="1280" height="709" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32901135" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32901135" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3279483" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3306321" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3273906" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25040388" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -673,7 +665,6 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32901135" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -701,7 +692,8 @@
     <MESSAGE value="Fixed Readme a bit more" />
     <MESSAGE value="Removed Unnecessary Files the program generates." />
     <MESSAGE value="Opps forgot to git add -A" />
-    <option name="LAST_COMMIT_MESSAGE" value="Opps forgot to git add -A" />
+    <MESSAGE value="Changes for BlueJ + windows operator system bugs crushed + no more TestableKarel + GUI changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes for BlueJ + windows operator system bugs crushed + no more TestableKarel + GUI changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -712,43 +704,11 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/kareltester/TestableKarel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/kareltester/TextAreaOutputStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/kareltester/Direction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/kareltester/FileReaderWriter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10275">
-          <caret line="748" column="0" selection-start-line="748" selection-start-column="0" selection-end-line="748" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/kareltester/gui/KarelWorldEditor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="27" column="5" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -815,9 +775,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -825,7 +783,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1473892350000" expanded="false" signature="29:174" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -833,6 +793,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="27" column="5" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -895,9 +856,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="32" column="42" selection-start-line="32" selection-start-column="28" selection-end-line="32" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -905,7 +864,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3900">
           <caret line="276" column="40" selection-start-line="276" selection-start-column="40" selection-end-line="276" selection-end-column="40" />
-          <folding />
+          <folding>
+            <marker date="1473892350000" expanded="false" signature="29:174" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1018,6 +979,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="27" column="5" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1033,13 +995,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/user_test/$KarelsHome.kwld">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
+        <state relative-caret-position="330">
           <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
           <folding />
         </state>
@@ -1060,19 +1021,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/kareltester/FileReaderWriter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12645">
-          <caret line="850" column="41" selection-start-line="850" selection-start-column="41" selection-end-line="850" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/kareltester/TextAreaOutputStream.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="14" column="54" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="54" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1086,17 +1038,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/kareltester/Direction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
+        <state relative-caret-position="0">
           <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/kareltester/KTerminalUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1650">
+        <state relative-caret-position="1575">
           <caret line="116" column="0" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
           <folding />
         </state>
@@ -1111,15 +1061,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
       <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="446">
-            <caret line="99" column="0" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+          <first_editor relative-caret-position="1305">
+            <caret line="87" column="20" selection-start-line="87" selection-start-column="20" selection-end-line="87" selection-end-column="20" />
             <folding />
           </first_editor>
           <second_editor />
@@ -1127,6 +1072,72 @@
       </provider>
       <provider editor-type-id="MarkdownFxPreviewEditor">
         <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/kareltester/Direction.ctxt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/kareltester/FileReaderWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="301" column="66" selection-start-line="301" selection-start-column="66" selection-end-line="301" selection-end-column="66" />
+          <folding>
+            <marker date="1473892350000" expanded="false" signature="29:174" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/kareltester/gui/KarelWorldViewComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="514">
+          <caret line="144" column="42" selection-start-line="144" selection-start-column="42" selection-end-line="144" selection-end-column="42" />
+          <folding>
+            <element signature="e#3320#3321#0" expanded="true" />
+            <element signature="e#3380#3381#0" expanded="true" />
+            <element signature="e#3558#3559#0" expanded="true" />
+            <element signature="e#3627#3628#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user_test/hs_err_pid1114.log.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/kareltester/gui/KarelCornerComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="232" column="6" selection-start-line="232" selection-start-column="6" selection-end-line="232" selection-end-column="6" />
+          <folding>
+            <element signature="method#paintComponent#0;class#KarelCornerComponent#0" expanded="false" />
+            <element signature="e#5427#5428#0" expanded="true" />
+            <element signature="e#5513#5514#0" expanded="true" />
+            <element signature="e#5736#5737#0" expanded="true" />
+            <element signature="e#5822#5823#0" expanded="true" />
+            <element signature="e#6048#6049#0" expanded="true" />
+            <element signature="e#6134#6135#0" expanded="true" />
+            <element signature="e#6362#6363#0" expanded="true" />
+            <element signature="e#6449#6450#0" expanded="true" />
+            <element signature="e#6680#6681#0" expanded="true" />
+            <element signature="e#6767#6768#0" expanded="true" />
+            <element signature="e#6988#6989#0" expanded="true" />
+            <element signature="e#7065#7066#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>
