@@ -1,6 +1,4 @@
-package kareltester.gui;
-
-import kareltester.*;
+package kareltester;
 
 import javax.swing.*;
 import java.awt.*;
@@ -70,6 +68,9 @@ public class KarelWorldViewComponent extends JComponent  {
         };
     }
 
+    /*
+    TODO; replace file with karel so its not depend on kwld system.
+     */
     public void addKarelMode(final File karelFile) {
         onClickAction = new CornerClickListener() {
             @Override
@@ -169,24 +170,10 @@ public class KarelWorldViewComponent extends JComponent  {
             FileReaderWriter.removeKarel(k);
         for(Karel k: karelsOnCorner)
         {
-            switch(k.getDir())
-            {
-                case NORTH:
-                    k.setDir(Direction.EAST);
-                    break;
-                case EAST:
-                    k.setDir(Direction.SOUTH);
-                    break;
-                case SOUTH:
-                    k.setDir(Direction.WEST);
-                    break;
-                case WEST:
-                    k.setDir(Direction.NORTH);
-                    break;
-            }
+            Karel newKarel = new Karel(k.getStreet(), k.getAvenue(), Direction.rotateRight(k.getDir()), k.getBeepers(), k.getSource());
+            FileReaderWriter.addKarel(newKarel);
         }
-        for(Karel k: karelsOnCorner)
-            FileReaderWriter.addKarel(k);
+
     }
 
 
@@ -194,8 +181,8 @@ public class KarelWorldViewComponent extends JComponent  {
         Karel[] karels = FileReaderWriter.getKarel(st, av);
         FileReaderWriter.removeKarels(st, av);
         for(Karel k: karels) {
-            k.setBeepers(k.getBeepers() + amt);
-            FileReaderWriter.addKarel(k);
+            Karel newKarel = new Karel(k.getStreet(), k.getAvenue(), k.getDir(), k.getBeepers() + amt, k.getSource());
+            FileReaderWriter.addKarel(newKarel);
         }
     }
 }

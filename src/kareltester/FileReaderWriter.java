@@ -1,17 +1,12 @@
 package kareltester;
 
-import kareltherobot.Directions;
 import kareltherobot.UrRobot;
-import kareltherobot.World;
 
-import javax.swing.*;
 import java.io.*;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.Stack;
 
 /**
  * @author Neil Prajapati
@@ -19,127 +14,10 @@ import java.util.Stack;
  *  This class manages all files. It does this by creating kwld2 or reusing an old kwld2.
  *  Whenever called on by the KarelWorldEditor it will add beepers, walls, and karels.
  *
- *  This class is a whole bunch of utility methods. To use these utility methods one must first call
- *  the static method setUp() which preforms all necessary preparations. Note that calling this multiple times
- *  will not cause any issues so always call this before using any FileReaderWriter methods.
- *  The other utility methods include but are not limited to:
+ *  However, this class is not intended to do operations important controlling operations.
+ *  That should all be relgated to another class. This class is simply an interface to
+ *  preform file io.
  *
- *      File[] getAllKarelsJavaFilesInFolder():
- *          this is for robbie since he has to list the karels we can use. This will retrive the Files
- *          which are .java and implement TestableKarel.
- *
- *      addListener(Kwld2Listener l)
- *          This method allows u to add an event listener. This will register Kwld2Listener l inside
- *          its list of objects that want to be told when the kwld2 file is modified. When the kwld2
- *          file is modified, FileREaderWriter will call the onChange() method of all of Kwld2Listeners
- *          registered. In other words, it makes it possible to be notified when the kwld2 file is changed
- *      removeListener(Kwld2Listener l)
- *          to unsuscribe from notifications from kwld2 file.
- *
- *      Karel[] getKarel(int st, int av)
- *          gets all karels on street, avenue
- *      int getBeepers(int st, int av)
- *          returns number of beepers on street, avenue
- *      boolean hasNSWall(int st, int av)
- *          return true iff there is north south wall on st, av
- *      boolean hasEWwall(int st, int av)
- *          returns true iff there is East west wall on st, av
- *      Direction getWall(int st, int av)
- *          return Direction.NORTH if theres a North south wall on st, av
- *          return Direction.EAST if theres an East west wall on st, av
- *          returns null if there is no walls on st, av
- *      setStreets(int st)
- *      setAvenues(int av)
- *
- *      addKarel(Karel k)
- *      addBeeper(int st, int av)
- *      addBeepers(int st, int av, int amount)
- *      addNSWall(int st, int av)
- *      addEWWall(int st, int av)
- *      setStreets(int number)
- *      setAvenues(int number)
- *
- *      boolean removeAllBeepers(int st, int av)
- *          removes all beepers from corner st, av
- *          returns true if it found the beeper and removed it
- *          return false if no beepers on that corner to begin with
- *      boolean subtractOneBeeper(int st, int av)
- *          self explanatory
- *      boolean removeNSWall(int st, int av)
- *      boolean removeEWWall(int st, int av)
- *      boolean removeKarels(Karel k)
- *
- *
- * TODO: KTerminals.printErr()
- * TODO: finish documentation
- * TODO: Maybe have a right click tip that uses reflection to call any method of the user's choice :D
- * TODO: replace Direction class with Karel Directions to be more consistant.
- * TODO: use classloaders to see if .class file implements TestableKarel
- * TODO: change System.in stream
- * TODO: reset world after each karel option :D
- *
- * TODO: if necessary, change MVC diagram{
- *     currently, the file itself counts as the model,
- *     but, it will be more efficient if their was an object ,not a file, which has these
- *     constant read and write operations from the GUI.
- *
- *     [KarelCorner, KarelCorner, ...]
- *          ^
- *          |
- *   [KarelWorldView Componenent]
- *        ^   |
- *        |   v
- *      [database]     {KarelWorldEditorComponent}
- *       ^  |                   |
- *       [] []  <---------------0
- *       |  v
- *    [KWLD2 FILE]
- *
- *
- *
- *    WorldDatabase:
- *      Sparse3DArray worldItems;
- *
- *      ctor(File kwld2, File kwld)
- *
- *      flushKwld2();
- *      flushKwld();
- *      getCorner(int st, int av): WorldComponents[]
- *      addComponenet(int st, int av, WorldComponent): void
- *
- *      addListener(CacheListener l)
- *      removeListener(CacheListener l)
- *      -fireCornerChanged(int st, int av)
- *
- *   Sparse3DArray<T>:
- *
- *      ArrayList<Sparse3DArrayItem<T>> worldItems
- *
- *      set(int row, int column, T obj):
- *          either finds (by binary search) and adds object to existing (r,c) one
- *          or inserts new Sparse3DArrayItem<T> in natural ordering
- *      get(int row, int column): T
- *      remove(int row, int column, T obj)
- *      remove(int row, int column): T
- *
- *   Sparse3DArrayItem<T>:
- *
- *      int row, column
- *      ArrayList<T> obj;
- *
- *      ctor:(T obj)
- *
- *      +ArrayList<T> getObjects()
- *
- *
- *      compareTo(): by row
- *
- *   CacheListener
- *      void onCornerChange(int st, int av)
- *
- *
- *
- * }
  */
 
 
@@ -160,8 +38,6 @@ public class FileReaderWriter
 
     private static ArrayList<Kwld2Listener> listeners; //the corners which listen to the kwld2 file updates
 
-    //so i can delete extras :D
-    private static Stack<JFrame> executions;
     
 
     //==================================Static-Constructor=================================//
@@ -194,7 +70,6 @@ public class FileReaderWriter
             e.printStackTrace();
         }
 
-        executions = new Stack<>();
 
         //copyToPlusLibs();
 
@@ -253,8 +128,6 @@ public class FileReaderWriter
             }
             if (streets != getStreets() || avenues != getAvenues()) {
                 KTerminalUtils.println("The size of the world has changed. Please restart the app.");
-                KTerminalUtils.println("Yeah...u should seriously listen to me though, after all J' suis la application");
-                KTerminalUtils.println("Yeah... please excuse my intentionally bad french.\n\n Sincerely, \nAntiStipulator");
             }
         }
     }
@@ -799,97 +672,32 @@ public class FileReaderWriter
 
 
 
-    //=================================FINALLLY RUNNING KAREL WORLD :))==================//
-    public static void runKarelTest()
-    {
-        KTerminalUtils.println("Starting KarelTest");
-        while(!executions.empty())
-        {
-            executions.pop().dispose();
-        }
-        KTerminalUtils.clear();
-        //copyToPlusLibs();
-        createKWLD();
-        runNoDriverKarelDriver();
-    }
+    //=================================Running Karel World==================//
 
-    private static void runNoDriverKarelDriver() {
-        //TODO: improve speed control
-        JFrame f = new JFrame("Karel Test");
-        executions.add(f);
-        f.add(World.worldCanvas());
-        f.setVisible(true);
-
-        World.reset();
-        System.out.println(kwldFile.getName());
-        World.readWorld(kwldFile.getName());
-//        World.setBeeperColor(Color.red);
-//        World.setStreetColor(Color.blue);
-//        World.setNeutroniumColor(Color.green.darker().darker());
-        World.setDelay(50);
-        f.setSize(600, 600);
-        f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-
-        World.showSpeedControl(true);
-
-        Karel[] ks = getAllKarels();
-        if(ks.length ==0)  return;
-        PrintStream defualt = System.out;
-        PrintStream stream = new PrintStream(KTerminalUtils.getOutputStream());
-        System.setOut(stream);
-
-        try {
-        
-            File parentDir = new File(
-                    ks[0].getSource().getAbsolutePath().substring(
+    /*packageLocal*/ static Class<?>[] getKarelClasses(Karel[] ks) throws ClassNotFoundException, MalformedURLException {
+        File parentDir = new File(
+                ks[0].getSource().getAbsolutePath().substring(
                         0,
                         ks[0].getSource().getAbsolutePath().lastIndexOf(System.getProperty("file.separator"))
-                    )
-            );
-            URLClassLoader classLoader = new URLClassLoader(
+                )
+        );
+        URLClassLoader classLoader = new URLClassLoader(
                 new URL[]{parentDir.toURI().toURL()}
-            );
-            
-            for(Karel k: ks)
-            {
-                Class<?> karelClass = classLoader.loadClass(k.getSource().getName().replace(".java", ""));
-                Constructor<?> ctor = karelClass.getDeclaredConstructor(int.class, int.class, Directions.Direction.class, int.class);
-                //System.out.println(ctor);
-                Object karelInstance = ctor.newInstance(
-                        k.getStreet(),
-                        k.getAvenue(),
-                        Direction.getKarelDirection( k.getDir()),
-                        k.getBeepers()
-                );
-                Method taskMethod = karelInstance.getClass().getDeclaredMethod("task", new Class[0]);
-                taskMethod.invoke(karelInstance, new Object[0]);
+        );
 
-            }
+        Class<?>[] classes = new Class<?>[ks.length];
+        for (int i = 0; i < ks.length; i++) {
+            Karel k = ks[i];
 
-        } catch (ClassNotFoundException e) {
-            System.out.println("You forgot to compile. Go back in BlueJ and hit the compile button");
-            KTerminalUtils.printlnErr(e);
-        }catch(NoSuchMethodException e) {
-            if(e.getMessage().contains("."))
-                System.out.println("You either forgot to write the method: " + e.getMessage());
-            else
-                System.out.println("You either forgot to write the constructor of " + e.getMessage());
-             KTerminalUtils.printlnErr(e);
-        } catch(IllegalAccessException e)
-        {
-            System.out.println("Be sure that your constructor and the task method is public.");
-             KTerminalUtils.printlnErr(e);
-        }catch (Exception e) {
-            System.out.println("Please report this error: ");
-            e.printStackTrace();
-             KTerminalUtils.printlnErr(e);
-        } finally {
-            System.setOut(defualt);
+            Class<?> karelClass = classLoader.loadClass(k.getSource().getName().replace(".java", ""));
+
+            classes[i] = karelClass;
         }
+        return classes;
     }
 
 
-    private static void createKWLD() {
+    /*packageLocal*/ static void createKWLD() {
 
 
         //read from kwld2 and write anything necessary into kwld
@@ -921,5 +729,7 @@ public class FileReaderWriter
 
     }
 
-
+    /*packageLocal*/ static File getKwldFile() {
+        return kwldFile;
+    }
 }

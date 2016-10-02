@@ -1,6 +1,4 @@
-package kareltester.gui;
-
-import kareltester.*;
+package kareltester;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,10 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Line2D;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.DirectoryNotEmptyException;
 import java.util.HashMap;
 
 /**
@@ -60,6 +56,9 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
 
 
     //===============================JCOMPONENT STUFF=========================//
+    /*
+    That cyclomatic complexity tho
+     */
     @Override
     protected void paintComponent(Graphics g) {
 
