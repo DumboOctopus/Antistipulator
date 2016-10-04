@@ -2,7 +2,9 @@ package kareltester;
 
 import kareltherobot.UrRobot;
 
+import javax.swing.filechooser.*;
 import java.io.*;
+import java.io.FileFilter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -196,20 +198,7 @@ public class FileReaderWriter
                 if(!pathname.getName().contains(".java")) return false;
                 //check inside file if its contains public class [FileName] implements TestableKarel
                 //later use reflection to find if it is instance of UrRobot
-
-                try {
-                    URLClassLoader classLoader = new URLClassLoader(
-                            new URL[]{outerFolder.toURI().toURL()}
-                    );
-                    System.out.println(pathname.getName().replace(".java", ""));
-                    Class<?> karelClass = classLoader.loadClass(pathname.getName().replace(".java", ""));
-                    return UrRobot.class.isAssignableFrom(karelClass);
-                } catch (Throwable e)
-                {
-                    e.printStackTrace();
-                    return false;
-                }
-
+                return true;
             }
         });
         return testableFiles;
