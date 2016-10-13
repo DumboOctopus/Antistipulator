@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=s
+comment0.target=Direction\ parseDirection(java.lang.String)
+comment1.params=d
+comment1.target=java.lang.String\ getDirectionsInterface(Direction)
+comment2.params=d
+comment2.target=kareltherobot.Directions.Direction\ getKarelDirection(Direction)
+numComments=3

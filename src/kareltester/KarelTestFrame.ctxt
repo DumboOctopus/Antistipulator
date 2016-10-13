@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=kwldFile\ ks
+comment0.target=KarelTestFrame(java.io.File,\ Karel[])
+comment1.params=ks
+comment1.target=void\ startTest(Karel[])
+comment2.params=
+comment2.target=void\ clearExecutions()
+numComments=3

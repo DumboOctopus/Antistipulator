@@ -14,7 +14,7 @@ import java.io.OutputStream;
  */
 public class KTerminalUtils {
     private static KTerminal currTerminal;
-    private static boolean showErrors = false;
+    private static boolean showErrors = true;
 
 
     //=====================GETTER=================//
@@ -52,6 +52,8 @@ public class KTerminalUtils {
             }
         });
     }
+    
+   
     public static void show()
     {
         SwingUtilities.invokeLater(new Runnable() {

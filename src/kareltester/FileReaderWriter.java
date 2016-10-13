@@ -1,14 +1,17 @@
 package kareltester;
 
-import kareltherobot.UrRobot;
+import kareltherobot.*;
 
-import javax.swing.filechooser.*;
+import javax.swing.*;
 import java.io.*;
-import java.io.FileFilter;
-import java.net.MalformedURLException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Stack;
+
+import java.net.MalformedURLException;
 
 /**
  * @author Neil Prajapati
@@ -16,10 +19,127 @@ import java.util.ArrayList;
  *  This class manages all files. It does this by creating kwld2 or reusing an old kwld2.
  *  Whenever called on by the KarelWorldEditor it will add beepers, walls, and karels.
  *
- *  However, this class is not intended to do operations important controlling operations.
- *  That should all be relgated to another class. This class is simply an interface to
- *  preform file io.
+ *  This class is a whole bunch of utility methods. To use these utility methods one must first call
+ *  the static method setUp() which preforms all necessary preparations. Note that calling this multiple times
+ *  will not cause any issues so always call this before using any FileReaderWriter methods.
+ *  The other utility methods include but are not limited to:
  *
+ *      File[] getAllKarelsJavaFilesInFolder():
+ *          this is for robbie since he has to list the karels we can use. This will retrive the Files
+ *          which are .java and implement TestableKarel.
+ *
+ *      addListener(Kwld2Listener l)
+ *          This method allows u to add an event listener. This will register Kwld2Listener l inside
+ *          its list of objects that want to be told when the kwld2 file is modified. When the kwld2
+ *          file is modified, FileREaderWriter will call the onChange() method of all of Kwld2Listeners
+ *          registered. In other words, it makes it possible to be notified when the kwld2 file is changed
+ *      removeListener(Kwld2Listener l)
+ *          to unsuscribe from notifications from kwld2 file.
+ *
+ *      Karel[] getKarel(int st, int av)
+ *          gets all karels on street, avenue
+ *      int getBeepers(int st, int av)
+ *          returns number of beepers on street, avenue
+ *      boolean hasNSWall(int st, int av)
+ *          return true iff there is north south wall on st, av
+ *      boolean hasEWwall(int st, int av)
+ *          returns true iff there is East west wall on st, av
+ *      Direction getWall(int st, int av)
+ *          return Direction.NORTH if theres a North south wall on st, av
+ *          return Direction.EAST if theres an East west wall on st, av
+ *          returns null if there is no walls on st, av
+ *      setStreets(int st)
+ *      setAvenues(int av)
+ *
+ *      addKarel(Karel k)
+ *      addBeeper(int st, int av)
+ *      addBeepers(int st, int av, int amount)
+ *      addNSWall(int st, int av)
+ *      addEWWall(int st, int av)
+ *      setStreets(int number)
+ *      setAvenues(int number)
+ *
+ *      boolean removeAllBeepers(int st, int av)
+ *          removes all beepers from corner st, av
+ *          returns true if it found the beeper and removed it
+ *          return false if no beepers on that corner to begin with
+ *      boolean subtractOneBeeper(int st, int av)
+ *          self explanatory
+ *      boolean removeNSWall(int st, int av)
+ *      boolean removeEWWall(int st, int av)
+ *      boolean removeKarels(Karel k)
+ *
+ *
+ * TODO: KTerminals.printErr()
+ * TODO: finish documentation
+ * TODO: Maybe have a right click tip that uses reflection to call any method of the user's choice :D
+ * TODO: replace Direction class with Karel Directions to be more consistant.
+ * TODO: use classloaders to see if .class file implements TestableKarel
+ * TODO: change System.in stream
+ * TODO: reset world after each karel option :D
+ *
+ * TODO: if necessary, change MVC diagram{
+ *     currently, the file itself counts as the model,
+ *     but, it will be more efficient if their was an object ,not a file, which has these
+ *     constant read and write operations from the GUI.
+ *
+ *     [KarelCorner, KarelCorner, ...]
+ *          ^
+ *          |
+ *   [KarelWorldView Componenent]
+ *        ^   |
+ *        |   v
+ *      [database]     {KarelWorldEditorComponent}
+ *       ^  |                   |
+ *       [] []  <---------------0
+ *       |  v
+ *    [KWLD2 FILE]
+ *
+ *
+ *
+ *    WorldDatabase:
+ *      Sparse3DArray worldItems;
+ *
+ *      ctor(File kwld2, File kwld)
+ *
+ *      flushKwld2();
+ *      flushKwld();
+ *      getCorner(int st, int av): WorldComponents[]
+ *      addComponenet(int st, int av, WorldComponent): void
+ *
+ *      addListener(CacheListener l)
+ *      removeListener(CacheListener l)
+ *      -fireCornerChanged(int st, int av)
+ *
+ *   Sparse3DArray<T>:
+ *
+ *      ArrayList<Sparse3DArrayItem<T>> worldItems
+ *
+ *      set(int row, int column, T obj):
+ *          either finds (by binary search) and adds object to existing (r,c) one
+ *          or inserts new Sparse3DArrayItem<T> in natural ordering
+ *      get(int row, int column): T
+ *      remove(int row, int column, T obj)
+ *      remove(int row, int column): T
+ *
+ *   Sparse3DArrayItem<T>:
+ *
+ *      int row, column
+ *      ArrayList<T> obj;
+ *
+ *      ctor:(T obj)
+ *
+ *      +ArrayList<T> getObjects()
+ *
+ *
+ *      compareTo(): by row
+ *
+ *   CacheListener
+ *      void onCornerChange(int st, int av)
+ *
+ *
+ *
+ * }
  */
 
 
@@ -27,34 +147,27 @@ public class FileReaderWriter
 {
     //===================================ATRRIBUTES===============================/
 
-    private static final String NEW_LINE = System.getProperty("line.separator");
-    private static final String FILE_SEP = System.getProperty("file.separator");
-
+    private static final String NEW_LINE = System.getProperty("line.separator");;
     private static File kwld2File; //Writer will be created when necessary
     private static File kwldFile; //^ same thing as above
     private static File outerFolder;
 
-    //to prevent clearWorld and copyWorld from occuring simultaneously :D
-    private final static Object WORLD_MODIFYING_LOCK = new Object();
-
-
     private static ArrayList<Kwld2Listener> listeners; //the corners which listen to the kwld2 file updates
 
-    
 
     //==================================Static-Constructor=================================//
     static {
-
+        KTerminalUtils.println("yess");
+        ////FOR DEBUGGING PATH ERRORS IN Z DRIVE
         String tmp = FileReaderWriter.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         String pathToOuterFolder = tmp.substring(0, tmp.lastIndexOf(tmp.charAt(0)));
-        outerFolder = new File(pathToOuterFolder);
-
-
-        File filesFolder = new File(pathToOuterFolder + FILE_SEP + "AntiStipulator Files");
-        if(!filesFolder.exists()) filesFolder.mkdir();
-
-
-        kwld2File = new File(pathToOuterFolder + FILE_SEP + "AntiStipulator Files" + FILE_SEP + "$KarelsHome.kwld2");
+        
+        //create folder if doesnt exists
+        File folder = new File(pathToOuterFolder + System.getProperty("file.separator") + "AntStipulator Files");
+        folder.mkdir();
+        
+        
+        kwld2File = new File(pathToOuterFolder + System.getProperty("file.separator") + "AntStipulator Files" + System.getProperty("file.separator") +"$KarelsHome.kwld2");
 
 
         //creates file if not created already else does nothing
@@ -64,7 +177,7 @@ public class FileReaderWriter
             e.printStackTrace();
         }
 
-        kwldFile = new File(pathToOuterFolder + FILE_SEP + "AntiStipulator Files" + FILE_SEP + "$KarelsHome.kwld");
+        kwldFile = new File(pathToOuterFolder + System.getProperty("file.separator") + "AntStipulator Files" + System.getProperty("file.separator") + "$KarelsHome.kwld");
         try {
             kwldFile.createNewFile();
 
@@ -72,12 +185,12 @@ public class FileReaderWriter
             e.printStackTrace();
         }
 
-
         //copyToPlusLibs();
+        
+        outerFolder = new File(pathToOuterFolder);
 
         listeners = new ArrayList<Kwld2Listener>();
-
-
+        
         //cleaning kwld2 before start
         Karel[] karelsInKwld2 = getAllKarels();
         File[] karelFilesInDir = getAllKarelsJavaFilesInFolder();
@@ -94,76 +207,69 @@ public class FileReaderWriter
         }
     }
 
-
-    //================================ENTIRE WORLD MODIFYING METHODS=======================//
     public static void copyFrom(File f)
     {
-        //TODO: check wheter this could deadlock.
-        synchronized (WORLD_MODIFYING_LOCK) {
-            int streets = getStreets();
-            int avenues = getAvenues();
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader(f));
-                StringBuilder builder = new StringBuilder();
+        int streets = getStreets();
+        int avenues = getAvenues();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(f));
+            StringBuilder builder = new StringBuilder();
 
-                //the reason why we use string builder rather than direct copy
-                //is so we minimize file writing which is quite expensive. Heh.
-                String line = null;
-                while ((line = reader.readLine()) != null) {
-                    builder.append(line).append(NEW_LINE);
-                }
-                reader.close();
-
-                BufferedWriter bw = new BufferedWriter(new FileWriter(kwld2File));
-                bw.write(builder.toString());
-                bw.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+            //the reason why we use string builder rather than direct copy
+            //is so we minimize file writing which is quite expensive. Heh.
+            String line = null;
+            while((line = reader.readLine()) != null)
+            {
+                builder.append(line).append(NEW_LINE);
             }
+            reader.close();
 
-            //fire kwld2 changed for like everything :D
-            for (int av = 1; av <= getAvenues(); av++) {
-                for (int st = 1; st <= getStreets(); st++) {
-                    for (Kwld2Listener listener : listeners)
-                        listener.onChange(st, av);
-                }
-            }
-            if (streets != getStreets() || avenues != getAvenues()) {
-                KTerminalUtils.println("The size of the world has changed. Please restart the app.");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(kwld2File));
+            bw.write(builder.toString());
+            bw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //fire kwld2 changed for like everything :D
+        for (int av = 1; av <= getAvenues(); av++) {
+            for (int st = 1; st <= getStreets() ; st++) {
+                for(Kwld2Listener listener: listeners)
+                    listener.onChange(st, av);
             }
         }
+        if(streets != getStreets() || avenues != getAvenues())
+        {
+            KTerminalUtils.println("The size of the world has changed. Please restart the app.");
+            KTerminalUtils.println("Yeah...u should seriously listen to me though, after all J' suis la application");
+            KTerminalUtils.println("Yeah... please excuse my intentionally bad french.\n\n Sincerely, \nAntiStipulator");
+        }
+
     }
 
 
-     public static void clearWorld() {
-         synchronized (WORLD_MODIFYING_LOCK) {
-             int totalAvenues = getAvenues();
-             int totalStreets = getStreets();
-             BufferedWriter bw = null;
-             try {
-                 bw = new BufferedWriter(new FileWriter(kwld2File, false));
-                 bw.write("streets " + totalStreets + NEW_LINE + "avenues " + totalAvenues);
-                 bw.close();
-                 for (int av = 1; av <= totalAvenues; av++) {
-                     for (int st = 1; st <= totalStreets; st++) {
-                         for (Kwld2Listener listener : listeners)
-                             listener.onChange(st, av);
-                     }
-                 }
+     public static void clearWorld()
+    {
+        int totalAves = getAvenues();
+        int totalStres = getStreets();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(kwld2File));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(kwld2File, false));
+            bw.write("streets " + totalStres + NEW_LINE+"avenues " + totalAves);
+            bw.close();
+            for (int av = 1; av <= totalAves; av++) {
+                for (int st = 1; st <= totalStres ; st++) {
+                    for(Kwld2Listener listener: listeners)
+                        listener.onChange(st, av);
+                }
+            }
 
-             } catch (FileNotFoundException e) {
-                 System.out.println("Oh noes, the kwld2 can't be found for some reason.. T.T");
-             } catch (IOException e) {
-                 e.printStackTrace();
-             } finally {
-                 try {
-                     bw.close();
-                 } catch (IOException e) {
-                     e.printStackTrace();
-                 }
-             }
-         }
-     }
+        } catch (FileNotFoundException e) {
+            System.out.println("Oh noes, the kwld2 can't be found for some reason.. T.T");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     //=======================================LISTENERS====================================//
     private static void fireKwld2Changed(int[] streets, int[] avenue)
@@ -196,9 +302,9 @@ public class FileReaderWriter
             public boolean accept(File pathname) {
                 //check if its .java
                 if(!pathname.getName().contains(".java")) return false;
-                //check inside file if its contains public class [FileName] implements TestableKarel
-                //later use reflection to find if it is instance of UrRobot
+                
                 return true;
+                
             }
         });
         return testableFiles;
@@ -363,10 +469,7 @@ public class FileReaderWriter
                 new int[]{av}
         );
     }
-    /*
-    Note. must be synchronized to prevent 2 editing things at once.
-     */
-    public synchronized static void addBeeper(int st, int av)
+    public static void addBeeper(int st, int av)
     {
         //beepers [st] [av] [#]
         String signature = "beepers " + st + " " + av + " " ;
@@ -441,9 +544,9 @@ public class FileReaderWriter
 
     //------helpers
     /*
-    this method simply adds the line, if it already exists then does nothing.
+    this method simply adds the line, if it already exists then does nothing
      */
-    private synchronized static void appendToKwld2(String toAppend) {
+    private static void appendToKwld2(String toAppend) {
         if(findFirstInKwld2(toAppend) != null) return; //already exists in file
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(kwld2File, true));
@@ -462,9 +565,8 @@ public class FileReaderWriter
     first parameter is the "signature" of the text. The method will first search for this signature. If it finds it
     it will simply replace the back end of the signature with the "ending".
     If it can't find signature it will simply append "signature" + "ending"
-    Note, multiple edits might occur concurntly. Thus, must be synhcronized.
      */
-    private synchronized static void smartAppendToKwld2(String signature, String ending)
+    private static void smartAppendToKwld2(String signature, String ending)
     {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(kwld2File));
@@ -661,9 +763,13 @@ public class FileReaderWriter
 
 
 
-    //=================================Running Karel World==================//
+    //=================================FINALLLY RUNNING KAREL WORLD :))==================//
 
-    /*packageLocal*/ static Class<?>[] getKarelClasses(Karel[] ks) throws ClassNotFoundException, MalformedURLException {
+    public static File getKwldFile() {
+        return kwldFile;
+    }
+    
+    public static Class<?>[] getKarelClasses(Karel[] ks) throws ClassNotFoundException, MalformedURLException {
         File parentDir = new File(
                 ks[0].getSource().getAbsolutePath().substring(
                         0,
@@ -684,9 +790,8 @@ public class FileReaderWriter
         }
         return classes;
     }
-
-
-    /*packageLocal*/ static void createKWLD() {
+    
+    public static void createKWLD() {
 
 
         //read from kwld2 and write anything necessary into kwld
@@ -711,14 +816,14 @@ public class FileReaderWriter
             bw.write(builder.toString());
             bw.close();
         } catch (FileNotFoundException e) {
+            KTerminalUtils.printErr(e);
             System.out.println("Oh noes, the kwld2 can't be found for some reason.. T.T");
         } catch (IOException e) {
             e.printStackTrace();
+            KTerminalUtils.printErr(e);
         }
 
     }
 
-    /*packageLocal*/ static File getKwldFile() {
-        return kwldFile;
-    }
+
 }

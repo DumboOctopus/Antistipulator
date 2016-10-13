@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.params=txtara
+comment0.target=TextAreaOutputStream(javax.swing.JTextArea)
+comment1.params=txtara\ maxlin
+comment1.target=TextAreaOutputStream(javax.swing.JTextArea,\ int)
+comment2.params=
+comment2.target=void\ clear()
+comment2.text=Clear\ the\ current\ console\ text\ area.
+comment3.params=
+comment3.target=void\ close()
+comment4.params=
+comment4.target=void\ flush()
+comment5.params=val
+comment5.target=void\ write(int)
+comment6.params=ba
+comment6.target=void\ write(byte[])
+comment7.params=ba\ str\ len
+comment7.target=void\ write(byte[],\ int,\ int)
+comment8.params=ba\ str\ len
+comment8.target=java.lang.String\ bytesToString(byte[],\ int,\ int)
+numComments=9

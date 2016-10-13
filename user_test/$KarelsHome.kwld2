@@ -1,6 +1,91 @@
-streets 10
+KarelWorld
 avenues 10
-beepers 6 8 1
+beepers 8 10 0
 
-_karel 7 5 NORTH 0 ABCBot.java 
-_karel 8 5 NORTH 0 ABCBot.java 
+eastwestwalls 8 7 7
+eastwestwalls 8 8 8
+eastwestwalls 8 9 9
+northsouthwalls 10 8 8
+beepers 8 8 10
+beepers 8 7 2
+beepers 7 8 21
+
+
+northsouthwalls 6 8 8
+eastwestwalls 7 6 6
+northsouthwalls 5 7 7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+beepers 7 6 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+beepers 6 3 1
+beepers 7 9 1
+
+
+
+streets 12
+beepers 12 3 1
+beepers 11 7 1
+beepers 5 7 1
+
+
+
+
+beepers 6 6 13
+beepers 1 7 1
+
+_karel 10 5 NORTH 0 TestR.java 

@@ -10,6 +10,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.util.Stack;
+import java.awt.event.*;
 
 /**
  * Created by neilprajapati on 10/1/16.
@@ -20,14 +21,33 @@ public class KarelTestFrame extends JFrame {
     private static Stack<KarelTestFrame> executions = new Stack<>();
 
 
-
     public KarelTestFrame(File kwldFile, Karel[] ks)
     {
         //TODO: improve speed control
         super("Karel Test");
+        
+        System.out.println("Initializing Frame..");
         executions.add(this);
         add(World.worldCanvas());
         setVisible(true);
+        /*
+        addWindowListener(new WindowAdapter(){
+                public void windowClosing(WindowEvent e)
+                {
+                    System.out.println("i was here");
+                    dispose();
+                }
+                public void  windowClosed(WindowEvent e)
+                {
+                    System.out.println("i was here a");
+                    World.stop();
+                    dispose();
+                }
+                public void windowStateChanged(WindowEvent e){
+                    System.out.println("i was here  b ");
+                    dispose();
+                }
+        });*/
 
         World.reset();
         System.out.println(kwldFile.getName());
@@ -36,7 +56,9 @@ public class KarelTestFrame extends JFrame {
         setSize(600, 600);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         World.showSpeedControl(true);
-
+        
+        KTerminalUtils.println("Starting Test...");
+        
         startTest(ks);
     }
 
@@ -50,16 +72,17 @@ public class KarelTestFrame extends JFrame {
             return;
         } catch (MalformedURLException e) {
             e.printStackTrace();
+            KTerminalUtils.println("Error 1");
             return;
         }
-
+         KTerminalUtils.println("Found classes..\n\n-----");
         PrintStream defualt = System.out;
         PrintStream stream = new PrintStream(KTerminalUtils.getOutputStream());
-        System.setOut(stream);
+        //System.setOut(stream);
         try{
             for (int i = 0; i < karelClasses.length; i++) {
                 Class<?> karelClass = karelClasses[i];
-
+                KTerminalUtils.println(karelClass);
                 Constructor<?> ctor = karelClass.getDeclaredConstructor(int.class, int.class, Directions.Direction.class, int.class);
                 //System.out.println(ctor);
                 Object karelInstance = ctor.newInstance(
@@ -67,7 +90,7 @@ public class KarelTestFrame extends JFrame {
                         ks[i].getAvenue(),
                         Direction.getKarelDirection(ks[i].getDir()),
                         ks[i].getBeepers()
-                );
+                    );
                 Method taskMethod = karelInstance.getClass().getDeclaredMethod("task", new Class[0]);
                 taskMethod.invoke(karelInstance, new Object[0]);
             }
@@ -90,7 +113,6 @@ public class KarelTestFrame extends JFrame {
             System.setOut(defualt);
         }
     }
-
 
 
     protected static void clearExecutions(){

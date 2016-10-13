@@ -1,0 +1,7 @@
+streets 10
+avenues 10
+
+_karel 9 4 NORTH 0 ABCBot.java 
+beepers 7 2 1
+beepers 4 6 1
+beepers 9 5 1

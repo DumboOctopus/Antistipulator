@@ -1,8 +1,13 @@
+import kareltester.*;
+import kareltherobot.*;
 import java.util.Scanner;
 
-public class TestR{
+public class TestR extends Robot implements TestableKarel{
 
-   
+    public TestR(int st, int av, Direction dir, int be)
+    {
+        super(st, av, dir, be);
+    }
 
     public void task()
     {
