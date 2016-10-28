@@ -2,6 +2,7 @@ package kareltester;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -149,7 +150,10 @@ public class KTerminalUtils {
 
             stream = new TextAreaOutputStream(textArea);
 
-            setBounds(0, 0, width, height);
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            int screenSizenwidth = (int) screenSize.getWidth();
+            int screenSizenHeight = (int) screenSize.getHeight();
+            setBounds(screenSizenwidth -width-10, 0, width, height);
             setVisible(true);
             setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
             addWindowListener(new WindowAdapter()

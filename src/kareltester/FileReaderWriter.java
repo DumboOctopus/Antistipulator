@@ -5,6 +5,9 @@ import kareltherobot.UrRobot;
 import kareltherobot.World;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -799,26 +802,25 @@ public class FileReaderWriter
         KTerminalUtils.clear();
         //copyToPlusLibs();
         createKWLD();
-        runNoDriverKarelDriver();
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                runNoDriverKarelDriver();
+            }
+        });
     }
 
     private static void runNoDriverKarelDriver() {
         //TODO: improve speed control
-        JFrame f = new JFrame("Karel Test");
-        executions.add(f);
-        f.add(World.worldCanvas());
-        f.setVisible(true);
 
         World.reset();
-        System.out.println(kwldFile.getName());
-        World.readWorld(kwldFile.getName());
+        World.setVisible(true);
+        World.readWorld(kwldFile.getAbsolutePath());
 //        World.setBeeperColor(Color.red);
 //        World.setStreetColor(Color.blue);
 //        World.setNeutroniumColor(Color.green.darker().darker());
         World.setDelay(50);
-        f.setSize(600, 600);
-        f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-
         World.showSpeedControl(true);
 
         Karel[] ks = getAllKarels();
@@ -828,7 +830,7 @@ public class FileReaderWriter
         System.setOut(stream);
 
         try {
-        
+
             File parentDir = new File(
                     ks[0].getSource().getAbsolutePath().substring(
                         0,
@@ -838,7 +840,7 @@ public class FileReaderWriter
             URLClassLoader classLoader = new URLClassLoader(
                 new URL[]{parentDir.toURI().toURL()}
             );
-            
+
             for(Karel k: ks)
             {
                 Class<?> karelClass = classLoader.loadClass(k.getSource().getName().replace(".java", ""));
@@ -888,7 +890,8 @@ public class FileReaderWriter
             StringBuilder builder = new StringBuilder();
 
             builder.append("KarelWorld").append(NEW_LINE);
-
+            builder.append("streets ").append(getStreets()).append(NEW_LINE);
+            builder.append("avenues ").append(getAvenues()).append(NEW_LINE);
             String line;
             while((line = reader.readLine()) != null)
             {
