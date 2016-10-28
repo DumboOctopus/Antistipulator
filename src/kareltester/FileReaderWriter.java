@@ -324,18 +324,7 @@ public class FileReaderWriter
                 //check inside file if its contains public class [FileName] implements TestableKarel
                 //later use reflection to find if it is instance of UrRobot
 
-                try {
-                    URLClassLoader classLoader = new URLClassLoader(
-                            new URL[]{outerFolder.toURI().toURL()}
-                    );
-                    System.out.println(pathname.getName().replace(".java", ""));
-                    Class<?> karelClass = classLoader.loadClass(pathname.getName().replace(".java", ""));
-                    return UrRobot.class.isAssignableFrom(karelClass);
-                } catch (Throwable e)
-                {
-                    e.printStackTrace();
-                    return false;
-                }
+                return true;
 
             }
         });
@@ -870,10 +859,10 @@ public class FileReaderWriter
             System.out.println("You forgot to compile. Go back in BlueJ and hit the compile button");
             KTerminalUtils.printlnErr(e);
         }catch(NoSuchMethodException e) {
-            if(e.getMessage().contains("."))
-                System.out.println("You either forgot to write the method: " + e.getMessage());
+            if(!e.getMessage().contains("<init>"))
+                System.out.println("You forgot to write the method: " + e.getMessage());
             else
-                System.out.println("You either forgot to write the constructor of " + e.getMessage());
+                System.out.println("You forgot to write the constructor of " + e.getMessage().replace("<init>", ""));
              KTerminalUtils.printlnErr(e);
         } catch(IllegalAccessException e)
         {
