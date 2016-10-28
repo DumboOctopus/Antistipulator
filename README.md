@@ -1,5 +1,4 @@
 # Antistipulator
-To test the karels...without hassel. Why do more work when u can do less...Worked on with Lydia Chan, Max Nyguyen and Robbie Robertson
 Note, this project is design for AP Computer Science Children using BlueJ. Thus, these instructions will focus on utilizing this app in a BlueJ context. If you are another fellow Kareler who is not using BlueJ, please see the Notes at the bottom.
 
 ##Instructions:
