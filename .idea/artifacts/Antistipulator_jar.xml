@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Antistipulator:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Antistipulator_jar</output-path>
+    <root id="archive" name="Antistipulator.jar">
+      <element id="module-output" name="Antistipulator" />
+      <element id="dir-copy" path="$PROJECT_DIR$/+libs" />
+    </root>
+  </artifact>
+</component>

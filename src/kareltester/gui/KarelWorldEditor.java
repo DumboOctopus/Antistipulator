@@ -2,7 +2,6 @@ package kareltester.gui;
 
 import kareltester.FileReaderWriter;
 import kareltester.KTerminalUtils;
-import kareltester.Kwld2Listener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,35 +17,84 @@ public class KarelWorldEditor extends JFrame{
     private JComboBox<Option> worldModifyingOptions;
     private JComboBox<Option> readFileOptions;
 
-    private Option[] standerdOptions;
+    private Option[] standardOptions;
     private JButton btnRefresh;
     private JButton btnRun;
 
 
-    //TODO: add modifying street and avenue
     //TODO; refactor comboBox into special class
-    //TODO: add beeper to karel mode. remove beeper from karel mode
 
     public KarelWorldEditor()
     {
-        FileReaderWriter.setUp();
         worldViewComponent = new KarelWorldViewComponent();
         add(worldViewComponent, BorderLayout.CENTER);
         worldViewComponent.addBeeperMode();
 
 
         //-------------jPanel
+        setUpJPanel();
+
+        //--------------
         JPanel panel = new JPanel();
+
+        //streets
+        panel.add(new JLabel("Streets: "));
+        final JTextField streetField = new JTextField(FileReaderWriter.getStreets() + "");
+        streetField.setColumns(3);
+        streetField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    int i = Integer.parseInt(streetField.getText());
+                    FileReaderWriter.setStreets(i);
+                    KTerminalUtils.println("Streets set to " + FileReaderWriter.getStreets());
+                    KTerminalUtils.println("Now please restart the program to view changes");
+                } catch (Exception e1)
+                {
+                    streetField.setText(""+FileReaderWriter.getStreets());
+                }
+            }
+        });
+        panel.add(streetField);
+
+        //avenues
+        panel.add(new JLabel("Avenues: "));
+        final JTextField avenuesField = new JTextField(FileReaderWriter.getAvenues() + "");
+        avenuesField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    int i = Integer.parseInt(avenuesField.getText());
+                    FileReaderWriter.setAvenues(i);
+                    KTerminalUtils.println("Avenues set to " + FileReaderWriter.getAvenues());
+                    KTerminalUtils.println("Now please restart the program to view changes");
+                }catch (Exception he)
+                {
+                    avenuesField.setText(""+FileReaderWriter.getAvenues());
+                }
+            }
+        });
+        panel.add(avenuesField);
+
+        add(panel, BorderLayout.SOUTH);
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setVisible(true);
+        setSize(770, 650);
+    }
+
+    private void setUpJPanel() {
+
         //panel.setLayout(new GridLayout(5,2));
 
         //refresh Button
+        JToolBar toolBar = new JToolBar();
         btnRefresh = new JButton("Refresh Karels");
         btnRefresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 File[] karelFiles = FileReaderWriter.getAllKarelsJavaFilesInFolder();
-                System.out.println("Ran");
-                for(int i = standerdOptions.length; i < worldModifyingOptions.getItemCount(); i ++)
+                for(int i = standardOptions.length; i < worldModifyingOptions.getItemCount(); i ++)
                 {
                     Option option = worldModifyingOptions.getItemAt(i);
                     System.out.println("Option: " + option.toString());
@@ -79,7 +127,7 @@ public class KarelWorldEditor extends JFrame{
 
             }
         });
-        panel.add(btnRefresh);
+        toolBar.add(btnRefresh);
 
         //setUp run button
         btnRun = new JButton("Run");
@@ -97,26 +145,27 @@ public class KarelWorldEditor extends JFrame{
                 worker.execute();
             }
         });
-        panel.add(btnRun);
-
+        toolBar.add(btnRun);
 
 
         //setUp standardOptions
         setUpStandardOptions();
 
         //setUp comboBox
+        JPanel panel = new JPanel();
         panel.add(new JLabel("Click Mode:"));
         setUpComboBox();
         panel.add(worldModifyingOptions);
-
-
+        toolBar.add(panel);
 
         //set up read from file button
+        panel = new JPanel();
+
         panel.add(new JLabel("Copy Kwld: "));
         File[] kwlds = FileReaderWriter.getAllKwldFilesInFolder();
         Option[] kwldOptions = new Option[kwlds.length];
         for (int i = 0; i < kwlds.length; i++) {
-            File curr = kwlds[i];
+            final File curr = kwlds[i];
             kwldOptions[i] = new Option(
                     kwlds[i].getName(),
                     new ActionListener() {
@@ -136,16 +185,24 @@ public class KarelWorldEditor extends JFrame{
             }
         });
         panel.add(readFileOptions);
-        panel.setSize(50, 600);
-        add(panel, BorderLayout.NORTH);
+        toolBar.add(panel);
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setVisible(true);
-        setSize(770, 650);
+
+        JButton clrButton = new JButton("Clear World");
+        clrButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                FileReaderWriter.clearWorld();
+            }
+        });
+        toolBar.add(clrButton);
+
+
+        add(toolBar, BorderLayout.NORTH);
+
     }
 
     private void setUpStandardOptions() {
-        standerdOptions = new Option[]{
+        standardOptions = new Option[]{
                 new Option(
                         "Add Beeper",
                         new ActionListener() {
@@ -191,7 +248,7 @@ public class KarelWorldEditor extends JFrame{
                             }
                         }
                 ),
-                 new Option(
+                new Option(
                         "Remove EW Wall",
                         new ActionListener() {
                             @Override
@@ -223,7 +280,7 @@ public class KarelWorldEditor extends JFrame{
                         new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                worldViewComponent.addBeeperTokarelMode();
+                                worldViewComponent.addBeeperToKarelMode();
                             }
                         }
                 ),
@@ -241,13 +298,13 @@ public class KarelWorldEditor extends JFrame{
 
     private void setUpComboBox() {
         File[] karelsFiles = FileReaderWriter.getAllKarelsJavaFilesInFolder();
-        Option[] so = new Option[standerdOptions.length + karelsFiles.length];
-        for (int i = 0; i < standerdOptions.length; i++) {
-            so[i] = standerdOptions[i];
+        Option[] so = new Option[standardOptions.length + karelsFiles.length];
+        for (int i = 0; i < standardOptions.length; i++) {
+            so[i] = standardOptions[i];
         }
         for (int i = 0; i < karelsFiles.length; i++) {
             File f = karelsFiles[i];
-            so[i + standerdOptions.length] = getOptionFromFile(f);
+            so[i + standardOptions.length] = getOptionFromFile(f);
         }
         worldModifyingOptions = new JComboBox<>(so);
         worldModifyingOptions.addActionListener(new ActionListener() {

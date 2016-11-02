@@ -80,16 +80,16 @@ public class FileReaderWriter
     private static File mainDriver; //Writer will be created when necessary
     private static File mainDriverJ;
     private static ArrayList<Kwld2Listener> listeners;
-    private static boolean inited = false;
+    private static final String NEW_LINE = System.getProperty("line.separator");;
 
     private static Stack<Process> mainDriverProcesses;
 
 
 
     //==================================psuedo COnstrutor=================================//
-    public static void setUp()
+    static
     {
-        if(inited) return;
+
         String tmp = FileReaderWriter.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         String pathToOuterFolder = tmp.substring(0, tmp.lastIndexOf(tmp.charAt(0)));
         kwld2File = new File(pathToOuterFolder + "/$KarelsHome.kwld2");
@@ -125,7 +125,7 @@ public class FileReaderWriter
         copyToPlusLibs();
 
         listeners = new ArrayList<Kwld2Listener>();
-        inited = true;
+
     }
 
     public static void copyFrom(File f)
@@ -157,6 +157,30 @@ public class FileReaderWriter
             }
         }
     }
+
+    public static void clearWorld()
+    {
+        int totalAves = getAvenues();
+        int totalStres = getStreets();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(kwld2File));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(kwld2File, false));
+            bw.write("streets " + totalStres + NEW_LINE+"avenues " + totalAves);
+            bw.close();
+            for (int av = 1; av <= totalAves; av++) {
+                for (int st = 1; st <= totalStres ; st++) {
+                    for(Kwld2Listener listener: listeners)
+                        listener.onChange(st, av);
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Oh noes, the kwld2 can't be found for some reason.. T.T");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 
@@ -359,6 +383,7 @@ public class FileReaderWriter
 
     private static String findFirstInKwld2(String keyword)
     {
+        System.out.println(kwld2File);
         try {
             BufferedReader reader = new BufferedReader(new FileReader(kwld2File));
             String line;
@@ -575,7 +600,7 @@ public class FileReaderWriter
                         newNumBeepers = 0;
                         couldSubtract = false;
                     }
-                    builder.append(signature).append(newNumBeepers).append("\n");
+                    builder.append(signature).append(newNumBeepers).append(NEW_LINE);
 
                     foundLine = true;
                 }
@@ -668,7 +693,7 @@ public class FileReaderWriter
             {
                 //if its not the signature...then add it otherwise don't cuz we delete that
                 if (!line.contains(signature)) {
-                    builder.append(line).append("\n");//TODO CHECK IF \n is okies
+                    builder.append(line).append(NEW_LINE);//TODO CHECK IF \n is okies
                 } else
                 {
                     foundLine = true;
@@ -848,8 +873,8 @@ public class FileReaderWriter
             String line;
             while((line = reader.readLine()) != null)
             {
-                if(!line.contains("_") && !line.equals("\n") && !line.contains("KarelWorld")) {
-                    builder.append(line).append("\n");
+                if(!line.contains("_") && !line.equals(NEW_LINE) && !line.contains("KarelWorld")) {
+                    builder.append(line).append(NEW_LINE);
                 }
             }
             reader.close();
@@ -911,7 +936,7 @@ public class FileReaderWriter
                 String nameOfClass = nameOfFile.substring(0, nameOfFile.length() - 5);
                 String constructor = "new " + nameOfClass + "(" + k.getStreet() + "," + k.getAvenue() + "," + Direction.getDirectionsInterface(k.getDir()) + "," + k.getBeepers() + ");";
 
-                builder.append("\t\t\tTestableKarel k" + "= "+constructor + "\n");
+                builder.append("\t\t\tTestableKarel k" + "= "+constructor + NEW_LINE);
                 builder.append("\t\t\tk.task();\n");
                 builder.append("\t\t}").append("catch(Exception e){}\n");
             }
@@ -1018,17 +1043,17 @@ public class FileReaderWriter
 
             for(Karel k: ks)
             {
-                builder.append("KLabel").append(lblNumber).append(":").append("\n");
+                builder.append("KLabel").append(lblNumber).append(":").append(NEW_LINE);
 
                 // construction of karel
                 String nameOfFile = k.getSource().getName();
                 String nameOfClass = nameOfFile.substring(0, nameOfFile.length() - 5);
-                builder.append("\tnew " + nameOfClass).append("\n");
-                builder.append("\tdup").append("\n");
-                builder.append("\tbipush ").append(k.getStreet()).append("\n");
-                builder.append("\tbipush ").append(k.getAvenue()).append("\n");
+                builder.append("\tnew " + nameOfClass).append(NEW_LINE);
+                builder.append("\tdup").append(NEW_LINE);
+                builder.append("\tbipush ").append(k.getStreet()).append(NEW_LINE);
+                builder.append("\tbipush ").append(k.getAvenue()).append(NEW_LINE);
                 builder.append("\tgetstatic $MainDriver/"+Direction.getDirectionsInterface(k.getDir())+" Lkareltherobot/Directions$Direction;\n");
-                builder.append("\tbipush ").append(k.getBeepers()).append("\n");
+                builder.append("\tbipush ").append(k.getBeepers()).append(NEW_LINE);
 
                 builder.append("\tinvokespecial "+nameOfClass+"/<init>(IILkareltherobot/Directions$Direction;I)V\n");
                 builder.append(
@@ -1039,7 +1064,7 @@ public class FileReaderWriter
                 //invokeinterface karel
                 builder.append("KLabelInvokeTask" + lblNumber + ":\n");
                 builder.append("\tinvokeinterface kareltester/TestableKarel/task()V 1\n");
-                builder.append("\tgoto KLabelNoExceptionPath"+lblNumber + "\n");
+                builder.append("\tgoto KLabelNoExceptionPath"+lblNumber + NEW_LINE);
 
                 //catch block
                 builder.append(
@@ -1056,7 +1081,7 @@ public class FileReaderWriter
                 //if its the last one, stick a return on it. :D
                 if(lblNumber == ks.length - 1) builder.append("\treturn\n");
 
-                builder.append(".catch java/lang/Exception from KLabel"+lblNumber+" to KLabelInvokeTask"+lblNumber+" using KLabelCatch" + lblNumber + "\n");
+                builder.append(".catch java/lang/Exception from KLabel"+lblNumber+" to KLabelInvokeTask"+lblNumber+" using KLabelCatch" + lblNumber + NEW_LINE);
 
                 lblNumber++;
             }

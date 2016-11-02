@@ -161,16 +161,11 @@ public class KarelWorldViewComponent extends JComponent  {
         };
     }
 
-    public void addBeeperTokarelMode() {
+    public void addBeeperToKarelMode() {
         onClickAction = new CornerClickListener() {
             @Override
             public void onClick(int st, int av) {
-                Karel[] karels = FileReaderWriter.getKarel(st, av);
-                FileReaderWriter.removeKarels(st, av);
-                for(Karel k: karels) {
-                    k.setBeepers(k.getBeepers() + 1);
-                    FileReaderWriter.addKarel(k);
-                }
+                addBeeperToKarel(st, av, 1);
 
             }
         };
@@ -180,17 +175,20 @@ public class KarelWorldViewComponent extends JComponent  {
         onClickAction = new CornerClickListener() {
             @Override
             public void onClick(int st, int av) {
-                Karel[] karels = FileReaderWriter.getKarel(st, av);
-                FileReaderWriter.removeKarels(st, av);
-                for(Karel k: karels) {
-                    k.setBeepers(k.getBeepers() - 1);
-                    FileReaderWriter.addKarel(k);
-                }
+                addBeeperToKarel(st, av, -1);
 
             }
         };
     }
 
+    protected void addBeeperToKarel(int st, int av, int amt) {
+        Karel[] karels = FileReaderWriter.getKarel(st, av);
+        FileReaderWriter.removeKarels(st, av);
+        for(Karel k: karels) {
+            k.setBeepers(k.getBeepers() + amt);
+            FileReaderWriter.addKarel(k);
+        }
+    }
 
     @Override
     public Dimension getPreferredSize() {

@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 import java.awt.geom.Line2D;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 
 /**
  * Created on 3/26/16.
@@ -18,7 +19,6 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
 
     private KarelWorldViewComponent worldViewComponent;
     private int street, avenue;
-    private Image img = null;
 
     //to making calculation not in drawing
     private int numBeepers;
@@ -29,7 +29,6 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
         this.worldViewComponent = worldViewComponent;
         this.street = street;
         this.avenue = avenue;
-
         addMouseListener(this);
         FileReaderWriter.addListener(this);
 
