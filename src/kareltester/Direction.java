@@ -1,6 +1,5 @@
 package kareltester;
 
-import kareltherobot.Directions;
 
 import java.util.InputMismatchException;
 
@@ -10,8 +9,6 @@ import java.util.InputMismatchException;
  */
 public enum Direction {
     NORTH, SOUTH, EAST, WEST;
-
-
 
     //just like Integer.parseInt(), it takes in a string and returns a Direction data type.
     public static Direction parseDirection(String s)
@@ -40,18 +37,6 @@ public enum Direction {
             case WEST: return "West";
         }
         throw new InputMismatchException(d + " is not a karel direction");
-    }
-
-    public static Directions.Direction getKarelDirection(Direction d)
-    {
-        switch(d)
-        {
-            case NORTH: return Directions.North;
-            case SOUTH: return Directions.South;
-            case EAST: return Directions.East;
-            case WEST: return Directions.West;
-        }
-        throw new InputMismatchException("is idk, no direction to convert too...");
     }
 
     public static Direction rotateRight(Direction d)

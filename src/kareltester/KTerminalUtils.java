@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.OutputStream;
 
 /**
  * Class that makes a terminal. Only one terminal allowed; U can't construct one
@@ -14,7 +13,8 @@ import java.io.OutputStream;
  */
 public class KTerminalUtils {
     private static KTerminal currTerminal;
-    private static boolean showErrors = false;
+
+
 
 
     //=====================GETTER=================//
@@ -24,7 +24,7 @@ public class KTerminalUtils {
 
 
     //====================METHODS================//
-    public static void print(final Object s)
+    public static void print(Object s)
     {
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -37,7 +37,7 @@ public class KTerminalUtils {
         });
 
     }
-    public static void println(final Object s)
+    public static void println(Object s)
     {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -62,81 +62,17 @@ public class KTerminalUtils {
             }
         });
     }
-
-    public static void clear()
-    {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                currTerminal.clear();
-
-            }
-        });
-    }
-    
-    //=========================ERROR======================//
-    public static void printErr(final Object s)
-    {
-
-        if(showErrors){
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-
-                    checkAndInitKTerminal();
-
-                    currTerminal.print(s);
-
-                    currTerminal.requestFocus();
-
-                }
-            });
-        }
-
-    }
-    
-    
-    public static void setShowErr(boolean b)
-    {
-        showErrors = b;
-    }
-    public static void printlnErr(final Object s)
-    {
-        if(showErrors){
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-
-                    checkAndInitKTerminal();
-
-                    currTerminal.println(s);
-
-                    currTerminal.requestFocus();
-
-                }
-            });
-        }
-    }
-    
-
-    public static TextAreaOutputStream getOutputStream()
-    {
-        return KTerminal.stream;
-    }
     //--helpers----
     private static void checkAndInitKTerminal() {
         if(currTerminal == null) currTerminal = new KTerminal(400, 300);
 
     }
 
-
     private static class KTerminal extends JFrame {
 
         private JScrollPane scrollPane;
         private JTextArea textArea;
         StringBuilder text;
-        public static TextAreaOutputStream stream;
-
 
         public KTerminal(int width, int height) {
             super("Karel Terminal :D ");
@@ -147,7 +83,7 @@ public class KTerminalUtils {
             text = new StringBuilder();
             add(scrollPane);
 
-            stream = new TextAreaOutputStream(textArea);
+
 
             setBounds(0, 0, width, height);
             setVisible(true);
@@ -171,12 +107,6 @@ public class KTerminalUtils {
         {
             text.append(s).append("\n");
             textArea.setText(text.toString());
-        }
-
-        public void clear()
-        {
-            text = new StringBuilder();
-            textArea.setText("");
         }
 
     }
