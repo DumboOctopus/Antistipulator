@@ -163,7 +163,7 @@ public class FileReaderWriter
         int totalAves = getAvenues();
         int totalStres = getStreets();
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(kwld2File));
+            BufferedReader reader = new BufferedReader(new FileReader(kwld2File)); //TODO: what is this for?
             BufferedWriter bw = new BufferedWriter(new FileWriter(kwld2File, false));
             bw.write("streets " + totalStres + NEW_LINE+"avenues " + totalAves);
             bw.close();
@@ -326,12 +326,12 @@ public class FileReaderWriter
         return (findFirstInKwld2("eastwestwalls " + st + " " + av + " ") != null);
     }
 
-    public static Direction getWall(int st, int av)
-    {
-        if(findFirstInKwld2("northsouthwalls " + st + " " + av + " ") != null) return Direction.NORTH;   //north south wall
-        else if(findFirstInKwld2("eastwestwalls " + st + " " + av + " ") != null) return Direction.EAST; //eastwest wall
-        else return Direction.IDK;
-    }
+//    public static Direction getWall(int st, int av)
+//    {
+//        if(findFirstInKwld2("northsouthwalls " + st + " " + av + " ") != null) return Direction.NORTH;   //north south wall
+//        else if(findFirstInKwld2("eastwestwalls " + st + " " + av + " ") != null) return Direction.EAST; //eastwest wall
+//        else return Direction.IDK;
+//    }
     public static int getStreets()
     {
         String s = findFirstInKwld2("streets ");
