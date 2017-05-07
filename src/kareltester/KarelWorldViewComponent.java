@@ -1,6 +1,5 @@
-package kareltester.gui;
+package kareltester;
 
-import kareltester.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;

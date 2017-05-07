@@ -1,6 +1,4 @@
-package kareltester.gui;
-
-import kareltester.*;
+package kareltester;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

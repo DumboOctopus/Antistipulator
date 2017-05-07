@@ -1,7 +1,4 @@
-package kareltester.gui;
-
-import kareltester.FileReaderWriter;
-import kareltester.KTerminalUtils;
+package kareltester;
 
 import javax.swing.*;
 import java.awt.*;
