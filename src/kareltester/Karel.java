@@ -26,7 +26,7 @@ public class Karel
     {
         this.street = st;
         this.avenue = av;
-        this.beepers = beeps;
+        this.beepers = Math.max(beeps, 0);
         this.dir = dir;
         this.source = source;
     }
