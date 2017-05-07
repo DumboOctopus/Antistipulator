@@ -24,7 +24,7 @@ public class KTerminalUtils {
 
 
     //====================METHODS================//
-    public static void print(Object s)
+    public static void print(final Object s)
     {
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -37,7 +37,7 @@ public class KTerminalUtils {
         });
 
     }
-    public static void println(Object s)
+    public static void println(final Object s)
     {
         SwingUtilities.invokeLater(new Runnable() {
             @Override

@@ -1,10 +1,9 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="Antistipulator:jar">
+  <artifact type="jar" name="Antistipulator:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/Antistipulator_jar</output-path>
     <root id="archive" name="Antistipulator.jar">
       <element id="module-output" name="Antistipulator" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/+libs/KarelJRobot.jar" path-in-jar="/" />
-      <element id="file-copy" path="$PROJECT_DIR$/+libs/KarelJRobot.jar" />
+      <element id="dir-copy" path="$PROJECT_DIR$/+libs" />
     </root>
   </artifact>
 </component>
