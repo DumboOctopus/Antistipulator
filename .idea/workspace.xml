@@ -6,60 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c09feea4-f772-44a2-aa81-822731877d1b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/gui/KarelWorldViewComponent$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/gui/KarelWorldViewComponent$10.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/gui/KarelWorldViewComponent$11.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/gui/KarelWorldViewComponent$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/gui/KarelWorldViewComponent$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/gui/KarelWorldViewComponent$4.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/gui/KarelWorldViewComponent$5.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/gui/KarelWorldViewComponent$6.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/gui/KarelWorldViewComponent$7.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/gui/KarelWorldViewComponent$8.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/gui/KarelWorldViewComponent$9.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/gui/KarelWorldViewComponent$CornerClickListener.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/gui/KarelWorldViewComponent.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/resources/corner 0000.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/resources/corner 0001.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/resources/corner 0010.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/resources/corner 0011.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/resources/corner 0100.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/resources/corner 0101.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/resources/corner 0110.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/resources/corner 0111.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/resources/corner 1000.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/resources/corner 1001.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/resources/corner 1010.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/resources/corner 1011.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/resources/corner 1100.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/resources/corner 1101.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/resources/corner 1110.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/kareltester/resources/corner 1111.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/gui/KarelCornerComponent.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/gui/KarelWorldEditor.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/gui/KarelWorldViewComponent.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/resources/corner 0000.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/resources/corner 0001.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/resources/corner 0010.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/resources/corner 0011.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/resources/corner 0100.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/resources/corner 0101.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/resources/corner 0110.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/resources/corner 0111.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/resources/corner 1000.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/resources/corner 1001.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/resources/corner 1010.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/resources/corner 1011.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/resources/corner 1100.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/resources/corner 1101.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/resources/corner 1110.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/kareltester/resources/corner 1111.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/Antistipulator_jar/Antistipulator.jar" afterPath="$PROJECT_DIR$/out/artifacts/Antistipulator_jar/Antistipulator.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/out/production/META-INF/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
-    </list>
+    <list default="true" id="c09feea4-f772-44a2-aa81-822731877d1b" name="Default" comment="" />
     <ignored path="Antistipulator.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
