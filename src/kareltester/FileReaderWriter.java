@@ -724,6 +724,10 @@ public class FileReaderWriter
     //=================================FINALLLY RUNNING KAREL WORLD :))==================//
     public static void runKarelTest()
     {
+        if( getAllKarels().length == 0) {
+            KTerminalUtils.println("There must be at least 1 Karel");
+            return;
+        }
         KTerminalUtils.println("Starting KarelTest");
         while(!mainDriverProcesses.empty())
         {
@@ -1041,8 +1045,7 @@ public class FileReaderWriter
              */
             int lblNumber = 0;
 
-            for(Karel k: ks)
-            {
+            for (Karel k : ks) {
                 builder.append("KLabel").append(lblNumber).append(":").append(NEW_LINE);
 
                 // construction of karel
@@ -1052,39 +1055,40 @@ public class FileReaderWriter
                 builder.append("\tdup").append(NEW_LINE);
                 builder.append("\tbipush ").append(k.getStreet()).append(NEW_LINE);
                 builder.append("\tbipush ").append(k.getAvenue()).append(NEW_LINE);
-                builder.append("\tgetstatic $MainDriver/"+Direction.getDirectionsInterface(k.getDir())+" Lkareltherobot/Directions$Direction;\n");
+                builder.append("\tgetstatic $MainDriver/" + Direction.getDirectionsInterface(k.getDir()) + " Lkareltherobot/Directions$Direction;\n");
                 builder.append("\tbipush ").append(k.getBeepers()).append(NEW_LINE);
 
-                builder.append("\tinvokespecial "+nameOfClass+"/<init>(IILkareltherobot/Directions$Direction;I)V\n");
+                builder.append("\tinvokespecial " + nameOfClass + "/<init>(IILkareltherobot/Directions$Direction;I)V\n");
                 builder.append(
                         "\tastore_1\n" +
-                        "\taload_1\n"
+                                "\taload_1\n"
                 );
 
                 //invokeinterface karel
                 builder.append("KLabelInvokeTask" + lblNumber + ":\n");
                 builder.append("\tinvokeinterface kareltester/TestableKarel/task()V 1\n");
-                builder.append("\tgoto KLabelNoExceptionPath"+lblNumber + NEW_LINE);
+                builder.append("\tgoto KLabelNoExceptionPath" + lblNumber + NEW_LINE);
 
                 //catch block
                 builder.append(
-                        "KLabelCatch"+lblNumber+":\n" +
-                        "\tastore_1\n"
+                        "KLabelCatch" + lblNumber + ":\n" +
+                                "\tastore_1\n"
                 );
 
                 //no exception path
                 builder.append(
-                        "KLabelNoExceptionPath"+lblNumber+":\n" +
-                        "\t\n"
+                        "KLabelNoExceptionPath" + lblNumber + ":\n" +
+                                "\t\n"
                 );
 
                 //if its the last one, stick a return on it. :D
-                if(lblNumber == ks.length - 1) builder.append("\treturn\n");
+                if (lblNumber == ks.length - 1) builder.append("\treturn\n");
 
-                builder.append(".catch java/lang/Exception from KLabel"+lblNumber+" to KLabelInvokeTask"+lblNumber+" using KLabelCatch" + lblNumber + NEW_LINE);
+                builder.append(".catch java/lang/Exception from KLabel" + lblNumber + " to KLabelInvokeTask" + lblNumber + " using KLabelCatch" + lblNumber + NEW_LINE);
 
                 lblNumber++;
             }
+
 
             builder.append(".end method").append("\n");
             //the static block
