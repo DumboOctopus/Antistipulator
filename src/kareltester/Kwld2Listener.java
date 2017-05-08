@@ -5,4 +5,5 @@ package kareltester;
  */
 public interface Kwld2Listener {
     void onChange(int st, int av);
+    void onWorldSizeChange();
 }

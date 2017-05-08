@@ -8,7 +8,7 @@ import java.io.File;
 
 /**
  */
-public class KarelWorldEditor extends JFrame{
+public class KarelWorldEditor extends JFrame implements Kwld2Listener{
     private KarelWorldViewComponent worldViewComponent;
 
     private JComboBox<Option> worldModifyingOptions;
@@ -18,6 +18,7 @@ public class KarelWorldEditor extends JFrame{
     private JButton btnRefresh;
     private JButton btnRun;
 
+    private final JTextField streetField, avenuesField;
 
     //TODO; refactor comboBox into special class
 
@@ -27,6 +28,7 @@ public class KarelWorldEditor extends JFrame{
         add(worldViewComponent, BorderLayout.CENTER);
         worldViewComponent.addBeeperMode();
 
+        FileReaderWriter.addListener(this);
 
         //-------------jPanel
         setUpJPanel();
@@ -36,7 +38,7 @@ public class KarelWorldEditor extends JFrame{
 
         //streets
         panel.add(new JLabel("Streets: "));
-        final JTextField streetField = new JTextField(FileReaderWriter.getStreets() + "");
+        streetField = new JTextField(FileReaderWriter.getStreets() + "");
         streetField.setColumns(3);
         streetField.addActionListener(new ActionListener() {
             @Override
@@ -44,8 +46,6 @@ public class KarelWorldEditor extends JFrame{
                 try{
                     int i = Integer.parseInt(streetField.getText());
                     FileReaderWriter.setStreets(i);
-                    KTerminalUtils.println("Streets set to " + FileReaderWriter.getStreets());
-                    KTerminalUtils.println("Now please restart the program to view changes");
                 } catch (Exception e1)
                 {
                     streetField.setText(""+FileReaderWriter.getStreets());
@@ -56,15 +56,14 @@ public class KarelWorldEditor extends JFrame{
 
         //avenues
         panel.add(new JLabel("Avenues: "));
-        final JTextField avenuesField = new JTextField(FileReaderWriter.getAvenues() + "");
+        avenuesField = new JTextField(FileReaderWriter.getAvenues() + "");
         avenuesField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
                     int i = Integer.parseInt(avenuesField.getText());
                     FileReaderWriter.setAvenues(i);
-                    KTerminalUtils.println("Avenues set to " + FileReaderWriter.getAvenues());
-                    KTerminalUtils.println("Now please restart the program to view changes");
+
                 }catch (Exception he)
                 {
                     avenuesField.setText(""+FileReaderWriter.getAvenues());
@@ -78,6 +77,16 @@ public class KarelWorldEditor extends JFrame{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
         setSize(770, 650);
+    }
+
+    private void resetWorldViewComponent(){
+        remove(worldViewComponent);
+        worldViewComponent = new KarelWorldViewComponent();
+        add(worldViewComponent, BorderLayout.CENTER);
+        streetField.setText(FileReaderWriter.getStreets() + "");
+        avenuesField.setText(FileReaderWriter.getAvenues() + "");
+        revalidate();
+        repaint();
     }
 
     private void setUpJPanel() {
@@ -349,6 +358,17 @@ public class KarelWorldEditor extends JFrame{
 
 
 
+    //==================================
+
+    @Override
+    public void onChange(int st, int av) {
+
+    }
+
+    @Override
+    public void onWorldSizeChange() {
+        resetWorldViewComponent();
+    }
 
 
     //==================================START THIS PROGRAM==================================//

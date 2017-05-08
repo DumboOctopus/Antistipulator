@@ -130,7 +130,7 @@ public class FileReaderWriter
 
     public static void copyFrom(File f)
     {
-
+        int initialAvenues = getAvenues(), intialStreets = getStreets();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(f));
             StringBuilder builder = new StringBuilder();
@@ -147,6 +147,16 @@ public class FileReaderWriter
             bw.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        if(initialAvenues != getAvenues() || intialStreets != getStreets()){
+
+            //the thing is...lots of listeners get removed when this is called...so loop forwards.
+            for(int i = 0; i < listeners.size(); i++)
+            {
+                listeners.get(i).onWorldSizeChange();
+            }
+            return;
         }
 
         //fire kwld2 changed for like everything :D
@@ -383,7 +393,7 @@ public class FileReaderWriter
 
     private static String findFirstInKwld2(String keyword)
     {
-        System.out.println(kwld2File);
+
         try {
             BufferedReader reader = new BufferedReader(new FileReader(kwld2File));
             String line;
@@ -491,10 +501,18 @@ public class FileReaderWriter
     }
     public static void setStreets (int in_streets) {
         smartAppendToKwld2("streets ", "" + in_streets);
+        for(int i = 0; i < listeners.size(); i++)
+        {
+            listeners.get(i).onWorldSizeChange();
+        }
 
     }
     public static void setAvenues(int in_avenue) {
         smartAppendToKwld2("avenues ", "" + in_avenue);
+        for(int i = 0; i < listeners.size(); i++)
+        {
+            listeners.get(i).onWorldSizeChange();
+        }
     }
 
     //------helpers

@@ -252,4 +252,7 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
             repaint();
         }
     }
+
+    @Override
+    public void onWorldSizeChange() {}
 }
