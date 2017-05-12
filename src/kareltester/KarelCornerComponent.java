@@ -208,6 +208,19 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
         });
         menu.add(item);
 
+        item = new JMenuItem("Remove All Beepers from Karel");
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Karel[] karels = FileReaderWriter.getKarel(street, avenue);
+                int maxAmt = 0;
+                for(Karel k: karels)
+                    if(k.getBeepers() > maxAmt) maxAmt = k.getBeepers();
+                worldViewComponent.addBeeperToKarel(street, avenue, -maxAmt);
+            }
+        });
+        menu.add(item);
+
         item = new JMenuItem("Remove all Karels");
         item.addActionListener(new ActionListener() {
             @Override

@@ -298,6 +298,15 @@ public class KarelWorldEditor extends JFrame implements Kwld2Listener{
                                 worldViewComponent.removeBeeperFromKarelMode();
                             }
                         }
+                ),
+                new Option(
+                        "Remove All Beepers From Karel",
+                        new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                worldViewComponent.removeAllBeepersFromKarelMode();
+                            }
+                        }
                 )
         };
     }
