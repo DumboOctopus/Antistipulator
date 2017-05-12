@@ -119,9 +119,9 @@ public class KarelCornerComponent extends JComponent implements MouseListener, K
                     image = imageMap.get(k.getDir());
                 }
                 g2.setColor(new Color(
-                        name.substring(0, name.length()/3).hashCode()%255,
-                        name.substring(name.length()/3, 2*name.length()/3).hashCode()%255,
-                        name.substring(2*name.length()/3).hashCode()%255
+                        Math.abs(name.substring(0, name.length()/3).hashCode()) %255,
+                        Math.abs(name.substring(name.length()/3, 2*name.length()/3).hashCode() )%255,
+                        Math.abs(name.substring(2*name.length()/3).hashCode() )%255
                 ));
                 g.drawRect(
                         getWidth()/5 + getWidth()/4,
