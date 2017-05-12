@@ -1232,12 +1232,10 @@ public class FileReaderWriter
             printKarelOutput(mainDriverProcess.getErrorStream());
             mainDriverProcess.waitFor();
             KTerminalUtils.println("\n\nThats all folks");
-        } catch (Exception e) {
-            KTerminalUtils.println("BIIGGGG Error occuered sorry freshy or sophy using this program");
-            KTerminalUtils.println("I can't access main driver because security... ur computer is dumb. jkjk");
-            KTerminalUtils.println("But seriously... check where u made this BlueJ project. There something really wrong");
-            KTerminalUtils.println("\ndetails:\n\n"+e.getMessage());
-
+        }
+        catch (Exception e) {
+            //none of these exceptions are much interest to the user.
+            e.printStackTrace();
         }
     }
     //--helper
